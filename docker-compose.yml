@@ -1,0 +1,49 @@
+services:
+
+  web_agora:
+    image: nginx:latest    
+    ports:
+      - '8000:80'
+    volumes:
+      - ./public:/app/public
+      - ./:/app
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php-fpm
+    restart: always   
+    tty: true
+    working_dir: /etc/nginx/conf.d/
+    networks:
+      - agoras
+
+  php-fpm:
+    container_name: agora_php-fpm
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    restart: always
+    working_dir: /app
+    links:
+      - postgres_agora
+    networks:
+      - agoras
+
+  postgres_agora:
+    image: postgres:13
+    ports:
+      - '5432:5432'
+    restart: always
+    tty: true
+    environment:
+      POSTGRES_DB: agora
+      POSTGRES_USER: agora
+      POSTGRES_PASSWORD: agorasaude
+    volumes:
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - agoras
+
+networks:
+  agoras:
+    driver: bridge  
