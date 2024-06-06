@@ -1,8 +1,43 @@
+.navbar .container .navbar-collapse {
+    padding: 0.6rem 0 0 2rem !important;
+}
+
 .navbar .container a:hover {
-    color: #4C9F47;
+    color: #4C9F47!important;
 }
 
 .navbar-nav .nav-link.active,
 .navbar-nav .show>.nav-link {
-    color:  #4C9F47;
+    color:  #4C9F47!important;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.background-container {
+    position: relative;
+    background-image: url('http://localhost:8000/images/background-home-1.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.foreground-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.image-container {
+    position: relative;
+}
+
+.centered-button {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
