@@ -131,49 +131,113 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center pb-5" style="background-color: #fcb900;">
+    <div class="row justify-content-center pb-5" style="background-color: #EFCD21;">
         <div class="col-md-8 align-items-center">
             <div class="p-4 text-center">
                 <p class="h2" style="color: #9b51e0;">EVENTOS</p>
             </div>
         </div>
     </div>
-    <div class="row justify-content-center pb-5" style="background-color: #fcb900;">
+    <div class="row justify-content-center pb-5" style="background-color: #EFCD21;">
         <div class="col-md-8 pb-5">
             <div class="text-center">
-                <a class="btn" style="border-color: #34AB44; border-radius: 20px; color: #34AB44;" href="#">
+                <a class="btn" style="background-color: #fff; border-color: #48773E; border-radius: 20px; color: #48773E;" href="#">
                     TODOS
                 </a>
-                <a class="btn" style="border-color: #fff; border-radius: 20px; color: #34AB44; background-color: #34AB44;" href="#">
+                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">2030 AGENDA</span>
                 </a>
-                <a class="btn" style="border-color: #fff; border-radius: 20px; color: #34AB44; background-color: #34AB44;" href="#">
+                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">ENCONTRO</span>
-
                 </a>
-                <a class="btn" style="border-color: #fff; border-radius: 20px; color: #34AB44; background-color: #34AB44;" href="#">
+                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">FEIRA</span>
-
                 </a>
-                <a class="btn" style="border-color: #fff; border-radius: 20px; color: #34AB44; background-color: #34AB44;" href="#">
+                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">OFICINA</span>
-
                 </a>
-                <a class="btn" style="border-color: #fff; border-radius: 20px; color: #34AB44; background-color: #34AB44;" href="#">
+                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">MAIS</span>
-
                 </a>
             </div>
-        </div>
-        <div class="col-md-8 d-flex justify-content-between align-items-center">
-            <div class="p-2">
-                <img src="http://localhost:8000/images/cxplanejamento-urbano.jpeg" width="320" height="184" alt="">
-            </div>
-            <div class="p-2">
-                <img src="http://localhost:8000/images/cxplanejamento-urbano.jpeg" width="320" height="184" alt="">
-            </div>
-            <div class="p-2">
-                <img src="http://localhost:8000/images/cxplanejamento-urbano.jpeg" width="320" height="184" alt="">
+        
+            <div class="col-md-12 d-flex justify-content-center align-items-start">
+                <div class="p-4">
+                    <div class="card" style="width: 18rem;">
+                    <img src="http://localhost:8000/images/cxplanejamento-urbano.jpeg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
+                                    target="_blank" rel="noopener noreferrer"
+                                    style="color: #222222;
+                                        text-decoration: none;
+                                        font-size: 19px;
+                                        line-height: 1.4;
+                                        font-weight: 700;">
+                                    <strong>Planejamento Urbano e Segurança Hídrica</strong>
+                                </a>
+                            </h5>
+                            <div>
+                                <span class="badge text-bg-success">PALESTRA</span>
+                                <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 11/02/2020</small>
+                            </div>
+                            <div>
+                                <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="card" style="width: 18rem;">
+                    <img src="http://localhost:8000/images/cxlogos.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                            <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
+                                target="_blank" rel="noopener noreferrer"
+                                style="color: #222222;
+                                    text-decoration: none;
+                                    font-size: 19px;
+                                    line-height: 1.4;
+                                    font-weight: 700;">
+                                <strong>3º Ciclo de Debates – Manaus</strong>
+                            </a>
+                            </h5>
+                            <span class="badge text-bg-success">ENCONTRO</span>
+                            <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 02/09/2019</small>
+                            <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde 
+                                convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade.
+                                Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII
+                                Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde,
+                                Ambiente e Sustentabilidade com o objetivo...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="http://localhost:8000/images/cxexperiencias-ciencia.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                            <a href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
+                                target="_blank" rel="noopener noreferrer"
+                                style="color: #222222;
+                                    text-decoration: none;
+                                    font-size: 19px;
+                                    line-height: 1.4;
+                                    font-weight: 700;">
+                                <strong>Experiências de Ciência Cidadã para Biodiversidade e Saúde</strong>
+                            </a>
+                            </h5>
+                            <span class="badge text-bg-success">SEMINÁRIO</span>
+                            <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 30/11/2018</small>
+                            <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
+                                Descrição O seminário visa abordar oportunidades e desafios em
+                                projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que
+                                tenham relação com esta temática. O enfoque será dado tanto em projetos
+                                voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda
+                                em resultados de pesquisas com dados advindos desta prática. Para se...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
