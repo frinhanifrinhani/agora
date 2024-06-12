@@ -36,7 +36,7 @@ class NoticiaRepository extends BaseRepository
         if ($sort) {
             $this->orderPaginate($query, $sort);
         } else {
-            $query->orderBy(Noticia::deafultSortAttribute(), 'asc');
+            $query->orderBy(Noticia::defaultSortAttribute(), 'asc');
         }
 
 

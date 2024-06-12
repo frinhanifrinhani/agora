@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Usuario;
+use App\Models\User;
 use App\Traits\Sanitize;
 
-class UsuarioRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     use Sanitize;
 
@@ -25,7 +25,7 @@ class UsuarioRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Usuario::rules();
+        return User::rules();
     }
 
 

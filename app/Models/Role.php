@@ -23,7 +23,7 @@ class Role extends Authenticatable
         ];
     }
 
-    public static function deafultSortAttribute(): string
+    public static function defaultSortAttribute(): string
     {
         return 'nome';
     }

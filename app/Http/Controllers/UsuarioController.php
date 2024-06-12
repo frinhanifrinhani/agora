@@ -2,92 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\UsuarioRepository;
-use App\Http\Requests\UsuarioRequest;
+use App\Repositories\UserRepository;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UsuarioController extends Controller
 {
-    private UsuarioRepository $usuarioRepository;
+    private UserRepository $userRepository;
 
-    public function __construct(UsuarioRepository $usuarioRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->usuarioRepository = $usuarioRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function index(Request $request)
     {
-        return $this->usuarioRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
-    }
-
-    public function store(UsuarioRequest $request): JsonResponse
-    {
-        try {
-            DB::beginTransaction();
-
-            $usuarioData = $request->validated();
-
-            $usuarioData['role_id'] = 1;
-
-            $usuario = $this->usuarioRepository->create($usuarioData);
-
-            DB::commit();
-            return response()->json(
-                [
-                    'success' => [
-                        'message' => __(
-                            'messages.saved',
-                            [
-                                'model' => 'Usuario'
-                            ]
-                        )
-                    ],
-                    'object' => [
-                        'usuario' => $usuario
-                    ]
-                ],
-                Response::HTTP_CREATED
-            );
-        } catch (\Exception $e) {
-
-            if ($e->getCode() == 23505) {
-                return response()->json(
-                    [
-                        'error' => [
-                            'message' =>
-                            __(
-                                'messages.erro.duplicateError',
-                                [
-                                    'model' => 'Usuario'
-                                ]
-                            )
-                        ]
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
-
-            return response()->json(
-                [
-                    'error' => [$e->getMessage()]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        return $this->userRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
     }
 
     public function show(string $id): JsonResponse
     {
         try {
-            $usuario = Usuario::findOrFail($id);
+            $user = User::findOrFail($id);
 
             return response()->json(
                 [
-                    'object' => $usuario
+                    'object' => $user
                 ],
                 Response::HTTP_OK
             );
@@ -101,13 +45,13 @@ class UsuarioController extends Controller
         }
     }
 
-    public function update(UsuarioRequest $request, string $id): JsonResponse
+    public function update(UserRequest $request, string $id): JsonResponse
     {
         try {
             DB::beginTransaction();
-            $usuario = $this->usuarioRepository->findOrFail($id);
+            $user = $this->userRepository->findOrFail($id);
 
-            $usuarioResponse = $this->usuarioRepository->update($request->validated(), $usuario->id);
+            $userResponse = $this->userRepository->update($request->validated(), $user->id);
 
             DB::commit();
 
@@ -117,12 +61,12 @@ class UsuarioController extends Controller
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Usuario'
+                                'model' => 'User'
                             ]
                         )
                     ],
                     'object' => [
-                        'usuario' => $usuarioResponse
+                        'user' => $userResponse
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -141,7 +85,7 @@ class UsuarioController extends Controller
     {
         try {
 
-            $this->usuarioRepository->delete($id);
+            $this->userRepository->delete($id);
 
             return response()->json(
                 [
@@ -149,7 +93,7 @@ class UsuarioController extends Controller
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Usuario'
+                                'model' => 'User'
                             ]
                         )
                     ]
