@@ -286,6 +286,20 @@
                     </div>
                 </div>
             </div>
+
+            <nav aria-label="Página de navegação noticias">
+                <ul class="pagination justify-content-center pt-4">
+                    <li class="page-item disabled">
+                    <a class="page-link">Anterior</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                    <a class="page-link" href="#">Próximo</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 
