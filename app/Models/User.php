@@ -18,10 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nome',
+        'name',
         'cpf',
         'email',
-        'telefone',
+        'phone',
         'password',
         'status',
         'role_id',
@@ -53,16 +53,16 @@ class User extends Authenticatable
 
     public static function defaultSortAttribute(): string
     {
-        return 'nome';
+        return 'name';
     }
 
     public static function rules(): array
     {
         return [
-            'nome'          => 'required|string',
+            'name'          => 'required|string',
             'cpf'           => 'required|string|max:11',
             'email'         => 'required|email|max:100',
-            'telefone'      => 'nullable|string',
+            'phone'      => 'nullable|string',
             'password'      => 'required|string|min:6|max:12',
             'status'        => 'nullable|bool',
         ];

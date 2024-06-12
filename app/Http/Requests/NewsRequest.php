@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Noticia;
+use App\Models\News;
 use App\Traits\Sanitize;
 
-class NoticiaRequest extends FormRequest
+class NewsRequest extends FormRequest
 {
     use Sanitize;
 
@@ -25,7 +25,7 @@ class NoticiaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Noticia::rules();
+        return News::rules();
     }
 
 

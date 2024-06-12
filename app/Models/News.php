@@ -5,27 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Noticia extends Model
+class News extends Model
 {
     use HasFactory;
-    protected $table = 'noticia';
+    protected $table = 'news';
 
     protected $fillable = [
-        'titulo',
-        'noticia',
+        'title',
+        'news',
         'status'
     ];
 
     public static function defaultSortAttribute(): string
     {
-        return 'titulo';
+        return 'title';
     }
 
     public static function rules(): array
     {
         return [
-            'titulo' => 'required|max:255',
-            'noticia' => 'required|string',
+            'title' => 'required|max:255',
+            'news' => 'required|string',
         ];
     }
 

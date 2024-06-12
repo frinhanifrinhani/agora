@@ -2,39 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Noticia;
-use App\Repositories\NoticiaRepository;
+use App\Models\News;
+use App\Repositories\NewsRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\NoticiaRequest;
+use App\Http\Requests\NewsRequest;
 
-class NoticiaController extends Controller
+class NewsController extends Controller
 {
-    private NoticiaRepository $noticiaRepository;
+    private NewsRepository $newsRepository;
 
-    public function __construct(NoticiaRepository $noticiaRepository)
+    public function __construct(NewsRepository $newsRepository)
     {
-        $this->noticiaRepository = $noticiaRepository;
+        $this->newsRepository = $newsRepository;
     }
 
     public function index(Request $request)
     {
-        return $this->noticiaRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
+        return $this->newsRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
     }
 
-    public function store(NoticiaRequest $request)
+    public function store(NewsRequest $request)
     {
 
         try {
             DB::beginTransaction();
 
-            $noticiaData = $request->validated();
+            $newsData = $request->validated();
 
-            $noticiaData['status'] = true;
+            $newsData['status'] = true;
 
-            $noticia = $this->noticiaRepository->create($noticiaData);
+            $news = $this->newsRepository->create($newsData);
 
             DB::commit();
             return response()->json(
@@ -43,12 +43,12 @@ class NoticiaController extends Controller
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Noticia'
+                                'model' => 'News'
                             ]
                         )
                     ],
                     'object' => [
-                        'noticia' => $noticia
+                        'news' => $news
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -63,7 +63,7 @@ class NoticiaController extends Controller
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Noticia'
+                                    'model' => 'News'
                                 ]
                             )
                         ]
@@ -84,11 +84,11 @@ class NoticiaController extends Controller
     public function show(string $id): JsonResponse
     {
         try {
-            $noticia = Noticia::findOrFail($id);
+            $news = News::findOrFail($id);
 
             return response()->json(
                 [
-                    'object' => $noticia
+                    'object' => $news
                 ],
                 Response::HTTP_OK
             );
@@ -101,13 +101,13 @@ class NoticiaController extends Controller
             );
         }
     }
-    public function update(NoticiaRequest $request, int $id): JsonResponse
+    public function update(NewsRequest $request, int $id): JsonResponse
     {
         try {
             DB::beginTransaction();
-            $noticia = $this->noticiaRepository->findOrFail($id);
+            $news = $this->newsRepository->findOrFail($id);
 
-            $noticiaResponse = $this->noticiaRepository->update($request->validated(), $noticia->id);
+            $newsResponse = $this->newsRepository->update($request->validated(), $news->id);
 
             DB::commit();
 
@@ -117,12 +117,12 @@ class NoticiaController extends Controller
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Noticia'
+                                'model' => 'News'
                             ]
                         )
                     ],
                     'object' => [
-                        'noticia' => $noticiaResponse
+                        'news' => $newsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -141,7 +141,7 @@ class NoticiaController extends Controller
     {
         try {
 
-            $this->noticiaRepository->delete($id);
+            $this->newsRepository->delete($id);
 
             return response()->json(
                 [
@@ -149,7 +149,7 @@ class NoticiaController extends Controller
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Noticia'
+                                'model' => 'News'
                             ]
                         )
                     ]
