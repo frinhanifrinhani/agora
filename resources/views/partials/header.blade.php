@@ -10,22 +10,22 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Início</a>
+                            <a class="nav-link active" aria-current="page" href="http://localhost:8000/home">Início</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">EFA 2030</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Soluções para Saúde</a>
+                            <a class="nav-link" href="https://solucoes.agora.fiocruz.br/" target="_blank">Soluções para Saúde</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Notícias</a>
+                            <a class="nav-link" href="http://localhost:8000/noticias">Notícias</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Redes</a>
+                            <a class="nav-link" href="https://redes.agora.fiocruz.br/" target="_blank">Redes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Ifuturo</a>
+                            <a class="nav-link" href="https://ifuturo.agora.fiocruz.br/" target="_blank">Ifuturo</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
