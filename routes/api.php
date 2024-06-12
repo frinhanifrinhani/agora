@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NoticiaController;
-use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\UserController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -23,13 +23,12 @@ Route::get('/check-db-connection', function () {
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
-    Route::post('/register', 'register');
     Route::middleware('auth:sanctum')->post('/logout', 'logout');
 });
 
-Route::resource('usuario', UsuarioController::class);
-Route::prefix('usuario')->group(function () {
-    Route::get('/usuarios-paginate', [UsuarioController::class, 'index']);
+Route::resource('user', UserController::class);
+Route::prefix('user')->group(function () {
+    Route::get('/user-paginate', [UserController::class, 'index']);
 });
 
 Route::resource('noticia', NoticiaController::class);

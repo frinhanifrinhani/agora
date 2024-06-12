@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     private UserRepository $userRepository;
 
@@ -22,6 +22,64 @@ class UsuarioController extends Controller
     public function index(Request $request)
     {
         return $this->userRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
+    }
+
+    public function store(UserRequest $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $userData = $request->validated();
+
+            $userData['password'] = bcrypt($userData['password']);
+
+            $userData['role_id'] = 1;
+
+            $user = $this->userRepository->create($userData);
+
+            DB::commit();
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.saved',
+                            [
+                                'model' => 'User'
+                            ]
+                        )
+                    ],
+                    'object' => [
+                        'user' => $user
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+        } catch (\Exception $e) {
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => 'User'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 
     public function show(string $id): JsonResponse

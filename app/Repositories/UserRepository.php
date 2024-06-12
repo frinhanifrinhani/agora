@@ -30,7 +30,7 @@ class UserRepository extends BaseRepository
         $query = $this->model->newQuery();
 
         if ($filtros) {
-            $this->wherePaginate($query, $this->getSearchByFiltros($filtros, ['nome']));
+            $this->wherePaginate($query, $this->getSearchByFiltros($filtros, ['name']));
         }
 
         if ($sort) {
@@ -44,9 +44,9 @@ class UserRepository extends BaseRepository
             [
                 'id',
                 'cpf',
-                'nome',
+                'name',
                 'email',
-                'telefone',
+                'phone',
                 'status',
                 'created_at',
                 'updated_at',
