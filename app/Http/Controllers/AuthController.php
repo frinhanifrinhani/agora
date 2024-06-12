@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -11,38 +14,69 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    public function register(Request $request): JsonResponse
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    public function register(UserRequest $request): JsonResponse
     {
         try {
+            DB::beginTransaction();
 
-            $validatedData = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:6', 'confirmed'],
-            ]);
-        } catch (ValidationException $e) {
-            $errors = $e->validator->errors()->toArray();
+            $userData = $request->validated();
+
+            $userData['password'] = bcrypt($userData['password']);
+
+            $userData['role_id'] = 1;
+
+            $user = $this->userRepository->create($userData);
+
+            DB::commit();
             return response()->json(
                 [
-                    'message' => $errors
+                    'success' => [
+                        'message' => __(
+                            'messages.saved',
+                            [
+                                'model' => 'User'
+                            ]
+                        )
+                    ],
+                    'object' => [
+                        'user' => $user
+                    ]
                 ],
-                Response::HTTP_UNPROCESSABLE_ENTITY
+                Response::HTTP_CREATED
+            );
+        } catch (\Exception $e) {
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => 'User'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         }
-
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
-        ]);
-
-        return response()->json(
-            [
-                'message' => 'User registered successfully!',
-                'user' => $user
-            ],
-            Response::HTTP_CREATED
-        );
     }
 
     public function login(Request $request): JsonResponse
@@ -65,9 +99,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('token')->plainTextToken;
 
-            $request->session()->regenerate();
+            $token = $request->user()->createToken('token')->plainTextToken;
+
+            //$request->session()->regenerate();
             return response()->json(
                 [
                     'message' => 'Login successfully!',

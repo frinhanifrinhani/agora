@@ -16,7 +16,7 @@ class Noticia extends Model
         'status'
     ];
 
-    public static function deafultSortAttribute(): string
+    public static function defaultSortAttribute(): string
     {
         return 'titulo';
     }

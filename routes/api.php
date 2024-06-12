@@ -8,9 +8,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\UsuarioController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 Route::get('/check-db-connection', function () {
     try {
@@ -20,7 +20,6 @@ Route::get('/check-db-connection', function () {
         return response()->json(['message' => 'Não foi possivel conectar no banco', 'error' => $e->getMessage()], 500);
     }
 });
-
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');

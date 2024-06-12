@@ -2,12 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Models\Usuario;
+use App\Models\User;
 use App\Traits\Paginate;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
-class UsuarioRepository extends BaseRepository
+class UserRepository extends BaseRepository
 {
     use Paginate;
 
@@ -16,7 +14,7 @@ class UsuarioRepository extends BaseRepository
      */
     public function getFieldsSearchable()
     {
-        return Usuario::searchable();
+        return User::searchable();
     }
 
     /**
@@ -24,7 +22,7 @@ class UsuarioRepository extends BaseRepository
      */
     public function model()
     {
-        return Usuario::class;
+        return User::class;
     }
 
     public function searchPaginate(array $filtros = null, $limit = null, array $sort = null)
@@ -38,7 +36,7 @@ class UsuarioRepository extends BaseRepository
         if ($sort) {
             $this->orderPaginate($query, $sort);
         } else {
-            $query->orderBy(Usuario::deafultSortAttribute(), 'asc');
+            $query->orderBy(User::defaultSortAttribute(), 'asc');
         }
 
         return $query->paginate(
