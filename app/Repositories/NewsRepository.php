@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Models\Noticia;
+use App\Models\News;
 use App\Traits\Paginate;
 
-class NoticiaRepository extends BaseRepository
+class NewsRepository extends BaseRepository
 {
     use Paginate;
 
@@ -14,7 +14,7 @@ class NoticiaRepository extends BaseRepository
      */
     public function getFieldsSearchable()
     {
-        return Noticia::searchable();
+        return News::searchable();
     }
 
     /**
@@ -22,7 +22,7 @@ class NoticiaRepository extends BaseRepository
      */
     public function model()
     {
-        return Noticia::class;
+        return News::class;
     }
 
     public function searchPaginate(array $filtros = null, $limit = null, array $sort = null)
@@ -30,13 +30,13 @@ class NoticiaRepository extends BaseRepository
         $query = $this->model->newQuery();
 
         if ($filtros) {
-            $this->wherePaginate($query, $this->getSearchByFiltros($filtros, ['titulo']));
+            $this->wherePaginate($query, $this->getSearchByFiltros($filtros, ['title']));
         }
 
         if ($sort) {
             $this->orderPaginate($query, $sort);
         } else {
-            $query->orderBy(Noticia::defaultSortAttribute(), 'asc');
+            $query->orderBy(News::defaultSortAttribute(), 'asc');
         }
 
 
@@ -44,8 +44,8 @@ class NoticiaRepository extends BaseRepository
             $limit,
             [
                 'id',
-                'titulo',
-                'noticia',
+                'title',
+                'news',
                 'status',
                 'created_at',
                 'updated_at',

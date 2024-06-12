@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div class="p-4 text-center">
-                <div class="pb-4"><img src="http://localhost:8000/images/cxnoticias-300x300.png" width="150" height="150" alt=""></div>
+                <div class="pb-4"><img src="http://localhost:8000/images/cxnewss-300x300.png" width="150" height="150" alt=""></div>
                 <div>
                     <p class="h5" style="color: #34AB44;"><strong>NOTÍCIAS</strong></p>
                     <p style="color: #888888; line-height: 1.42857143; font-size: 14px;">No Blog Ágora você encontra notícias, textos autorais, entrevistas, artigos,
@@ -160,7 +160,7 @@
                     <span class="text-white">MAIS</span>
                 </a>
             </div>
-        
+
             <div class="col-md-12 d-flex justify-content-center align-items-start">
                 <div class="p-4">
                     <div class="card" style="width: 18rem;">
@@ -204,7 +204,7 @@
                             </h5>
                             <span class="badge text-bg-success">ENCONTRO</span>
                             <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 02/09/2019</small>
-                            <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde 
+                            <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde
                                 convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade.
                                 Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII
                                 Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde,

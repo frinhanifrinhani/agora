@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 
 // Route::get('/user', function (Request $request) {
@@ -31,7 +31,7 @@ Route::prefix('user')->group(function () {
     Route::get('/user-paginate', [UserController::class, 'index']);
 });
 
-Route::resource('noticia', NoticiaController::class);
-Route::prefix('noticia')->group(function () {
-    Route::get('/noticia-paginate', [NoticiaController::class, 'index']);
+Route::resource('news', NewsController::class);
+Route::prefix('news')->group(function () {
+    Route::get('/news-paginate', [NewsController::class, 'index']);
 });
