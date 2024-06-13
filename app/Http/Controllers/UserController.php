@@ -6,165 +6,42 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use App\Http\Requests\UserRequest;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
-    private UserRepository $userRepository;
+    private UserService $userService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserService $userService)
     {
-        $this->userRepository = $userRepository;
+        $this->userService = $userService;
     }
 
     public function index(Request $request)
     {
-        return $this->userRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
+        return $this->userService->getAllUsers($request);
     }
 
     public function store(UserRequest $request): JsonResponse
     {
-        try {
-            DB::beginTransaction();
-
-            $userData = $request->validated();
-
-            $userData['password'] = bcrypt($userData['password']);
-
-            $userData['role_id'] = 1;
-
-            $user = $this->userRepository->create($userData);
-
-            DB::commit();
-            return response()->json(
-                [
-                    'success' => [
-                        'message' => __(
-                            'messages.saved',
-                            [
-                                'model' => 'User'
-                            ]
-                        )
-                    ],
-                    'object' => [
-                        'user' => $user
-                    ]
-                ],
-                Response::HTTP_CREATED
-            );
-        } catch (\Exception $e) {
-
-            if ($e->getCode() == 23505) {
-                return response()->json(
-                    [
-                        'error' => [
-                            'message' =>
-                            __(
-                                'messages.erro.duplicateError',
-                                [
-                                    'model' => 'User'
-                                ]
-                            )
-                        ]
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
-
-            return response()->json(
-                [
-                    'error' => [$e->getMessage()]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        return $this->userService->createUser($request);
     }
 
     public function show(string $id): JsonResponse
     {
-        try {
-            $user = User::findOrFail($id);
-
-            return response()->json(
-                [
-                    'object' => $user
-                ],
-                Response::HTTP_OK
-            );
-        } catch (\Exception  $e) {
-            return response()->json(
-                [
-                    'error' => [$e->getMessage()]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        return $this->userService->getUserById($id);
     }
 
     public function update(UserRequest $request, string $id): JsonResponse
     {
-        try {
-            DB::beginTransaction();
-            $user = $this->userRepository->findOrFail($id);
-
-            $userResponse = $this->userRepository->update($request->validated(), $user->id);
-
-            DB::commit();
-
-            return response()->json(
-                [
-                    'success' => [
-                        'message' => __(
-                            'messages.updated',
-                            [
-                                'model' => 'User'
-                            ]
-                        )
-                    ],
-                    'object' => [
-                        'user' => $userResponse
-                    ]
-                ],
-                Response::HTTP_CREATED
-            );
-        } catch (\Exception $e) {
-            return response()->json(
-                [
-                    'error' => [$e->getMessage()]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        return $this->userService->updateUser($request,$id);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        try {
-
-            $this->userRepository->delete($id);
-
-            return response()->json(
-                [
-                    'success' => [
-                        'message' => __(
-                            'messages.deleted',
-                            [
-                                'model' => 'User'
-                            ]
-                        )
-                    ]
-                ],
-                Response::HTTP_OK
-            );
-        } catch (\Exception $e) {
-            return response()->json(
-                [
-                    'error' => [$e->getMessage()]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        return $this->userService->deleteUser($id);
     }
 }
