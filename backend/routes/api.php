@@ -26,12 +26,22 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware('auth:sanctum')->post('/logout', 'logout');
 });
 
-Route::resource('user', UserController::class);
-Route::prefix('user')->group(function () {
-    Route::get('/user-paginate', [UserController::class, 'index']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::resource('user', UserController::class);
+    Route::prefix('user')->group(function () {
+        Route::get('/user-paginate', [NewsController::class, 'index']);
+    });
 });
 
-Route::resource('news', NewsController::class);
-Route::prefix('news')->group(function () {
-    Route::get('/news-paginate', [NewsController::class, 'index']);
+Route::controller(NewsController::class)->group(function () {
+    Route::get('/news', 'index');
+    Route::get('/news/{id}', 'show');
+    Route::middleware('auth:sanctum')->post('/news', 'store');
+    Route::middleware('auth:sanctum')->put('/news/{id}', 'update');
+    Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
+
+
+Route::match(['post', 'patch', 'put', 'delete'], '{any}', function (Request $request) {
+    return response()->json(['message' => 'Method not allowed.'], 405);
+})->where('any', '.*');
