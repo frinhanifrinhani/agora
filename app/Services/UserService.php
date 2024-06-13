@@ -2,37 +2,38 @@
 
 namespace App\Services;
 
-use App\Repositories\NewsRepository;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Models\News;
+use App\Repositories\UserRepository;
 
-class NewsService
+class UserService
 {
-    private NewsRepository $newsRepository;
 
-    public function __construct(NewsRepository $newsRepository)
+    private UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
-        $this->newsRepository = $newsRepository;
+        $this->userRepository = $userRepository;
     }
 
-    public function getAllNews($request)
+    public function getAllUsers($request)
     {
-        return $this->newsRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
+        return $this->userRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
     }
 
-    public function createNews($request): JsonResponse
+    public function createUser($request): JsonResponse
     {
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
+            $userData = $request->validated();
 
-            $newsData = $request->validated();
+            $userData['password'] = bcrypt($userData['password']);
 
-            $newsData['status'] = true;
+            $userData['role_id'] = 1;
 
-            $news = $this->newsRepository->create($newsData);
+            $user = $this->userRepository->create($userData);
 
             DB::commit();
             return response()->json(
@@ -41,18 +42,18 @@ class NewsService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'News'
+                                'model' => 'User'
                             ]
                         )
                     ],
                     'object' => [
-                        'news' => $news
+                        'user' => $user
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
-
+            DB::rollBack();
             if ($e->getCode() == 23505) {
                 return response()->json(
                     [
@@ -61,7 +62,7 @@ class NewsService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'News'
+                                    'model' => 'User'
                                 ]
                             )
                         ]
@@ -79,15 +80,14 @@ class NewsService
         }
     }
 
-    public function getNewsById($id)
+    public function getUserById($id): JsonResponse
     {
-
         try {
-            $news = News::findOrFail($id);
+            $user = User::findOrFail($id);
 
             return response()->json(
                 [
-                    'object' => $news
+                    'object' => $user
                 ],
                 Response::HTTP_OK
             );
@@ -101,13 +101,12 @@ class NewsService
         }
     }
 
-    public function updateNews($request, $id)
+    public function updateUser($request, $id): JsonResponse
     {
-
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
 
-            $newsResponse = $this->newsRepository->update($request->validated(),$id);
+            $userResponse = $this->userRepository->update($request->validated(), $id);
 
             DB::commit();
 
@@ -117,17 +116,18 @@ class NewsService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'News'
+                                'model' => 'User'
                             ]
                         )
                     ],
                     'object' => [
-                        'news' => $newsResponse
+                        'user' => $userResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -137,11 +137,10 @@ class NewsService
         }
     }
 
-    public function deleteNews($id)
+    public function deleteUser($id): JsonResponse
     {
         try {
-
-            $this->newsRepository->delete($id);
+            $this->userRepository->delete($id);
 
             return response()->json(
                 [
@@ -149,7 +148,7 @@ class NewsService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'News'
+                                'model' => 'User'
                             ]
                         )
                     ]
