@@ -1,13 +1,15 @@
 services:
 
   web_agora:
+    container_name: web_agora
     image: nginx:latest    
     ports:
       - '8000:80'
     volumes:
-      - ./public:/app/public
-      - ./:/app
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./backend/public:/app/public
+      - ./backend/:/app
+      #- ./frontend/dist:/app/frontend/dist
+      - ./backend/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     links:
       - php-fpm
     restart: always   
@@ -17,11 +19,9 @@ services:
       - agoras
 
   php-fpm:
-    container_name: agora_php-fpm
-    build:
-      context: .
+    build: ./backend
     volumes:
-      - ./:/app
+      - ./backend/:/app:delegated
     restart: always
     working_dir: /app
     links:
@@ -29,7 +29,24 @@ services:
     networks:
       - agoras
 
+  frontend:
+    container_name: frontend_agora
+    build: ./frontend
+    networks:
+      - agoras
+    ports:
+      #- '5173:80'
+      - 5173:5173
+    volumes:
+      - ./frontend:/app:delegated
+      - /app/node_modules
+    working_dir: /app
+    depends_on:
+      - php-fpm
+    restart: always
+
   postgres_agora:
+    container_name: banco_agora
     image: postgres:13
     ports:
       - '5432:5432'
@@ -40,7 +57,7 @@ services:
       POSTGRES_USER: agora
       POSTGRES_PASSWORD: agorasaude
     volumes:
-      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backend/docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - agoras
 
