@@ -20,7 +20,7 @@ class UserService
 
     public function getAllUsers($request)
     {
-        return $this->userRepository->searchPaginate($request->filtros, $request->limit, $request->sort);
+        return $this->userRepository->paginate($request->limit);
     }
 
     public function createUser($request): JsonResponse
