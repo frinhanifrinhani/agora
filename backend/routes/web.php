@@ -13,6 +13,10 @@ Route::get('/home', function () {
     return view('home');
 });
 
-Route::get('/noticias', function () {
-    return view('noticias.index');
+Route::get('/noticia', function () {
+    return view('noticia.index');
+});
+
+Route::get('/noticia/destaque', function () {
+    return view('noticia.destaque');
 });
