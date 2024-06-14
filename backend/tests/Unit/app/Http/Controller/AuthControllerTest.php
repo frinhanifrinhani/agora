@@ -4,14 +4,11 @@ namespace Tests\Unit\app\Http\Controllers;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Http\Request;
-use TheSeer\Tokenizer\Token;
 use App\Services\AuthService;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\AuthRequest;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -23,7 +20,6 @@ class AuthControllerTest extends TestCase
     protected $authController;
     protected $userRepository;
     protected $authService;
-    //AuthService $authService
 
     public function setUp(): void
     {
@@ -31,7 +27,7 @@ class AuthControllerTest extends TestCase
 
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->authService = $this->createMock(AuthService::class);
-        $this->authController = new AuthController($this->userRepository, $this->authService);
+        $this->authController = new AuthController( $this->authService);
     }
 
     public function testLoginSuccess()
@@ -66,7 +62,7 @@ class AuthControllerTest extends TestCase
             'password' => '',
         ];
 
-        $request = new Request($requestData);
+        $request = new AuthRequest($requestData);
 
         $responseMock = $this->createMock(JsonResponse::class);
         $responseMock->expects($this->once())
@@ -78,8 +74,8 @@ class AuthControllerTest extends TestCase
             ->method('getContent')
             ->willReturn(json_encode([
                 'errors' => [
-                    'email' => ['The email field is required.'],
-                    'password' => ['The password field is required.']
+                    'email' => ['O campo E-mail é obrigatório.'],
+                    'password' => ['O campo Senha é obrigatório.']
                 ]
             ]));
 
@@ -97,8 +93,8 @@ class AuthControllerTest extends TestCase
         $this->assertArrayHasKey('errors', $responseContent);
         $this->assertArrayHasKey('email', $responseContent['errors']);
         $this->assertArrayHasKey('password', $responseContent['errors']);
-        $this->assertEquals(['The email field is required.'], $responseContent['errors']['email']);
-        $this->assertEquals(['The password field is required.'], $responseContent['errors']['password']);
+        $this->assertEquals(['O campo E-mail é obrigatório.'], $responseContent['errors']['email']);
+        $this->assertEquals(['O campo Senha é obrigatório.'], $responseContent['errors']['password']);
     }
 
     public function testLoginInvalidEmailTypeError()
@@ -109,7 +105,7 @@ class AuthControllerTest extends TestCase
             'password' => 'invalid',
         ];
 
-        $request = new Request($requestData);
+        $request = new AuthRequest($requestData);
 
         $responseMock = $this->createMock(JsonResponse::class);
         $responseMock->expects($this->once())
@@ -149,7 +145,7 @@ class AuthControllerTest extends TestCase
             'password' => 'invalidPassword',
         ];
 
-        $request = new Request($requestData);
+        $request = new AuthRequest($requestData);
 
         $responseMock = $this->createMock(JsonResponse::class);
         $responseMock->expects($this->once())

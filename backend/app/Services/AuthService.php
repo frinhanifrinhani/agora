@@ -2,12 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\News;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
-use App\Repositories\NewsRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -17,10 +13,8 @@ class AuthService
     public function login($request): JsonResponse
     {
         try {
-            $credentials = $request->validate([
-                'email' => ['required', 'email'],
-                'password' => ['required'],
-            ]);
+
+            $credentials = $request->validated();
 
             if (Auth::attempt($credentials)) {
                 $user = Auth::user();

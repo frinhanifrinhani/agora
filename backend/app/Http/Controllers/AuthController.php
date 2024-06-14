@@ -2,30 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthRequest;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
-use App\Services\UserService;
-use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use PhpParser\Node\Stmt\TryCatch;
-use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\DB;
-use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    private UserRepository $userRepository;
     private AuthService $authService;
 
-    public function __construct(UserRepository $userRepository, AuthService $authService)
+    public function __construct(AuthService $authService)
     {
-        $this->userRepository = $userRepository;
         $this->authService = $authService;
     }
 
-    public function login(Request $request): JsonResponse
+    public function login(AuthRequest $request): JsonResponse
     {
         return $this->authService->login($request);
     }

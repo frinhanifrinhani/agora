@@ -3,11 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\User;
 
-class UserRequest extends FormRequest
+class AuthRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,7 +21,19 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return User::rules();
+        return [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+    }
+
+    public function messages(){
+        return[
+            'email' => config('global.PARAM_EMAIL_REQUIRED'),
+            'email' => config('global.PARAM_EMAIL_EMAIL'),
+            'password' => config('global.PARAM_PASSWORD_REQUIRED'),
+        ];
+
     }
 
 
