@@ -4,11 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\News;
-use App\Traits\Sanitize;
 
 class NewsRequest extends FormRequest
 {
-    use Sanitize;
 
     /**
      * Determine if the user is authorized to make this request.
