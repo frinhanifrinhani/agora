@@ -20,7 +20,7 @@ class Authenticate extends Middleware
         if ($this->auth->guard($guards[0])->guest()) {
             return response()->json(
                 [
-                    'message' => 'Not authorized'
+                    'error' => 'Not authorized'
                 ],
                 Response::HTTP_UNAUTHORIZED
             );
