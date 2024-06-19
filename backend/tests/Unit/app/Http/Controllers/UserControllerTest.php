@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\App\Http\Controllers;
 
-use Exception;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,8 +9,6 @@ use App\Services\UserService;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UserRequest;
-use Database\Factories\UserFactory;
-use Illuminate\Support\Facades\Factory;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -22,7 +19,7 @@ class UserControllerTest extends TestCase
 
     private $userController;
     private $userService;
-    private $user;
+    private $userFactory;
 
     public function setUp(): void
     {
@@ -30,7 +27,7 @@ class UserControllerTest extends TestCase
 
         $this->userService = $this->createMock(UserService::class);
         $this->userController = new UserController($this->userService);
-        $this->user = User::factory()->create();
+        $this->userFactory = User::factory()->create();
     }
 
 
@@ -38,7 +35,7 @@ class UserControllerTest extends TestCase
     {
         $request = new Request();
 
-        $data = $this->user;
+        $data = $this->userFactory;
 
         $this->userService
             ->expects($this->once())
@@ -69,8 +66,8 @@ class UserControllerTest extends TestCase
     public function testStoreSuccess()
     {
         $request = new UserRequest();
-        $userData = array($this->user);
-        $expectedResponse = new JsonResponse();
+        $userData = array($this->userFactory);
+        $expectedResponse = new JsonResponse('', Response::HTTP_CREATED);
 
         $request->request->add($userData);
 
@@ -82,14 +79,14 @@ class UserControllerTest extends TestCase
 
         $response = $this->userController->store($request);
 
-        $this->assertEquals($response->getStatusCode(),Response::HTTP_OK);
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_CREATED);
     }
 
     public function testUpdateSuccess()
     {
         $request = new UserRequest();
-        $userData = array($this->user);
-        $expectedResponse = new JsonResponse();
+        $userData = array($this->userFactory);
+        $expectedResponse = new JsonResponse('', Response::HTTP_CREATED);
 
         $request->request->add($userData);
 
@@ -99,35 +96,34 @@ class UserControllerTest extends TestCase
             ->with($request)
             ->willReturn($expectedResponse);
 
-        $response = $this->userController->update($request,$userData[0]['id']);
+        $response = $this->userController->update($request, $userData[0]['id']);
 
-        $this->assertEquals($response->getStatusCode(),Response::HTTP_OK);
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_CREATED);
     }
 
     public function testShowSuccess()
     {
-        $expectedResponse = new JsonResponse();
+        $expectedResponse = new JsonResponse('', Response::HTTP_OK);
 
         $this->userService
             ->expects($this->once())
             ->method('getUserById')
             ->willReturn($expectedResponse);
 
-        $response = $this->userController->show( $this->user->id);
-        $this->assertEquals($response->getStatusCode(),Response::HTTP_OK);
+        $response = $this->userController->show($this->userFactory->id);
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
     }
 
     public function testDestroySuccess()
     {
-        $expectedResponse = new JsonResponse();
+        $expectedResponse = new JsonResponse('', Response::HTTP_OK);
 
         $this->userService
             ->expects($this->once())
             ->method('deleteUser')
             ->willReturn($expectedResponse);
 
-        $response = $this->userController->destroy($this->user->id);
-        $this->assertEquals($response->getStatusCode(),Response::HTTP_OK);
+        $response = $this->userController->destroy($this->userFactory->id);
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
     }
-
 }
