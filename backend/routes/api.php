@@ -27,9 +27,9 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('user', UserController::class);
+    Route::resource('users', UserController::class);
     Route::prefix('user')->group(function () {
-        Route::get('/user-paginate', [NewsController::class, 'index']);
+        Route::get('/users-paginate', [NewsController::class, 'index']);
     });
 });
 

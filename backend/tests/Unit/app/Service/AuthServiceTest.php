@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\app\Http\Controllers;
+namespace Tests\Unit\app\Http\Services;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -13,7 +13,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AuthControllerTest extends TestCase
+class AuthServiceTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
