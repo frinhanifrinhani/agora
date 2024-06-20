@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\app\Http\Controllers;
 
+use Mockery;
 use Tests\TestCase;
 use App\Models\User;
 use App\Services\AuthService;
@@ -20,8 +21,8 @@ class AuthControllerTest extends TestCase
     protected $authController;
     protected $userRepository;
     protected $authService;
-    protected $userController ;
-    protected $userFactory;
+    protected $userController;
+    protected $user;
 
     public function setUp(): void
     {
@@ -29,14 +30,19 @@ class AuthControllerTest extends TestCase
 
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->authService = $this->createMock(AuthService::class);
-        $this->authController = new AuthController( $this->authService);
-        $this->userFactory = User::factory()->create();
+        $this->authController = new AuthController($this->authService);
+
+        $userMock = Mockery::mock(User::class);
+        $this->app->instance(User::class, $userMock);
+        $this->user = User::factory()->create();
+
     }
 
     public function testLoginSuccess()
     {
+
         $request = new AuthRequest();
-        $userData = array($this->userFactory);
+        $userData = array($this->user);
 
         $expectedResponse = new JsonResponse();
 
@@ -50,6 +56,53 @@ class AuthControllerTest extends TestCase
 
         $response = $this->authController->login($request);
 
-        $this->assertEquals($response->getStatusCode(),Response::HTTP_OK);
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+    }
+
+    public function testLogoutSuccess()
+    {
+        $expectedResponse = new JsonResponse();
+
+        $this->authService
+            ->expects($this->once())
+            ->method('logout')
+            ->willReturn($expectedResponse);
+
+        $response = $this->authController->logout();
+
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+    }
+
+    public function testLoginThrowsExceptionError()
+    {
+        $request = new AuthRequest();
+        $userData = [
+            "email" => "xxx@xxx.xx",
+            "password" => "xxx"
+        ];
+
+        $request->request->add($userData);
+
+        $this->authService
+            ->expects($this->once())
+            ->method('login')
+            ->with($request)
+            ->willThrowException(new \Exception());
+
+        $this->expectException(\Exception::class);
+
+        $this->authController->login($request);
+    }
+
+    public function testLogoutThrowsExceptionError()
+    {
+        $this->authService
+            ->expects($this->once())
+            ->method('logout')
+            ->willThrowException(new \Exception());
+
+        $this->expectException(\Exception::class);
+
+        $this->authController->logout();
     }
 }

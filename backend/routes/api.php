@@ -41,7 +41,3 @@ Route::controller(NewsController::class)->group(function () {
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
 
-
-Route::match(['post', 'patch', 'put', 'delete'], '{any}', function (Request $request) {
-    return response()->json(['message' => 'Method not allowed.'], 405);
-})->where('any', '.*');

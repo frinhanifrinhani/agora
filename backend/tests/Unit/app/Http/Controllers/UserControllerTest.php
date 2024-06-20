@@ -51,13 +51,12 @@ class UserControllerTest extends TestCase
     public function testIndexExceptionError()
     {
         $request = new Request();
-        $exception = new \Exception();
 
         $this->userService
             ->expects($this->once())
             ->method('getAllUsers')
             ->with($request)
-            ->willThrowException($exception);
+            ->willThrowException(new \Exception());
 
         $this->expectException(\Exception::class);
         $this->userController->index($request);
