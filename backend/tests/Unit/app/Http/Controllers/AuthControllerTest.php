@@ -20,7 +20,7 @@ class AuthControllerTest extends TestCase
     protected $authController;
     protected $userRepository;
     protected $authService;
-    protected $userController ;
+    protected $userController;
     protected $userFactory;
 
     public function setUp(): void
@@ -29,7 +29,7 @@ class AuthControllerTest extends TestCase
 
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->authService = $this->createMock(AuthService::class);
-        $this->authController = new AuthController( $this->authService);
+        $this->authController = new AuthController($this->authService);
         $this->userFactory = User::factory()->create();
     }
 
@@ -50,6 +50,53 @@ class AuthControllerTest extends TestCase
 
         $response = $this->authController->login($request);
 
-        $this->assertEquals($response->getStatusCode(),Response::HTTP_OK);
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+    }
+
+    public function testLogoutSuccess()
+    {
+        $expectedResponse = new JsonResponse();
+
+        $this->authService
+            ->expects($this->once())
+            ->method('logout')
+            ->willReturn($expectedResponse);
+
+        $response = $this->authController->logout();
+
+        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+    }
+
+    public function testLoginThrowsExceptionError()
+    {
+        $request = new AuthRequest();
+        $userData = [
+            "email" => "xxx@xxx.xx",
+            "password" => "xxx"
+        ];
+
+        $request->request->add($userData);
+
+        $this->authService
+            ->expects($this->once())
+            ->method('login')
+            ->with($request)
+            ->willThrowException(new \Exception());
+
+        $this->expectException(\Exception::class);
+
+        $this->authController->login($request);
+    }
+
+    public function testLogoutThrowsExceptionError()
+    {
+        $this->authService
+            ->expects($this->once())
+            ->method('logout')
+            ->willThrowException(new \Exception());
+
+        $this->expectException(\Exception::class);
+
+        $this->authController->logout();
     }
 }
