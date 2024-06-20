@@ -57,15 +57,7 @@ class UserService
             if ($e->getCode() == 23505) {
                 return response()->json(
                     [
-                        'error' => [
-                            'message' =>
-                            __(
-                                'messages.erro.duplicateError',
-                                [
-                                    'model' => 'User'
-                                ]
-                            )
-                        ]
+                        'error' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
                     ],
                     Response::HTTP_BAD_REQUEST
                 );

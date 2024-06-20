@@ -28,9 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('*')) {
                 return response()->json(
                     [
-                        'error' => [
-                            'message' => $e->getMessage()
-                        ]
+                        'error' =>  'A rota '.$request->server('REDIRECT_URL').' não foi encontrada.'
                     ],
                     Response::HTTP_NOT_FOUND
                 );
@@ -41,10 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json(
                 [
-                    'error' => [
-                        'message' => $e->getMessage(),
-                        'errors' => $e->errors()
-                    ]
+                    'error' => $e->errors()
                 ],
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );

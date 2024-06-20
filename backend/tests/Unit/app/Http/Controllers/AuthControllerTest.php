@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\app\Http\Controllers;
 
+use Mockery;
 use Tests\TestCase;
 use App\Models\User;
 use App\Services\AuthService;
@@ -21,7 +22,7 @@ class AuthControllerTest extends TestCase
     protected $userRepository;
     protected $authService;
     protected $userController;
-    protected $userFactory;
+    protected $user;
 
     public function setUp(): void
     {
@@ -30,13 +31,18 @@ class AuthControllerTest extends TestCase
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->authService = $this->createMock(AuthService::class);
         $this->authController = new AuthController($this->authService);
-        $this->userFactory = User::factory()->create();
+
+        $userMock = Mockery::mock(User::class);
+        $this->app->instance(User::class, $userMock);
+        $this->user = User::factory()->create();
+
     }
 
     public function testLoginSuccess()
     {
+
         $request = new AuthRequest();
-        $userData = array($this->userFactory);
+        $userData = array($this->user);
 
         $expectedResponse = new JsonResponse();
 
