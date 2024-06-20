@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\app\Http\Services;
 
+use Mockery;
 use Tests\TestCase;
 use App\Models\User;
 use App\Services\AuthService;
@@ -20,6 +21,7 @@ class AuthServiceTest extends TestCase
     protected $authController;
     protected $userRepository;
     protected $authService;
+    protected $user;
 
     public function setUp(): void
     {
@@ -27,15 +29,17 @@ class AuthServiceTest extends TestCase
 
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->authService = $this->createMock(AuthService::class);
-        $this->authController = new AuthController( $this->authService);
+        $this->authController = new AuthController($this->authService);
+
+        $userMock = Mockery::mock(User::class);
+        $this->app->instance(User::class, $userMock);
+        $this->user = User::factory()->create();
     }
 
     public function testLoginSuccess()
     {
-        $user = User::factory()->create();
-
         $response = $this->post('/api/login', [
-            'email' =>  $user->email,
+            'email' =>  $this->user->email,
             'password' => 'password',
         ]);
 
@@ -43,14 +47,14 @@ class AuthServiceTest extends TestCase
             ->assertJson([
                 'message' => 'Login realizado com suscesso!',
                 'user' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email
+                    'id' => $this->user->id,
+                    'name' => $this->user->name,
+                    'email' => $this->user->email
                 ],
                 'token' => $response->original['token']
             ]);
 
-        $this->assertAuthenticatedAs($user);
+        $this->assertAuthenticatedAs($this->user);
     }
 
 
@@ -180,8 +184,7 @@ class AuthServiceTest extends TestCase
 
     public function testLogoutSuccess()
     {
-        $user = User::factory()->create();
-        $token = $user->createToken('token')->plainTextToken;
+        $token = $this->user->createToken('token')->plainTextToken;
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)->post('/api/logout');
 
@@ -190,13 +193,11 @@ class AuthServiceTest extends TestCase
                 'message' => 'Logout realizado com sucesso!'
             ]);
 
-        $this->assertEmpty($user->tokens);
+        $this->assertEmpty($this->user->tokens);
     }
-
 
     public function testLogoutError()
     {
-        $user = User::factory()->create();
         $token = 'null';
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)->post('/api/logout');
@@ -206,6 +207,6 @@ class AuthServiceTest extends TestCase
                 'error' => 'Not authorized'
             ]);
 
-        $this->assertEmpty($user->tokens);
+        $this->assertEmpty($this->user->tokens);
     }
 }
