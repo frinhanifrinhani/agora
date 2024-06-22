@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Rules\ValidateCpf;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -37,6 +39,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $visible = [
+        'name',
+        'cpf',
+        'email',
+        'phone',
+        'status',
+        'role_id',
+        'email_verified_at',
+        'password',
+        'remember_token',
+        'updated_at',
+        'created_at',
+        'id',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -59,13 +76,12 @@ class User extends Authenticatable
     public static function rules(): array
     {
         return [
-            'name'          => 'required|string',
-            'cpf'           => 'required|string|max:11',
-            'email'         => 'required|email|max:100',
-            'phone'      => 'nullable|string',
-            'password'      => 'required|string|min:6|max:12',
-            'status'        => 'nullable|bool',
+            'name' => 'required|string',
+            'cpf' => ['required', new ValidateCpf],
+            'email' => 'required|email|max:100',
+            'phone' => 'nullable|string',
+            'password' => 'required|string|min:6|max:12',
+            'status' => 'nullable|bool',
         ];
     }
-
 }

@@ -27,4 +27,14 @@ class UserRequest extends FormRequest
     }
 
 
+    public function messages(){
+        return[
+            'name' => config('global.PARAM_NAME_REQUIRED'),
+            'cpf' => config('global.PARAM_CPF_REQUIRED'),
+            'email' => config('global.PARAM_EMAIL_REQUIRED'),
+            'password' => config('global.PARAM_PASSWORD_REQUIRED'),
+        ];
+
+    }
+
 }

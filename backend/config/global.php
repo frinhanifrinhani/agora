@@ -7,6 +7,6 @@ return [
     'PARAM_EMAIL_REQUIRED'=> 'O campo E-mail é obrigatório.',
     'PARAM_EMAIL_EMAIL'=>'O campo de E-mail deve ser um endereço de e-mail válido.',
     'PARAM_PASSWORD_REQUIRED'=> 'O campo Senha é obrigatório.',
-
-
+    'PARAM_NAME_REQUIRED'=> 'O campo Nome é obrigatório.',
+    'PARAM_CPF_REQUIRED'=> 'CPF inválido.',
 ];

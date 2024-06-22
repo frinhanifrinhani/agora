@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserService
 {
@@ -83,7 +84,15 @@ class UserService
                 ],
                 Response::HTTP_OK
             );
-        } catch (\Exception  $e) {
+        } catch (ModelNotFoundException $e){
+            return response()->json(
+                [
+                    'error'=>'Usuário não encontrado.'
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+
+        }catch (\Exception  $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -120,6 +129,15 @@ class UserService
             );
         } catch (\Exception $e) {
             DB::rollBack();
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
