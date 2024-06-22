@@ -28,7 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('*')) {
                 return response()->json(
                     [
-                        'error' =>  'A rota '.$request->server('REDIRECT_URL').' não foi encontrada.'
+                        'error' =>  'A rota não foi encontrada.'
                     ],
                     Response::HTTP_NOT_FOUND
                 );

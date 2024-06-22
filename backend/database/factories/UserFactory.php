@@ -15,7 +15,7 @@ class UserFactory extends Factory
     /**
      * The current password being used by the factory.
      */
-    protected static ?string $password;
+    protected static ?string $password = null;
 
     protected $model = User::class;
     /**
@@ -25,15 +25,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('pt_BR');
+        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
+
         return [
             'name' => fake()->name(),
-            'cpf' => '123456789',
+            'cpf' => $faker->cpf(false),
             'email' => fake()->unique()->safeEmail(),
             'phone' => '619969999',
             'status' => true,
+            'password' => '123456',
             'role_id' => 1,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
