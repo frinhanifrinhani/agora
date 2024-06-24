@@ -1,16 +1,14 @@
 <?php
 
-namespace Tests\Unit\app\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers;
 
-use Mockery;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Services\AuthService;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
-use App\Http\Requests\AuthRequest;
-use App\Repositories\UserRepository;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -18,91 +16,60 @@ class AuthControllerTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    protected $authController;
-    protected $userRepository;
-    protected $authService;
-    protected $userController;
+    protected AuthService $authService;
+    protected AuthController $authController;
     protected $user;
+    protected $token;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-
-        $this->userRepository = $this->createMock(UserRepository::class);
-        $this->authService = $this->createMock(AuthService::class);
+        $this->authService = $this->app->make(AuthService::class);
         $this->authController = new AuthController($this->authService);
 
-        $userMock = Mockery::mock(User::class);
-        $this->app->instance(User::class, $userMock);
         $this->user = User::factory()->create();
 
+        $this->token = $this->user->createToken('token')->plainTextToken;
     }
 
     public function testLoginSuccess()
     {
 
-        $request = new AuthRequest();
-        $userData = array($this->user);
+        $email=$this->user['email'];
+        $password='123456';
 
-        $expectedResponse = new JsonResponse();
+        $userData = ['email'=>$email ,'password'=>$password];
 
-        $request->request->add($userData);
+        $response = $this->post('/api/login', $userData);
 
-        $this->authService
-            ->expects($this->once())
-            ->method('login')
-            ->with($request)
-            ->willReturn($expectedResponse);
+        $response->assertStatus(Response::HTTP_OK);
 
-        $response = $this->authController->login($request);
+        $responseData = $response->json();
 
-        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Login realizado com suscesso!', $responseData['message']);
+
     }
 
     public function testLogoutSuccess()
     {
-        $expectedResponse = new JsonResponse();
+        $email=$this->user['email'];
+        $password='123456';
 
-        $this->authService
-            ->expects($this->once())
-            ->method('logout')
-            ->willReturn($expectedResponse);
+        $userData = ['email'=>$email ,'password'=>$password];
 
-        $response = $this->authController->logout();
+        $responseLogin = $this->post('/api/login', $userData);
 
-        $this->assertEquals($response->getStatusCode(), Response::HTTP_OK);
-    }
+        $response = $this->withHeader('Authorization', 'Bearer ' . $responseLogin['token'])->post('/api/logout');
 
-    public function testLoginThrowsExceptionError()
-    {
-        $request = new AuthRequest();
-        $userData = [
-            "email" => "xxx@xxx.xx",
-            "password" => "xxx"
-        ];
+        $response->assertStatus(Response::HTTP_OK);
 
-        $request->request->add($userData);
+        $responseData = $response->json();
 
-        $this->authService
-            ->expects($this->once())
-            ->method('login')
-            ->with($request)
-            ->willThrowException(new \Exception());
+        $this->assertNotEmpty($responseData);
 
-        $this->expectException(\Exception::class);
+        $this->assertEquals('Logout realizado com sucesso!', $responseData['message']);
 
-        $this->authController->login($request);
-    }
-
-    public function testLogoutThrowsExceptionError()
-    {
-        $this->authService
-            ->expects($this->once())
-            ->method('logout')
-            ->willThrowException(new \Exception());
-
-        $this->expectException(\Exception::class);
-
-        $this->authController->logout();
     }
 }
