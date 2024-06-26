@@ -1,8 +1,7 @@
 <template>
-
     <nav class="navbar navbar-expand bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="@/assets/images/logo_AgoraFiocruz.png" alt="Bootstrap" width="275" height="46">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +10,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://localhost:8000/home">Início</a>
+                        <a class="nav-link active" aria-current="page" href="/">Início</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">EFA 2030</a>
@@ -20,7 +19,7 @@
                         <a class="nav-link" href="https://solucoes.agora.fiocruz.br/" target="_blank">Soluções para Saúde</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:8000/noticia">Notícias</a>
+                        <a class="nav-link" href="/noticia">Notícias</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://redes.agora.fiocruz.br/" target="_blank">Redes</a>
@@ -50,5 +49,10 @@
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {
+      baseUrl: import.meta.env.VITE_BASE_URL,
+    };
+  }
 };
 </script>
