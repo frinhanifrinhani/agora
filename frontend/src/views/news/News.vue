@@ -15,14 +15,15 @@ export default {
 };
 </script>
 <style>
-.content {
-  height: inherit;
-  min-height: 580px;
-  width: 1080px;
-  margin: 0 auto;
-  margin-top: 1rem;
+
+.card {
+  height: 18rem!important;
+  width: 30rem;
 }
 
+.card .card-title{
+  height: 3.6rem;
+}
 .card .card-title a {
   color: #222222;
   text-decoration: none;
@@ -34,6 +35,7 @@ export default {
 .card .card-text {
   font-size: 12px;
   line-height: 1.42857143;
+  height: 8rem;
 }
 
 .card .fa-calendar-days,
@@ -44,6 +46,9 @@ export default {
 .card .card-info-area {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1rem;
+  
+  
 }
 
 .card .card-info-area .card-info {
@@ -57,5 +62,12 @@ export default {
   border-radius: 20px;
   color: #48773e;
   background-color: #48773e;
-}
+  padding: 0.2rem 1.6rem ;
+} 
+
+/* .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+} */
 </style>
