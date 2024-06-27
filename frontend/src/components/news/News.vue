@@ -39,10 +39,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -82,10 +79,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -124,10 +118,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -167,10 +158,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -209,10 +197,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -252,10 +237,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -294,10 +276,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
@@ -337,10 +316,7 @@
                     <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
                     <small> <i class="fas fa-comment"></i> 0 Comentário </small>
                   </div>
-                  <a
-                    class="btn btn-sm float-end"
-                    href="#"
-                  >
+                  <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>
                   </a>
                 </div>
