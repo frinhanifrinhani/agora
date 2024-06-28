@@ -2,39 +2,35 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\UserRepository;
+use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserService
+class CategoryService
 {
 
-    private UserRepository $userRepository;
+    private CategoryRepository $categoryRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    public function getAllUsers($request)
+    public function getAllCategories($request)
     {
-        return $this->userRepository->paginate($request->limit,$request->page);
+        return $this->categoryRepository->paginate($request->limit,$request->page);
     }
 
-    public function createUser($request): JsonResponse
+    public function createCategory($request): JsonResponse
     {
         try {
             DB::beginTransaction();
-            $userData = $request->validated();
+            $categoryData = $request->validated();
 
-            $userData['password'] = bcrypt($userData['password']);
-
-            $userData['role_id'] = 1;
-
-            $user = $this->userRepository->create($userData);
+            $category = $this->categoryRepository->create($categoryData);
 
             DB::commit();
             return response()->json(
@@ -43,26 +39,18 @@ class UserService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'User'
+                                'model' => 'Category'
                             ]
                         )
                     ],
                     'data' => [
-                        'user' => $user
+                        'category' => $category
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
             DB::rollBack();
-            if ($e->getCode() == 23505) {
-                return response()->json(
-                    [
-                        'error' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
 
             return response()->json(
                 [
@@ -73,21 +61,21 @@ class UserService
         }
     }
 
-    public function getUserById($id): JsonResponse
+    public function getCategoryById($id): JsonResponse
     {
         try {
-            $user = User::findOrFail($id);
+            $category = Category::findOrFail($id);
 
             return response()->json(
                 [
-                    'data' => $user
+                    'data' => $category
                 ],
                 Response::HTTP_OK
             );
         } catch (ModelNotFoundException $e){
             return response()->json(
                 [
-                    'error'=>'Usuário não encontrado.'
+                    'error'=>'Categoria não encontrada.'
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -102,12 +90,12 @@ class UserService
         }
     }
 
-    public function updateUser($request, $id): JsonResponse
+    public function updateCategory($request, $id): JsonResponse
     {
         try {
             DB::beginTransaction();
 
-            $userResponse = $this->userRepository->update($request->validated(), $id);
+            $categoryResponse = $this->categoryRepository->update($request->validated(), $id);
 
             DB::commit();
 
@@ -117,26 +105,18 @@ class UserService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'User'
+                                'model' => 'Category'
                             ]
                         )
                     ],
                     'data' => [
-                        'user' => $userResponse
+                        'category' => $categoryResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
             DB::rollBack();
-            if ($e->getCode() == 23505) {
-                return response()->json(
-                    [
-                        'error' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
 
             return response()->json(
                 [
@@ -147,10 +127,10 @@ class UserService
         }
     }
 
-    public function deleteUser($id): JsonResponse
+    public function deleteCategory($id): JsonResponse
     {
         try {
-            $this->userRepository->delete($id);
+            $this->categoryRepository->delete($id);
 
             return response()->json(
                 [
@@ -158,7 +138,7 @@ class UserService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'User'
+                                'model' => 'Category'
                             ]
                         )
                     ]

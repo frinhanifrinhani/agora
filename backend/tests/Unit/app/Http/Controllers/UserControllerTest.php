@@ -217,10 +217,10 @@ class UserControllerTest extends TestCase
             'remember_token' => Str::random(10),
         ];
 
-        $response = $this->put('/api/users/' . $userCreateResponse['object']['user']['id'], $userDataUpdate);
+        $response = $this->put('/api/users/' . $userCreateResponse['data']['user']['id'], $userDataUpdate);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/users/' . $userCreateResponse['object']['user']['id'], $userDataUpdate);
+            ->put('/api/users/' . $userCreateResponse['data']['user']['id'], $userDataUpdate);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -252,7 +252,7 @@ class UserControllerTest extends TestCase
 
         $userDataUpdate = [];
 
-        $response = $this->put('/api/users/' . $userCreateResponse['object']['user']['id'], $userDataUpdate);
+        $response = $this->put('/api/users/' . $userCreateResponse['data']['user']['id'], $userDataUpdate);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -314,7 +314,7 @@ class UserControllerTest extends TestCase
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/users/' . $userCreateResponse2['object']['user']['id'], $userDataUpdate);
+            ->put('/api/users/' . $userCreateResponse2['data']['user']['id'], $userDataUpdate);
 
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
