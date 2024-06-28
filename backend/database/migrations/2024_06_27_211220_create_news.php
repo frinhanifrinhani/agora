@@ -14,8 +14,21 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('news')->nullable();
-            $table->boolean('status');
+            $table->text('news_body');
+            $table->string('url')->unique();
+            $table->boolean('status')->default(true);
+            $table->date('publication_date');
+
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict');
+
+            $table->foreignId('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('restrict');
+
             $table->timestamps();
         });
     }
