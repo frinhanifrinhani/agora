@@ -9,4 +9,5 @@ return [
     'PARAM_PASSWORD_REQUIRED'=> 'O campo Senha é obrigatório.',
     'PARAM_NAME_REQUIRED'=> 'O campo Nome é obrigatório.',
     'PARAM_CPF_REQUIRED'=> 'CPF inválido.',
+    'PARAM_NAME_REQUIRED'=> 'O campo Nome é obrigatório.',
 ];

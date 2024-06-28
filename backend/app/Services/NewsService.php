@@ -20,7 +20,7 @@ class NewsService
 
     public function getAllNews($request)
     {
-        return $this->newsRepository->paginate($request->limit);
+        return $this->newsRepository->paginate($request->limit,$request->page);
     }
 
     public function createNews($request): JsonResponse
@@ -45,7 +45,7 @@ class NewsService
                             ]
                         )
                     ],
-                    'object' => [
+                    'data' => [
                         'news' => $news
                     ]
                 ],
@@ -87,7 +87,7 @@ class NewsService
 
             return response()->json(
                 [
-                    'object' => $news
+                    'data' => $news
                 ],
                 Response::HTTP_OK
             );
@@ -121,7 +121,7 @@ class NewsService
                             ]
                         )
                     ],
-                    'object' => [
+                    'data' => [
                         'news' => $newsResponse
                     ]
                 ],

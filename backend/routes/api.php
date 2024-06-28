@@ -2,11 +2,12 @@
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -28,9 +29,6 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
-    Route::prefix('user')->group(function () {
-        Route::get('/users-paginate', [NewsController::class, 'index']);
-    });
 });
 
 Route::controller(NewsController::class)->group(function () {
@@ -40,4 +38,11 @@ Route::controller(NewsController::class)->group(function () {
     Route::middleware('auth:sanctum')->put('/news/{id}', 'update');
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
+
+///Route::middleware(['auth:sanctum'])->group(function () {
+Route::controller(CategoryController::class)->group(function () {
+    Route::resource('categories', CategoryController::class);
+});
+
+
 
