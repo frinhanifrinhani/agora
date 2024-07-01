@@ -22,8 +22,7 @@ class Tag extends Model
     public static function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'tag' => 'required',
+            'name' => 'required|max:255'
         ];
     }
 

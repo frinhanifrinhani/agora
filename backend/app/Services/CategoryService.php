@@ -27,8 +27,9 @@ class CategoryService
     public function createCategory($request): JsonResponse
     {
         try {
-            DB::beginTransaction();
             $categoryData = $request->validated();
+
+            DB::beginTransaction();
 
             $category = $this->categoryRepository->create($categoryData);
 

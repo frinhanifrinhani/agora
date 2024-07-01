@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\TagRepository;
-use Illuminate\Http\JsonResponse;
+use App\Helpers\StringToUrl;
+use App\Models\Tag;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Models\Tag;
+use App\Repositories\TagRepository;
 
 class TagService
 {
@@ -26,11 +28,14 @@ class TagService
     public function createTag($request): JsonResponse
     {
         try {
-            DB::beginTransaction();
-
             $tagData = $request->validated();
 
-            $tagData['status'] = true;
+            $stringToUrl = new StringToUrl();
+            $tag = $stringToUrl->stringToUrl($tagData['name']);
+
+            $tagData['tag'] = $tag;
+
+            DB::beginTransaction();
 
             $tag = $this->tagRepository->create($tagData);
 
@@ -103,11 +108,18 @@ class TagService
 
     public function updateTag($request, $id)
     {
-
         try {
+
+            $tagData = $request->validated();
+
+            $stringToUrl = new StringToUrl();
+            $tag = $stringToUrl->stringToUrl($tagData['name']);
+
+            $tagData['tag'] = $tag;
+
             DB::beginTransaction();
 
-            $tagResponse = $this->tagRepository->update($request->validated(),$id);
+            $tagResponse = $this->tagRepository->update($tagData,$id);
 
             DB::commit();
 
@@ -128,6 +140,24 @@ class TagService
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => 'Tag'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -165,4 +195,6 @@ class TagService
             );
         }
     }
+
+
 }
