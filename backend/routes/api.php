@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
@@ -39,10 +40,12 @@ Route::controller(NewsController::class)->group(function () {
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
 
-///Route::middleware(['auth:sanctum'])->group(function () {
-Route::controller(CategoryController::class)->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('categories', CategoryController::class);
 });
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::resource('tags', TagController::class);
+});
 
 
