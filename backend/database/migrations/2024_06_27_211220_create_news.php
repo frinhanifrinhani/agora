@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('news_body');
-            $table->string('url')->unique();
+            $table->string('alias')->unique();
             $table->boolean('status')->default(true);
             $table->date('publication_date');
 

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Helpers\StringToUrl;
+use App\Helpers\MakeAlias;
 use App\Models\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -30,10 +30,10 @@ class TagService
         try {
             $tagData = $request->validated();
 
-            $stringToUrl = new StringToUrl();
-            $tag = $stringToUrl->stringToUrl($tagData['name']);
+            $stringToAlias = new MakeAlias();
+            $tagAlias = $stringToAlias->stringToAlias($tagData['name']);
 
-            $tagData['tag'] = $tag;
+            $tagData['alias'] = $tagAlias;
 
             DB::beginTransaction();
 
@@ -112,10 +112,10 @@ class TagService
 
             $tagData = $request->validated();
 
-            $stringToUrl = new StringToUrl();
-            $tag = $stringToUrl->stringToUrl($tagData['name']);
+            $stringToAlias = new MakeAlias();
+            $tagAlias = $stringToAlias->stringToAlias($tagData['name']);
 
-            $tagData['tag'] = $tag;
+            $tagData['alias'] = $tagAlias;
 
             DB::beginTransaction();
 

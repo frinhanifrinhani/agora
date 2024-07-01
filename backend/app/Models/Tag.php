@@ -11,7 +11,7 @@ class Tag extends Model
 
     protected $fillable = [
         'name',
-        'tag',
+        'alias',
     ];
 
     public static function defaultSortAttribute(): string

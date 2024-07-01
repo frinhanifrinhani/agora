@@ -4,9 +4,9 @@ namespace App\Helpers;
 
 use Illuminate\Support\Str;
 
-class StringToUrl
+class MakeAlias
 {
-    public function stringToUrl($string)
+    public function stringToAlias($string)
     {
         $treatedString = mb_strtolower($string, 'UTF-8');
 

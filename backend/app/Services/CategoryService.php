@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Category;
+use App\Helpers\MakeAlias;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,11 @@ class CategoryService
         try {
             $categoryData = $request->validated();
 
+            $stringToAlias = new MakeAlias();
+            $categoryAlias = $stringToAlias->stringToAlias($categoryData['name']);
+
+            $categoryData['alias'] = $categoryAlias;
+
             DB::beginTransaction();
 
             $category = $this->categoryRepository->create($categoryData);
@@ -52,6 +58,23 @@ class CategoryService
             );
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => 'Tag'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
 
             return response()->json(
                 [
@@ -94,9 +117,17 @@ class CategoryService
     public function updateCategory($request, $id): JsonResponse
     {
         try {
+
+            $categoryData = $request->validated();
+
+            $stringToAlias = new MakeAlias();
+            $categoryAlias = $stringToAlias->stringToAlias($categoryData['name']);
+
+            $categoryData['alias'] = $categoryAlias;
+
             DB::beginTransaction();
 
-            $categoryResponse = $this->categoryRepository->update($request->validated(), $id);
+            $categoryResponse = $this->categoryRepository->update($categoryData, $id);
 
             DB::commit();
 
@@ -118,6 +149,23 @@ class CategoryService
             );
         } catch (\Exception $e) {
             DB::rollBack();
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => 'Tag'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
 
             return response()->json(
                 [
