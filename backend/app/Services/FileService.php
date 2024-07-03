@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\FileRepository;
+use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
@@ -61,6 +62,41 @@ class FileService
             );
         } catch (\Exception $e) {
 
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function deleteFile($id)
+    {
+
+        try {
+            $file = $this->fileRepository->findOrFail($id);
+
+            $deleted = Storage::delete($file->full_path);
+
+            if ($deleted) {
+                $this->fileRepository->delete($id);
+
+                return response()->json(
+                    [
+                        'success' => [
+                            'message' => __(
+                                'messages.deleted',
+                                [
+                                    'model' => 'File'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_OK
+                );
+            }
+        } catch (\Exception $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]

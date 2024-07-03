@@ -27,4 +27,9 @@ class FileController extends Controller
         return $this->fileService->createFile($request,'file');
     }
 
+    public function destroy(int $id): JsonResponse
+    {
+        return $this->fileService->deleteFile($id);
+    }
+
 }
