@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Arquivo;
+use App\Models\File;
 
-class ArquivoRequest extends FormRequest
+class FileRequest extends FormRequest
 {
 
     /**
@@ -23,7 +23,7 @@ class ArquivoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Arquivo::rules();
+        return File::rules();
     }
 
     public function messages(){

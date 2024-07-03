@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Arquivo;
+use App\Models\File;
 
-class ArquivoRepository extends BaseRepository
+class FileRepository extends BaseRepository
 {
     /**
      * @inheritDoc
      */
     public function getFieldsSearchable()
     {
-        return Arquivo::searchable();
+        return File::searchable();
     }
 
     /**
@@ -19,7 +19,7 @@ class ArquivoRepository extends BaseRepository
      */
     public function model()
     {
-        return Arquivo::class;
+        return File::class;
     }
 
     public function findOrFail($id)

@@ -2,43 +2,43 @@
 
 namespace App\Services;
 
-use App\Models\Arquivo;
+use App\Models\File;
 use App\Helpers\MakeAlias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\ArquivoRepository;
+use App\Repositories\FileRepository;
 
-class ArquivoService
+class FileService
 {
     use MakeAlias;
 
-    private ArquivoRepository $arquivoRepository;
+    private FileRepository $fileRepository;
 
-    public function __construct(ArquivoRepository $arquivoRepository)
+    public function __construct(FileRepository $fileRepository)
     {
-        $this->arquivoRepository = $arquivoRepository;
+        $this->fileRepository = $fileRepository;
     }
 
-    public function getAllArquivo($request)
+    public function getAllFile($request)
     {
-        return $this->arquivoRepository->paginate($request->limit, $request->page);
+        return $this->fileRepository->paginate($request->limit, $request->page);
     }
 
-    public function createArquivo($request, $type): JsonResponse
+    public function createFile($request, $type): JsonResponse
     {
 
         try {
 
             $fileData = $request->validated();
 
-            $fileData = $this->uploadArquivo($request->file('file'), $type);
+            $fileData = $this->uploadFile($request->file('file'), $type);
 
             if ($fileData) {
                 DB::beginTransaction();
 
-                $arquivo = $this->arquivoRepository->create($fileData);
+                $file = $this->fileRepository->create($fileData);
 
                 DB::commit();
             }
@@ -49,12 +49,12 @@ class ArquivoService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Arquivo'
+                                'model' => 'File'
                             ]
                         )
                     ],
                     'data' => [
-                        'arquivo' => $arquivo
+                        'file' => $file
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -70,7 +70,7 @@ class ArquivoService
         }
     }
 
-    public function uploadArquivo($fileRequest, $type)
+    public function uploadFile($fileRequest, $type)
     {
 
         try {
