@@ -10,4 +10,5 @@ return [
     'PARAM_NAME_REQUIRED'=> 'O campo Nome é obrigatório.',
     'PARAM_CPF_REQUIRED'=> 'CPF inválido.',
     'PARAM_NAME_REQUIRED'=> 'O campo Nome é obrigatório.',
+    'PARAM_FILE_REQUIRED'=> 'O campo Arquivo é obrigatório.',
 ];
