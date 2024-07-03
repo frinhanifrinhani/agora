@@ -5,15 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class Arquivo extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'news',
-        'alias',
-        'status'
+        'name',
+        'path',
+        'full_path',
+        'file',
+        'type',
+        'size',
+        'extension'
     ];
 
     public static function defaultSortAttribute(): string
@@ -24,8 +27,8 @@ class News extends Model
     public static function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'news' => 'required|string',
+            'name' => 'required|max:255',
+            'file' => 'required',
         ];
     }
 

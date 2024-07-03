@@ -27,12 +27,13 @@ class UserService
     public function createUser($request): JsonResponse
     {
         try {
-            DB::beginTransaction();
             $userData = $request->validated();
 
             $userData['password'] = bcrypt($userData['password']);
 
             $userData['role_id'] = 1;
+
+            DB::beginTransaction();
 
             $user = $this->userRepository->create($userData);
 

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('news_history', function (Blueprint $table) {
-            $table->increments('id');
+
             $table->enum('action', ['create', 'update', 'status_true','status_false', 'publish','unpublish']);
 
             $table->foreignId('user_id')

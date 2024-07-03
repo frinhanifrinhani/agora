@@ -1,12 +1,13 @@
 <?php
 
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ArquivoController;
 use App\Http\Controllers\CategoryController;
 
 // Route::get('/user', function (Request $request) {
@@ -27,10 +28,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware('auth:sanctum')->post('/logout', 'logout');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('users', UserController::class);
-});
-
 Route::controller(NewsController::class)->group(function () {
     Route::get('/news', 'index');
     Route::get('/news/{id}', 'show');
@@ -39,10 +36,19 @@ Route::controller(NewsController::class)->group(function () {
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
 
-///Route::middleware(['auth:sanctum'])->group(function () {
-Route::controller(CategoryController::class)->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
+    Route::resource('tags', TagController::class);
+
+    Route::controller(ArquivoController::class)->group(function () {
+        Route::post('/images', 'images');
+        Route::post('/files', 'files');
+    });
+
 });
+
+
 
 
 

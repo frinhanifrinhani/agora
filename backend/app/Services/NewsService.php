@@ -26,11 +26,11 @@ class NewsService
     public function createNews($request): JsonResponse
     {
         try {
-            DB::beginTransaction();
-
             $newsData = $request->validated();
 
             $newsData['status'] = true;
+
+            DB::beginTransaction();
 
             $news = $this->newsRepository->create($newsData);
 

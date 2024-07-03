@@ -2,43 +2,43 @@
 
 namespace App\Services;
 
-use App\Models\Category;
+use App\Models\Tag;
 use App\Helpers\MakeAlias;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\CategoryRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Repositories\TagRepository;
 
-class CategoryService
+class TagService
 {
-
     use MakeAlias;
 
-    private CategoryRepository $categoryRepository;
+    private TagRepository $tagRepository;
 
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(TagRepository $tagRepository)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->tagRepository = $tagRepository;
     }
 
-    public function getAllCategories($request)
+    public function getAllTag($request)
     {
-        return $this->categoryRepository->paginate($request->limit,$request->page);
+        return $this->tagRepository->paginate($request->limit,$request->page);
     }
 
-    public function createCategory($request): JsonResponse
+    public function createTag($request): JsonResponse
     {
         try {
-            $categoryData = $request->validated();
+            $tagData = $request->validated();
 
-            $categoryAlias = $this->stringToAlias($categoryData['name']);
+            $tagAlias = $this->stringToAlias($tagData['name']);
 
-            $categoryData['alias'] = $categoryAlias;
+            $tagData['alias'] = $tagAlias;
 
             DB::beginTransaction();
 
-            $category = $this->categoryRepository->create($categoryData);
+            $tag = $this->tagRepository->create($tagData);
 
             DB::commit();
             return response()->json(
@@ -47,18 +47,17 @@ class CategoryService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Category'
+                                'model' => 'Tag'
                             ]
                         )
                     ],
                     'data' => [
-                        'category' => $category
+                        'tag' => $tag
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
-            DB::rollBack();
 
             if ($e->getCode() == 23505) {
                 return response()->json(
@@ -86,26 +85,19 @@ class CategoryService
         }
     }
 
-    public function getCategoryById($id): JsonResponse
+    public function getTagById($id)
     {
+
         try {
-            $category = Category::findOrFail($id);
+            $tag = Tag::findOrFail($id);
 
             return response()->json(
                 [
-                    'data' => $category
+                    'data' => $tag
                 ],
                 Response::HTTP_OK
             );
-        } catch (ModelNotFoundException $e){
-            return response()->json(
-                [
-                    'error'=>'Categoria não encontrada.'
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-
-        }catch (\Exception  $e) {
+        } catch (\Exception  $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -115,19 +107,19 @@ class CategoryService
         }
     }
 
-    public function updateCategory($request, $id): JsonResponse
+    public function updateTag($request, $id)
     {
         try {
 
-            $categoryData = $request->validated();
+            $tagData = $request->validated();
 
-            $categoryAlias = $this->stringToAlias($categoryData['name']);
+            $tagAlias = $this->stringToAlias($tagData['name']);
 
-            $categoryData['alias'] = $categoryAlias;
+            $tagData['alias'] = $tagAlias;
 
             DB::beginTransaction();
 
-            $categoryResponse = $this->categoryRepository->update($categoryData, $id);
+            $tagResponse = $this->tagRepository->update($tagData,$id);
 
             DB::commit();
 
@@ -137,18 +129,17 @@ class CategoryService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Category'
+                                'model' => 'Tag'
                             ]
                         )
                     ],
                     'data' => [
-                        'category' => $categoryResponse
+                        'tag' => $tagResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
-            DB::rollBack();
 
             if ($e->getCode() == 23505) {
                 return response()->json(
@@ -176,10 +167,11 @@ class CategoryService
         }
     }
 
-    public function deleteCategory($id): JsonResponse
+    public function deleteTag($id)
     {
         try {
-            $this->categoryRepository->delete($id);
+
+            $this->tagRepository->delete($id);
 
             return response()->json(
                 [
@@ -187,7 +179,7 @@ class CategoryService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Category'
+                                'model' => 'Tag'
                             ]
                         )
                     ]
@@ -203,4 +195,6 @@ class CategoryService
             );
         }
     }
+
+
 }
