@@ -21,7 +21,7 @@ class FileService
         $this->fileRepository = $fileRepository;
     }
 
-    public function getAllFile($request)
+    public function getAllFiles($request)
     {
         return $this->fileRepository->paginate($request->limit, $request->page);
     }
