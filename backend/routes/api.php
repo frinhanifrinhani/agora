@@ -7,7 +7,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ArquivoController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\CategoryController;
 
 // Route::get('/user', function (Request $request) {
@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
 
-    Route::controller(ArquivoController::class)->group(function () {
+    Route::controller(FileController::class)->group(function () {
         Route::post('/images', 'images');
         Route::post('/files', 'files');
     });

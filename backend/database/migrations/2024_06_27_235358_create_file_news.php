@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('arquivos_news', function (Blueprint $table) {
-            $table->foreignId('arquivo_id')->constrained()->onDelete('restrict');
+        Schema::create('files_news', function (Blueprint $table) {
+            $table->foreignId('file_id')->constrained()->onDelete('restrict');
             $table->foreignId('news_id')->constrained()->onDelete('restrict');
             $table->timestamps();
         });
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('arquivos_news');
+        Schema::dropIfExists('files_news');
     }
 };
