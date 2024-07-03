@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Helpers\MakeAlias;
 use App\Models\Tag;
+use App\Helpers\MakeAlias;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,6 +13,8 @@ use App\Repositories\TagRepository;
 
 class TagService
 {
+    use MakeAlias;
+
     private TagRepository $tagRepository;
 
     public function __construct(TagRepository $tagRepository)
@@ -30,8 +32,7 @@ class TagService
         try {
             $tagData = $request->validated();
 
-            $stringToAlias = new MakeAlias();
-            $tagAlias = $stringToAlias->stringToAlias($tagData['name']);
+            $tagAlias = $this->stringToAlias($tagData['name']);
 
             $tagData['alias'] = $tagAlias;
 
@@ -112,8 +113,7 @@ class TagService
 
             $tagData = $request->validated();
 
-            $stringToAlias = new MakeAlias();
-            $tagAlias = $stringToAlias->stringToAlias($tagData['name']);
+            $tagAlias = $this->stringToAlias($tagData['name']);
 
             $tagData['alias'] = $tagAlias;
 

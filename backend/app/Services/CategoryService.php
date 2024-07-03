@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class CategoryService
 {
 
+    use MakeAlias;
+
     private CategoryRepository $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository)
@@ -30,8 +32,7 @@ class CategoryService
         try {
             $categoryData = $request->validated();
 
-            $stringToAlias = new MakeAlias();
-            $categoryAlias = $stringToAlias->stringToAlias($categoryData['name']);
+            $categoryAlias = $this->stringToAlias($categoryData['name']);
 
             $categoryData['alias'] = $categoryAlias;
 
@@ -120,8 +121,7 @@ class CategoryService
 
             $categoryData = $request->validated();
 
-            $stringToAlias = new MakeAlias();
-            $categoryAlias = $stringToAlias->stringToAlias($categoryData['name']);
+            $categoryAlias = $this->stringToAlias($categoryData['name']);
 
             $categoryData['alias'] = $categoryAlias;
 

@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Str;
 
-class MakeAlias
+trait MakeAlias
 {
     public function stringToAlias($string)
     {
