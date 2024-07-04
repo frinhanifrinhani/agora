@@ -2,6 +2,7 @@
   <Header />
   <Content />
   <Footer />
+ 
 </template>
 
 <script>
@@ -14,7 +15,7 @@ export default {
   components:{
     Header,
     Content,
-    Footer
+    Footer,
   }
 }
 </script>

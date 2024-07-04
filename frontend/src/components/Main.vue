@@ -74,8 +74,10 @@
                 <div class="pb-4"><img src="@/assets/images/cxredes.png" width="150" height="150" alt=""></div>
                 <div>
                     <p class="h5" style="color: #34AB44;"><strong>APLICATIVOS</strong></p>
-                    <p style="color: #888888;">Catálogo de aplicativos para melhoria do teletrabalho e conexões entre
-                        as pessoas e a sociedade.</p>
+                    <p style="color: #888888;">
+                        Catálogo de aplicativos para melhoria do teletrabalho e conexões entre
+                        as pessoas e a sociedade.
+                    </p>
                 </div>
             </div>
             <div class="p-4 text-center">
@@ -84,23 +86,28 @@
                     <p class="h5" style="color: #34AB44;"><strong>FEIRA DE SOLUÇÕES</strong></p>
                     <p style="color: #888888; line-height: 1.42857143; font-size: 14px;">As Feiras de Soluções para a Saúde possuem um
                         formato inovador de apresentar soluções industriais,
-                        sociais e de serviços para a saúde.</p>
+                        sociais e de serviços para a saúde.
+                    </p>
                 </div>
             </div>
             <div class="p-4 text-center">
                 <div class="pb-4"><img src="@/assets/images/cxnoticias-300x300.png" width="150" height="150" alt=""></div>
                 <div>
                     <p class="h5" style="color: #34AB44;"><strong>NOTÍCIAS</strong></p>
-                    <p style="color: #888888; line-height: 1.42857143; font-size: 14px;">No Blog Ágora você encontra notícias, textos autorais, entrevistas, artigos,
-                        tutoriais e links sobre saúde, ciência, tecnologia e a Agenda 2030.</p>
+                    <p style="color: #888888; line-height: 1.42857143; font-size: 14px;">
+                        No Blog Ágora você encontra notícias, textos autorais, entrevistas, artigos,
+                        tutoriais e links sobre saúde, ciência, tecnologia e a Agenda 2030.
+                    </p>
                 </div>
             </div>
             <div class="p-4 text-center">
                 <div class="pb-4"><img src="@/assets/images/cxeventos-300x300.png" width="150" height="150" alt=""></div>
                 <div>
                     <p class="h5" style="color: #34AB44;"><strong>EVENTOS</strong></p>
-                    <p style="color: #888888; line-height: 1.42857143; font-size: 14px;">Eventos são importantes para fomentar o debate e as trocas de experiência.
-                        Fique por dentro da agenda de eventos da saúde.</p>
+                    <p style="color: #888888; line-height: 1.42857143; font-size: 14px;">
+                        Eventos são importantes para fomentar o debate e as trocas de experiência.
+                        Fique por dentro da agenda de eventos da saúde.
+                    </p>
                 </div>
             </div>
         </div>
