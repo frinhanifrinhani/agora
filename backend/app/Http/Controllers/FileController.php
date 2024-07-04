@@ -17,14 +17,34 @@ class FileController extends Controller
         $this->fileService = $fileService;
     }
 
-    public function images(FileRequest $request)
+    public function files(Request $request)
+    {
+        return $this->fileService->getAllFiles($request,'file');
+    }
+
+    public function images(Request $request)
+    {
+        return $this->fileService->getAllFiles($request,'image');
+    }
+
+    public function creteImage(FileRequest $request)
     {
         return $this->fileService->createFile($request,'image');
     }
 
-    public function files(FileRequest $request)
+    public function creteFile(FileRequest $request)
     {
         return $this->fileService->createFile($request,'file');
+    }
+
+    public function show(int $id)
+    {
+        return $this->fileService->getFileById($id);
+    }
+
+    public function destroy(int $id): JsonResponse
+    {
+        return $this->fileService->deleteFile($id);
     }
 
 }

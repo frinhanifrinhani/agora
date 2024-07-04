@@ -68,9 +68,13 @@ abstract class BaseRepository
      * @param array $columns
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function paginate($limit, $page)
+    public function paginate($limit, $page,$type)
     {
         $query = $this->allQuery();
+
+        if ($type) {
+            $query->where('type', $type);
+        }
 
         return $query->orderBy('id', 'desc')->paginate($limit,['*'],'page', $page);
     }

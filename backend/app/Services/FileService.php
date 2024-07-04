@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\FileRepository;
+use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
@@ -21,9 +22,9 @@ class FileService
         $this->fileRepository = $fileRepository;
     }
 
-    public function getAllFile($request)
+    public function getAllFiles($request,$type)
     {
-        return $this->fileRepository->paginate($request->limit, $request->page);
+        return $this->fileRepository->paginate($request->limit, $request->page,$type);
     }
 
     public function createFile($request, $type): JsonResponse
@@ -61,6 +62,63 @@ class FileService
             );
         } catch (\Exception $e) {
 
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function getFileById($id)
+    {
+
+        try {
+            $file = File::findOrFail($id);
+
+            return response()->json(
+                [
+                    'data' => $file
+                ],
+                Response::HTTP_OK
+            );
+        } catch (\Exception  $e) {
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function deleteFile($id)
+    {
+
+        try {
+            $file = $this->fileRepository->findOrFail($id);
+
+            $deleted = Storage::delete($file->full_path);
+
+            if ($deleted) {
+                $this->fileRepository->delete($id);
+
+                return response()->json(
+                    [
+                        'success' => [
+                            'message' => __(
+                                'messages.deleted',
+                                [
+                                    'model' => 'File'
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_OK
+                );
+            }
+        } catch (\Exception $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
