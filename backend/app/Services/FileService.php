@@ -22,9 +22,9 @@ class FileService
         $this->fileRepository = $fileRepository;
     }
 
-    public function getAllFiles($request)
+    public function getAllFiles($request,$type)
     {
-        return $this->fileRepository->paginate($request->limit, $request->page);
+        return $this->fileRepository->paginate($request->limit, $request->page,$type);
     }
 
     public function createFile($request, $type): JsonResponse
@@ -62,6 +62,28 @@ class FileService
             );
         } catch (\Exception $e) {
 
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function getFileById($id)
+    {
+
+        try {
+            $file = File::findOrFail($id);
+
+            return response()->json(
+                [
+                    'data' => $file
+                ],
+                Response::HTTP_OK
+            );
+        } catch (\Exception  $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]

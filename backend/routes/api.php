@@ -10,10 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CategoryController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
 Route::get('/check-db-connection', function () {
     try {
         DB::connection()->getPdo();
@@ -42,8 +38,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('tags', TagController::class);
 
     Route::controller(FileController::class)->group(function () {
-        Route::post('/images', 'images');
-        Route::post('/files', 'files');
+        //create
+        Route::post('/images', 'creteImage');
+        Route::post('/files', 'creteFile');
+        //return all
+        Route::get('/images', 'images');
+        Route::get('/files', 'files');
+        //get by id
+        Route::get('/images/{id}', 'show');
+        Route::get('/files/{id}', 'show');
+        // delete
+        Route::delete('/files/{id}', 'destroy');
     });
 
 });
