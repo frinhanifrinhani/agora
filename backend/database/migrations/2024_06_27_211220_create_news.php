@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->text('news_body');
+            $table->text('body');
             $table->string('alias')->unique();
-            $table->boolean('status')->default(true);
-            $table->date('publication_date');
+            $table->boolean('publicated')->default(false);
+            $table->date('publication_date')->nullable();
 
             $table->foreignId('user_id')
                 ->references('id')

@@ -30,7 +30,7 @@ class NewsRequest extends FormRequest
         return[
             'title' => config('global.PARAM_TITLE_REQUIRED'),
             'title' => config('global.PARAM_TITLE_MAX'),
-            'news' => config('global.PARAM_NEWS_REQUIRED'),
+            'body' => config('global.PARAM_BODY_REQUIRED'),
         ];
 
     }

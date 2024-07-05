@@ -51,6 +51,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/files/{id}', 'destroy');
     });
 
+    Route::controller(NewsController::class)->group(function () {
+        Route::resource('news', NewsController::class);
+    });
+
+
 });
 
 

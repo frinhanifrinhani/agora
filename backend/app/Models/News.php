@@ -11,9 +11,13 @@ class News extends Model
 
     protected $fillable = [
         'title',
-        'news',
+        'body',
         'alias',
-        'status'
+        'status',
+        'publicated',
+        'user_id',
+        'category_id',
+        'publication_date'
     ];
 
     public static function defaultSortAttribute(): string
@@ -25,8 +29,21 @@ class News extends Model
     {
         return [
             'title' => 'required|max:255',
-            'news' => 'required|string',
+            'body' => 'required|string',
+            'publicated' => '',
+            'category_id' => '',
         ];
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 
 }
