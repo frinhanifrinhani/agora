@@ -37,7 +37,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:5174/sobre">Sobre</a>
+                        <a class="nav-link" href="/sobre">Sobre</a>
                     </li>
                 </ul>
             </div>
