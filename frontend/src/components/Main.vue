@@ -113,7 +113,7 @@
         </div>
     </div>
     <div class="row justify-content-center pb-5">
-        <div class="col-md-8 background-container">
+        <div class="col-md-12 background-container">
             <div class="row w-100">
                 <div class="col-md-6 d-flex justify-content-end align-items-center">
                     <img src="@/assets/images/cxredes.png" class="foreground-image" width="400" height="400" alt="">
@@ -134,39 +134,39 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center pb-5" style="background-color: #EFCD21;">
+    <div class="row justify-content-center pb-4" style="background-color: #EFCD21;">
         <div class="col-md-8 align-items-center">
             <div class="p-4 text-center">
                 <p class="h2" style="color: #9b51e0;">EVENTOS</p>
             </div>
         </div>
     </div>
-    <div class="row justify-content-center pb-5" style="background-color: #EFCD21;">
-        <div class="col-md-8 pb-5">
+    <div class="row justify-content-center pb-3" style="background-color: #EFCD21;">
+        <div class="col-md-8">
             <div class="text-center">
                 <a class="btn" style="background-color: #fff; border-color: #48773E; border-radius: 20px; color: #48773E;" href="#">
                     TODOS
                 </a>
-                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
+                <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">2030 AGENDA</span>
                 </a>
-                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
+                <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">ENCONTRO</span>
                 </a>
-                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
+                <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">FEIRA</span>
                 </a>
-                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
+                <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">OFICINA</span>
                 </a>
-                <a class="btn" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
+                <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
                     <span class="text-white">MAIS</span>
                 </a>
             </div>
-  
+
             <div class="col-md-12 d-flex justify-content-center align-items-start">
                 <div class="p-4">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card pb-4" style="width: 18rem; height: auto !important;">
                     <img src="@/assets/images/cxplanejamento-urbano.jpeg" class="card-img-top" alt="">
                         <div class="card-body">
                             <h5 class="card-title">
@@ -180,9 +180,11 @@
                                     <strong>Planejamento Urbano e Segurança Hídrica</strong>
                                 </a>
                             </h5>
-                            <div>
-                                <span class="badge text-bg-success">PALESTRA</span>
-                                <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 11/02/2020</small>
+                            <div class="card-info-area">
+                                <div class="card-info">
+                                    <span class="badge text-bg-success">PALESTRA</span>
+                                    <small> <i class="fas fa-calendar-alt"></i> 11/02/2020</small>
+                                </div>                                
                             </div>
                             <div>
                                 <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
@@ -191,53 +193,71 @@
                     </div>
                 </div>
                 <div class="p-4">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card pb-4" style="width: 18rem; height: auto !important;">
                     <img src="@/assets/images/cxlogos.jpg" class="card-img-top" alt="">
                         <div class="card-body">
-                            <h5 class="card-title">
-                            <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
-                                target="_blank" rel="noopener noreferrer"
-                                style="color: #222222;
-                                    text-decoration: none;
-                                    font-size: 19px;
-                                    line-height: 1.4;
-                                    font-weight: 700;">
-                                <strong>3º Ciclo de Debates – Manaus</strong>
-                            </a>
-                            </h5>
-                            <span class="badge text-bg-success">ENCONTRO</span>
-                            <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 02/09/2019</small>
-                            <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde
-                                convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade.
-                                Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII
-                                Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde,
-                                Ambiente e Sustentabilidade com o objetivo...</p>
+                            <div>
+                                <h5 class="card-title">
+                                    <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
+                                        target="_blank" rel="noopener noreferrer"
+                                        style="color: #222222;
+                                            text-decoration: none;
+                                            font-size: 19px;
+                                            line-height: 1.4;
+                                            font-weight: 700;">
+                                        <strong>3º Ciclo de Debates – Manaus</strong>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="card-info-area">
+                                <div class="card-info">
+                                    <span class="badge text-bg-success">ENCONTRO</span>
+                                    <small> <i class="fas fa-calendar-alt"></i> 02/09/2019</small>
+                                </div>                                
+                            </div>
+                            <div>
+                                <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde
+                                    convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade.
+                                    Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII
+                                    Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde,
+                                    Ambiente e Sustentabilidade com o objetivo...
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="p-4">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card pb-4" style="width: 18rem; height: auto !important;">
                         <img src="@/assets/images/cxexperiencias-ciencia.jpg" class="card-img-top" alt="">
                         <div class="card-body">
-                            <h5 class="card-title">
-                            <a href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                                target="_blank" rel="noopener noreferrer"
-                                style="color: #222222;
-                                    text-decoration: none;
-                                    font-size: 19px;
-                                    line-height: 1.4;
-                                    font-weight: 700;">
-                                <strong>Experiências de Ciência Cidadã para Biodiversidade e Saúde</strong>
-                            </a>
-                            </h5>
-                            <span class="badge text-bg-success">SEMINÁRIO</span>
-                            <i class="fas fa-calendar-alt pb-3" style="color: #48773E;"></i><small> 30/11/2018</small>
-                            <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
-                                Descrição O seminário visa abordar oportunidades e desafios em
-                                projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que
-                                tenham relação com esta temática. O enfoque será dado tanto em projetos
-                                voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda
-                                em resultados de pesquisas com dados advindos desta prática. Para se...</p>
+                            <div class="pb-3">
+                                <h5 class="card-title">
+                                    <a href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
+                                        target="_blank" rel="noopener noreferrer"
+                                        style="color: #222222;
+                                            text-decoration: none;
+                                            font-size: 19px;
+                                            line-height: 1.4;
+                                            font-weight: 700;">
+                                        <strong>Experiências de Ciência Cidadã para Biodiversidade e Saúde</strong>
+                                    </a>
+                                </h5>
+                            </div>
+                            <div class="card-info-area">
+                                <div class="card-info">
+                                    <span class="badge text-bg-success">SEMINÁRIO</span>
+                                    <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
+                                </div>                                
+                            </div>
+                            <div>
+                                <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
+                                    Descrição O seminário visa abordar oportunidades e desafios em
+                                    projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que
+                                    tenham relação com esta temática. O enfoque será dado tanto em projetos
+                                    voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda
+                                    em resultados de pesquisas com dados advindos desta prática. Para se...
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
