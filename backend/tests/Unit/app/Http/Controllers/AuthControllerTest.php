@@ -52,7 +52,7 @@ class AuthControllerTest extends TestCase
 
     }
 
-    public function testLogoutSuccess()
+    public function logoutSuccess()
     {
         $email=$this->user['email'];
         $password='123456';

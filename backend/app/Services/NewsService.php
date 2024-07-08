@@ -28,7 +28,7 @@ class NewsService
 
     public function getAllNews($request)
     {
-        return $this->newsRepository->paginate($request->limit,$request->page);
+        return $this->newsRepository->paginate($request->limit, $request->page);
     }
 
     public function createNews($request): JsonResponse
@@ -36,8 +36,8 @@ class NewsService
         try {
             $newsData = $request->validated();
 
-            if($newsData['publicated']){
-                $newsData['publication_date'] =$this->getNow();
+            if ($newsData['publicated']) {
+                $newsData['publication_date'] = $this->getNow();
             }
 
             $newsAlias = $this->stringToAlias($newsData['title']);
@@ -122,7 +122,14 @@ class NewsService
         try {
             DB::beginTransaction();
 
-            $newsResponse = $this->newsRepository->update($request->validated(),$id);
+            $newsData = $request->validated();
+
+            $newsAlias = $this->stringToAlias($newsData['title']);
+
+            $newsData['alias'] = $newsAlias;
+            $newsData['user_id'] = auth()->id();
+
+            $newsResponse = $this->newsRepository->update($newsData, $id);
 
             DB::commit();
 
