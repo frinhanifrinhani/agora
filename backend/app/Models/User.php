@@ -4,8 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Helpers\DateHelper;
 use App\Helpers\ValidateCpf;
-use App\Rules\ValidateCpf as RulesValidateCpf;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, DateHelper;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +29,7 @@ class User extends Authenticatable
         'status',
         'role_id',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -66,6 +67,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
     }
 
 

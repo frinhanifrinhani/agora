@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Helpers\DateHelper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class File extends Model
 {
-    use HasFactory;
+    use HasFactory, DateHelper;
 
     protected $fillable = [
         'name',
@@ -32,4 +33,13 @@ class File extends Model
         ];
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
 }

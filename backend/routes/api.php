@@ -24,6 +24,20 @@ Route::controller(AuthController::class)->group(function () {
     Route::middleware('auth:sanctum')->post('/logout', 'logout');
 });
 
+Route::controller(FileController::class)->group(function () {
+    //return all
+    Route::get('/images', 'images');
+    Route::get('/files', 'files');
+    //get by id
+    Route::get('/images/{id}', 'show');
+    Route::get('/files/{id}', 'show');
+    //create
+    Route::middleware('auth:sanctum')->post('/images', 'creteImage');
+    Route::middleware('auth:sanctum')->post('/files', 'creteFile');
+    // delete
+    Route::middleware('auth:sanctum')->delete('/files/{id}', 'destroy');
+});
+
 Route::controller(NewsController::class)->group(function () {
     Route::get('/news', 'index');
     Route::get('/news/{id}', 'show');
@@ -36,29 +50,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
-
-    Route::controller(FileController::class)->group(function () {
-        //create
-        Route::post('/images', 'creteImage');
-        Route::post('/files', 'creteFile');
-        //return all
-        Route::get('/images', 'images');
-        Route::get('/files', 'files');
-        //get by id
-        Route::get('/images/{id}', 'show');
-        Route::get('/files/{id}', 'show');
-        // delete
-        Route::delete('/files/{id}', 'destroy');
-    });
-
-    Route::controller(NewsController::class)->group(function () {
-        Route::resource('news', NewsController::class);
-    });
-
-
 });
-
-
-
-
-

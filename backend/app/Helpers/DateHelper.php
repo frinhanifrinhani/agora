@@ -12,4 +12,9 @@ trait DateHelper
         $now = Carbon::now();
         return $now->toDateTimeString();
     }
+
+    public function returnBrazilianDefaultDate($value){
+        return Carbon::parse($value)->format('d/m/Y H:i:s');
+    }
+
 }

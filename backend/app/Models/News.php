@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Helpers\DateHelper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory, DateHelper;
 
     protected $fillable = [
         'title',
@@ -19,6 +20,16 @@ class News extends Model
         'category_id',
         'publication_date'
     ];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
 
     public static function defaultSortAttribute(): string
     {
@@ -44,6 +55,4 @@ class News extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-
 }
