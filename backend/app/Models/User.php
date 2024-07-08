@@ -79,6 +79,10 @@ class User extends Authenticatable
         return $this->returnBrazilianDefaultDate($value);
     }
 
+    public function getCpfAttribute($value)
+    {
+        return substr($value, 0, 3) . '.' . substr($value, 3, 3) . '.' . substr($value, 6, 3) . '-' . substr($value, 9);
+    }
 
     public static function defaultSortAttribute(): string
     {
