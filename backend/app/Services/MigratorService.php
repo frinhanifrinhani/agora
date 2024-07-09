@@ -2,14 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\File;
 use App\Helpers\MakeAlias;
 use App\Repositories\CategoryRepository;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\FileRepository;
+use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,11 +16,16 @@ class MigratorService
 
     private UserRepository $userRepository;
     private CategoryRepository $categoryRepository;
+    private TagRepository $tagRepository;
 
-    public function __construct(UserRepository $userRepository,CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        CategoryRepository $categoryRepository,
+        TagRepository $tagRepository
+    ) {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     public function migrateNews() //: JsonResponse
@@ -48,6 +50,9 @@ class MigratorService
 
             $categoriesData = $this->handlerCategories($data);
             $this->saveCategories($categoriesData);
+
+            $tagsData = $this->handlerTags($data);
+            $this->saveTags($tagsData);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -212,7 +217,85 @@ class MigratorService
         echo "<br />";
         echo "==========================================";
         echo "<br />";
-
     }
 
+    private function handlerTags($data)
+    {
+        if (isset($data['rss']['channel']['item'])) {
+            $tags = $data['rss']['channel']['item'];
+
+            $tagsData = [];
+            foreach ($tags as $tag) {
+
+                foreach ($tag['category'] as $tagIn) {
+
+                    if (gettype($tagIn) == 'array') {
+                        if (
+                            $tagIn['_domain'] == 'post_tag'
+                        ) {
+                            $data = [
+                                'name' => $tagIn['__cdata'] ?? null,
+                                'alias' => $tagIn['_nicename'] ?? null,
+                            ];
+                        }
+                    } else {
+
+                        if (
+                            $tag['category']['_domain']  == 'post_tag'
+                        ) {
+                            $data = [
+                                'name' => $tag['category']['__cdata'] ?? null,
+                                'alias' => $tag['category']['_nicename'] ?? null,
+                            ];
+                        }
+                    }
+                }
+                array_push($tagsData, $data);
+            }
+
+            return $tagsData;
+        }
+    }
+
+    private function saveTags($arrayData)
+    {
+        echo "<br />";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRAÇÃO DE TAGS";
+        echo "<br />";
+
+        try {
+
+            foreach ($arrayData as $data) {
+                $author = $this->tagRepository->findByAttribute('alias', $data['alias']);
+                echo "<br />";
+                if (!$author) {
+                    DB::beginTransaction();
+                    echo $this->tagRepository->create($data);
+                    DB::commit();
+                } else {
+                    echo "A Tag <b>" . $data['name'] . "</b> já se econtra cadastrada";
+                }
+            }
+
+            echo "<br />";
+            echo "<br />";
+            echo "Tags migradas com sucesso";
+            echo "<br />";
+            echo "<br />";
+        } catch (\Exception $e) {
+            echo "<br />";
+            echo "<br />";
+            echo "Erro: " . 'Tags ' . $e;
+            echo "<br />";
+            echo "<br />";
+        }
+
+        echo "FINALIZADA MIGRAÇÃO DE TAGS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+    }
 }
