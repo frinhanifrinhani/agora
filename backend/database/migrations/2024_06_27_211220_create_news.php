@@ -24,10 +24,10 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('restrict');
 
-            $table->foreignId('category_id')
-                ->references('id')
-                ->on('categories')
-                ->onDelete('restrict');
+            // $table->foreignId('category_id')
+            //     ->references('id')
+            //     ->on('categories')
+            //     ->onDelete('restrict');
 
             $table->timestamps();
         });

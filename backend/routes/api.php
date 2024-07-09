@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MigratorController;
 
 Route::get('/check-db-connection', function () {
     try {
@@ -51,3 +52,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
 });
+
+Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {
+    Route::post('news', 'news');
+});
+
+
