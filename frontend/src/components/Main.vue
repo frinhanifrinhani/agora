@@ -5,12 +5,11 @@
       <div class="col-md-12 position-relative image-container pb-5">
           <img src="@/assets/images/banner.jpg" class="img-fluid" alt="">
           <div class="centered-button">
-              <!-- <div class="position-absolute top-50 start-50 translate-middle-y"> -->
-              <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="#">
-                  Leia Mais <strong>></strong>
-              </a>
-              <!-- </div> -->
-          </div>
+            <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="/sobre">
+                <span class="me-2">Leia Mais</span>
+                <i class="fa-solid fa-angle-right"></i>
+            </a>
+        </div>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -30,7 +29,8 @@
         <div class="col-md-10">
             <div class="text-center ">
                 <a class="btn" style="background-color:#789bbc; color:#ffffff; border-radius: 20px;" href="#">
-                    Leia Mais <strong>></strong>
+                    <span class="me-2">Leia Mais</span>
+                    <i class="fa-solid fa-angle-right"></i>
                 </a>
             </div>
         </div>

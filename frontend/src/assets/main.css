@@ -63,3 +63,24 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.centered-button-detache {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centered-title {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centered-form {
+    position: absolute;
+    top: 92%;
+    left: 31.68%;
+    transform: translate(-30%, -60%);
+}
