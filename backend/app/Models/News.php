@@ -2,19 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Helpers\DateHelper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory, DateHelper;
 
     protected $fillable = [
         'title',
-        'news',
+        'body',
         'alias',
-        'status'
+        'status',
+        'publicated',
+        'open_to_comments',
+        'user_id',
+        'category_id',
+        'publication_date',
+        'created_at',
+        'updated_at',
     ];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
 
     public static function defaultSortAttribute(): string
     {
@@ -25,8 +43,22 @@ class News extends Model
     {
         return [
             'title' => 'required|max:255',
-            'news' => 'required|string',
+            'body' => 'required|string',
+            'publicated' => '',
+            'open_to_comments' => '',
+            'category_id' => '',
+            'created_at' => '',
+            'updated_at' => '',
         ];
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

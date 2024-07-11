@@ -68,7 +68,7 @@ abstract class BaseRepository
      * @param array $columns
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function paginate($limit, $page,$type)
+    public function paginate($limit, $page, $type = '')
     {
         $query = $this->allQuery();
 
@@ -76,7 +76,7 @@ abstract class BaseRepository
             $query->where('type', $type);
         }
 
-        return $query->orderBy('id', 'desc')->paginate($limit,['*'],'page', $page);
+        return $query->orderBy('id', 'desc')->paginate($limit, ['*'], 'page', $page);
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class BaseRepository
         $query = $this->model->newQuery();
 
         if (count($search)) {
-            foreach($search as $key => $value) {
+            foreach ($search as $key => $value) {
                 if (in_array($key, $this->getFieldsSearchable())) {
                     $query->where($key, $value);
                 }

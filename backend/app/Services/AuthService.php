@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -16,7 +17,7 @@ class AuthService
 
             $credentials = $request->validated();
 
-            if (Auth::attempt($credentials)) {
+            if (Auth::guard('web')->attempt($credentials)) {
                 $user = Auth::user();
 
                 $token = $request->user()->createToken('token')->plainTextToken;
@@ -49,12 +50,13 @@ class AuthService
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         try {
-            $user = Auth::guard('sanctum')->user();
-            if ($user) {
-                $user->currentAccessToken()->delete();
+
+            if (Auth::check()) {
+
+                $request->user()->currentAccessToken()->delete();
 
                 return response()->json(
                     [

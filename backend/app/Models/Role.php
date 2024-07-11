@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Helpers\DateHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Role extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, DateHelper;
 
     protected $table = 'roles';
 
@@ -15,6 +16,16 @@ class Role extends Authenticatable
         'nome',
         'descricao',
     ];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->returnBrazilianDefaultDate($value);
+    }
 
     public static function searchable(): array
     {

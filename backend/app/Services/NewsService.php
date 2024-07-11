@@ -2,15 +2,23 @@
 
 namespace App\Services;
 
-use App\Repositories\NewsRepository;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
+
+use Carbon\Carbon;
 use App\Models\News;
+use App\Helpers\MakeAlias;
+use App\Helpers\DateHelper;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\NewsRepository;
+use Illuminate\Support\Facades\Auth;
+
 
 class NewsService
 {
+    use MakeAlias;
+    use DateHelper;
+
     private NewsRepository $newsRepository;
 
     public function __construct(NewsRepository $newsRepository)
@@ -20,7 +28,7 @@ class NewsService
 
     public function getAllNews($request)
     {
-        return $this->newsRepository->paginate($request->limit,$request->page);
+        return $this->newsRepository->paginate($request->limit, $request->page);
     }
 
     public function createNews($request): JsonResponse
@@ -28,7 +36,14 @@ class NewsService
         try {
             $newsData = $request->validated();
 
-            $newsData['status'] = true;
+            if ($newsData['publicated']) {
+                $newsData['publication_date'] = $this->getNow();
+            }
+
+            $newsAlias = $this->stringToAlias($newsData['title']);
+
+            $newsData['alias'] = $newsAlias;
+            $newsData['user_id'] = auth()->id();
 
             DB::beginTransaction();
 
@@ -107,7 +122,14 @@ class NewsService
         try {
             DB::beginTransaction();
 
-            $newsResponse = $this->newsRepository->update($request->validated(),$id);
+            $newsData = $request->validated();
+
+            $newsAlias = $this->stringToAlias($newsData['title']);
+
+            $newsData['alias'] = $newsAlias;
+            $newsData['user_id'] = auth()->id();
+
+            $newsResponse = $this->newsRepository->update($newsData, $id);
 
             DB::commit();
 
