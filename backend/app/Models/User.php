@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'cpf',
         'email',
+        'login',
         'phone',
         'password',
         'status',
@@ -45,6 +46,7 @@ class User extends Authenticatable
         'name',
         'cpf',
         'email',
+        'login',
         'phone',
         'status',
         'role_id',
@@ -95,8 +97,10 @@ class User extends Authenticatable
             'name' => 'required|string',
             'cpf' => ['required', new ValidateCpf],
             'email' => 'required|email|max:100',
+            'login'=>'',
             'phone' => 'nullable|string',
             'password' => 'required|string|min:6|max:12',
+
         ];
     }
 }

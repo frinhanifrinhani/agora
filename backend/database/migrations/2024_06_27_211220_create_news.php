@@ -13,16 +13,18 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->text('title');
             $table->text('body');
-            $table->string('alias')->unique();
+            $table->text('alias')->unique();
+            $table->boolean('open_to_comments')->default(true);
             $table->boolean('publicated')->default(false);
             $table->date('publication_date')->nullable();
 
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('restrict');
+                ->onDelete('restrict')
+                ->comment('Autor');
 
             // $table->foreignId('category_id')
             //     ->references('id')

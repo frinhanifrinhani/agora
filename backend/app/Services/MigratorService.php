@@ -2,13 +2,15 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Helpers\MakeAlias;
-use App\Repositories\CategoryRepository;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Storage;
+use App\Repositories\CategoryRepository;
+use App\Repositories\NewsRepository;
 
 class MigratorService
 {
@@ -17,23 +19,26 @@ class MigratorService
     private UserRepository $userRepository;
     private CategoryRepository $categoryRepository;
     private TagRepository $tagRepository;
+    private NewsRepository $newsRepository;
 
     public function __construct(
         UserRepository $userRepository,
         CategoryRepository $categoryRepository,
-        TagRepository $tagRepository
+        TagRepository $tagRepository,
+        NewsRepository $newsRepository
     ) {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->tagRepository = $tagRepository;
+        $this->newsRepository = $newsRepository;
     }
 
-    public function migrateNews() //: JsonResponse
+    public function migrateNews()
     {
 
         echo "==========================================";
         echo "<br />";
-        echo "INICIANDO MIGRAÇÃO DE NOTÍCIAS";
+        echo "INICIANDO MIGRADOR DE NOTÍCIAS";
         echo "<br />";
         echo "==========================================";
         echo "<br />";
@@ -43,6 +48,7 @@ class MigratorService
         try {
             $json = Storage::get('migrator/posts.json');
             $data = json_decode($json, true);
+
             DB::beginTransaction();
 
             $authorsData = $this->handlerAuthors($data);
@@ -54,6 +60,10 @@ class MigratorService
             $tagsData = $this->handlerTags($data);
             $this->saveTags($tagsData);
 
+            $newsData = $this->handlerNews($data);
+            $this->saveNews($newsData);
+
+
             DB::commit();
         } catch (\Exception $e) {
 
@@ -64,6 +74,12 @@ class MigratorService
                 Response::HTTP_BAD_REQUEST
             );
         }
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "MIGRAÇÃO FINALIZADA COM SUCESSO";
+        echo "<br />";
+        echo "==========================================";
     }
 
     private function handlerAuthors($data)
@@ -78,6 +94,7 @@ class MigratorService
 
                 $data = [
                     'name' => $author['author_first_name']['__cdata'] . ' ' . $author['author_last_name']['__cdata'] ?? null,
+                    'login' => $author['author_login']['__cdata'] ?? null,
                     'cpf' => $rand,
                     'email' => $author['author_email']['__cdata'] ?? null,
                     'password' => bcrypt($rand),
@@ -294,6 +311,97 @@ class MigratorService
         }
 
         echo "FINALIZADA MIGRAÇÃO DE TAGS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+    }
+
+    private function handlerNews($data)
+    {
+        if (isset($data['rss']['channel']['item'])) {
+            $newsJson = $data['rss']['channel']['item'];
+
+            $newsData = [];
+            foreach ($newsJson as $news) {
+
+                $body = strlen($news['encoded'][1]['__cdata']) > strlen($news['encoded'][0]['__cdata']) ? $news['encoded'][1]['__cdata'] : $news['encoded'][0]['__cdata'];
+
+                $publicated = $news['status']['__cdata'] == 'publish' ? true : false;
+                $openToComments = $news['comment_status']['__cdata'] == 'open' ? true : false;
+
+                $data = [
+                    'title' =>  $news['title'],
+                    'body' => $body,
+                    'alias' => $news['post_name']['__cdata'],
+                    'user_id' => $this->getUserIdByLogin($news['creator']['__cdata']),
+                    'publication_date' => $this->dateWPToDefault($news['pubDate']),
+                    'publicated'=> $publicated,
+                    'open_to_comments'=> $openToComments,
+                    'created_at'=>  $this->dateWPToDefault($news['post_date']['__cdata']),
+                    'updated_at'=>$this->dateWPToDefault($news['post_modified']['__cdata']),
+
+                ];
+
+                array_push($newsData, $data);
+            }
+        }
+
+        return $newsData;
+    }
+
+    private function dateWPToDefault($date)
+    {
+        $date = Carbon::parse($date);
+
+        $formattedDate = $date->format('Y-m-d H:i:s.u');
+
+        return $formattedDate;
+    }
+
+    private function getUserIdByLogin($login)
+    {
+        $creator = $this->userRepository->findByAttribute('login', $login);
+        return $creator->id;
+    }
+
+    private function saveNews($arrayData)
+    {
+        echo "<br />";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRAÇÃO DE NOTÍCIAS";
+        echo "<br />";
+
+        try {
+
+            foreach ($arrayData as $data) {
+                $news = $this->newsRepository->findByAttribute('alias', $data['alias']);
+                echo "<br />";
+                if (!$news) {
+                    DB::beginTransaction();
+                    $this->newsRepository->create($data);
+                    echo $data['title'];
+                    DB::commit();
+                } else {
+                    echo "A Notícia <b>" . $data['title'] . "</b> já se econtra cadastrada";
+                }
+            }
+
+            echo "<br />";
+            echo "<br />";
+            echo "Notícas migradas com sucesso";
+            echo "<br />";
+            echo "<br />";
+        } catch (\Exception $e) {
+            echo "<br />";
+            echo "<br />";
+            echo "Erro: " . 'Notícias ' . $e;
+            echo "<br />";
+            echo "<br />";
+        }
+
+        echo "FINALIZADA MIGRAÇÃO DE NOTÍCAS";
         echo "<br />";
         echo "==========================================";
         echo "<br />";

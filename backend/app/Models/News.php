@@ -16,9 +16,12 @@ class News extends Model
         'alias',
         'status',
         'publicated',
+        'open_to_comments',
         'user_id',
         'category_id',
-        'publication_date'
+        'publication_date',
+        'created_at',
+        'updated_at',
     ];
 
     public function getCreatedAtAttribute($value)
@@ -42,7 +45,10 @@ class News extends Model
             'title' => 'required|max:255',
             'body' => 'required|string',
             'publicated' => '',
+            'open_to_comments' => '',
             'category_id' => '',
+            'created_at' => '',
+            'updated_at' => '',
         ];
     }
 
