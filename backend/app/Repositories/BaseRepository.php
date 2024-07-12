@@ -76,6 +76,7 @@ abstract class BaseRepository
             $query->where('type', $type);
         }
 
+        $query->with(['category']);
         return $query->orderBy('id', 'desc')->paginate($limit, ['*'], 'page', $page);
     }
 
@@ -162,7 +163,7 @@ abstract class BaseRepository
     {
         $query = $this->model->newQuery();
 
-        return $query->where($key, $value)->first($columns);
+        return $query->where($key, $value);//->first($columns);
     }
 
     public function findOrFailByAttribute($key, $value, $columns = ['*'])
