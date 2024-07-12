@@ -33,7 +33,7 @@ export default {
     }
     
    .hr-line {
-        width: 20%;
+        width: 10%;
         /* position: center; */
         margin: 15px;
         border-bottom: 1px solid #bdbdbd;

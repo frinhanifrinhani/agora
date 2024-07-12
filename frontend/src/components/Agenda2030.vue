@@ -9,17 +9,17 @@
             <HorizontalLine icon="info" class="mb-4"/>
             
             <div class="row">
-                <div class="col-md-8"> 
+                <div class="col-md-8 text-responsive"> 
                     <p>
                         Em 1º de janeiro de 2016 foi lançada oficialmente a Agenda 2030 para o desenvolvimento sustentável e os seus 17 Objetivos de Desenvolvimento Sustentável (ODS) – adotada pelos líderes mundiais em Setembro de 2015 durante a cimeira do desenvolvimento sustentável realizada durante a Assembleia Geral da ONU. Nos próximos doze anos, os países irão mobilizar esforços para contribuir na implementação dessa Agenda que é uma aspiração de alcançar os cinco Ps do desenvolvimento sustentável: Parcerias para ter um Planeta sustentável, Próspero, em Paz, e justo com as Pessoas.
                     </p>
                     
                     <p>
-                        <a href="#">Clique aqui</a> e aprenda mais sobre a Agenda 2030 e os seus 17 objetivos que nos nortearão para transformar “o mundo naquele que queremos”.
+                        <a href="https://brasil.un.org/pt-br" class="link-success link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">Clique aqui</a> e aprenda mais sobre a Agenda 2030 e os seus 17 objetivos que nos nortearão para transformar “o mundo naquele que queremos”.
                     </p>
                 </div>
                 <div class="col-md-4">
-                    <img src="@/assets/images/desenvolvimento-sustentavel-agenda-2030.png" alt="">
+                    <img src="@/assets/images/desenvolvimento-sustentavel-agenda-2030.png" alt="" class="image-responsive">
                 </div>
             </div>
         </section>
@@ -27,9 +27,9 @@
         <section class="col-md-10 mt-5">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="">
+                    <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="" class="image-responsive">
                 </div>
-                <div class="col-md-8"> 
+                <div class="col-md-8 text-responsive"> 
                     <h2 class="h2 green-title">Rede Agenda 2030</h2>
                     <p>
                         Rede destinada a promover conversas e decisões em torno da Agenda 2030 no Brasil, no contexto Estratégia Fiocruz para a Agenda 2030.
@@ -68,9 +68,12 @@
                 </div>
             </div>
 
-            <button class="btn btn-outline-success d-block mx-auto">Saiba Mais  <strong> > </strong> </button>
+            <button class="btn btn-outline-success d-block mx-auto" > 
+                <a href="https://portal.fiocruz.br/estrategia-fiocruz-para-agenda-2030" class="text-reset text-decoration-none">Saiba Mais<strong> > </strong>
+                </a>
+            </button>
         </section>
-
+        
         <section class="col-md-10 mt-5">
             <div class="container text-center"> 
                 <h2 class="h2">Notícas 
@@ -86,13 +89,14 @@
 
         </section>
 
+        <!-- Seção Flip Card !-->
         <section class="col-md-10 mt-5">
             <div class="content text-center">
                 <h2 class="h2">Agenda 2030 <span class="green-title">na Fiocruz</span></h2>
 
                 <HorizontalLine icon="info" class="mb-4"/>
             </div>
-            <div class="row mb-5">
+            <div class="row mb-5 card-responsive">
                 <div class="col-md-4">
                     <div class="flip-card">
                         <div class="flip-card-inner">
@@ -131,7 +135,7 @@
                     <div class="flip-card">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
-                                <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="">
+                                <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="" >
                             </div>
 
                             <div class="flip-card-back">
