@@ -18,7 +18,6 @@ class News extends Model
         'publicated',
         'open_to_comments',
         'user_id',
-        'category_id',
         'publication_date',
         'created_at',
         'updated_at',
@@ -46,7 +45,7 @@ class News extends Model
             'body' => 'required|string',
             'publicated' => '',
             'open_to_comments' => '',
-            'category_id' => '',
+            'categories' => '',
             'created_at' => '',
             'updated_at' => '',
         ];
@@ -59,6 +58,7 @@ class News extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'news_categories', 'news_id','category_id' );
     }
+
 }
