@@ -163,7 +163,15 @@ abstract class BaseRepository
     {
         $query = $this->model->newQuery();
 
-        return $query->where($key, $value);//->first($columns);
+        return $query->where($key, $value)->first($columns);
+    }
+
+
+    public function findByAttributeWhitRelation($key, $value, $columns = ['*'])
+    {
+        $query = $this->model->newQuery();
+
+        return $query->where($key, $value);
     }
 
     public function findOrFailByAttribute($key, $value, $columns = ['*'])

@@ -96,7 +96,7 @@ class NewsService
     public function getNewsById($id)
     {
         try {
-            $news = $this->newsRepository->findByAttribute('id',$id)
+            $news = $this->newsRepository->findByAttributeWhitRelation('id',$id)
             ->with('category')
             ->firstOrFail();
 
