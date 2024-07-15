@@ -63,7 +63,6 @@ class MigratorService
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
 
-
             DB::commit();
         } catch (\Exception $e) {
 
@@ -120,7 +119,9 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
+
                 $author = $this->userRepository->findByAttribute('name', $data['name']);
+
                 echo "<br />";
                 if (!$author) {
                     DB::beginTransaction();
@@ -322,6 +323,7 @@ class MigratorService
             $newsJson = $data['rss']['channel']['item'];
 
             $newsData = [];
+            echo "<pre>";
             foreach ($newsJson as $news) {
 
                 $body = strlen($news['encoded'][1]['__cdata']) > strlen($news['encoded'][0]['__cdata']) ? $news['encoded'][1]['__cdata'] : $news['encoded'][0]['__cdata'];
@@ -329,16 +331,49 @@ class MigratorService
                 $publicated = $news['status']['__cdata'] == 'publish' ? true : false;
                 $openToComments = $news['comment_status']['__cdata'] == 'open' ? true : false;
 
+                $categoriesToAdd = [];
+                if (isset($news['category']['_domain'])) {
+
+                    if (
+                        $news['category']['_domain'] == 'category'
+                        && $news['category']['_nicename'] != 'nao-categorizado'
+                        && $news['category']['_nicename'] != 'uncategorized'
+                    ) {
+                        $catetoryResponse = $this->categoryRepository->findByAttribute('alias', $news['category']['_nicename']);
+                        if ($catetoryResponse) {
+                            array_push($categoriesToAdd, $catetoryResponse->id);
+                        }
+                    }
+                } else {
+
+                    foreach ($news['category'] as $categories) {
+
+                        if (
+                            $categories['_domain'] == 'category'
+                            && $categories['_nicename'] != 'uncategorized'
+                            && $categories['_nicename'] != 'nao-categorizado'
+                        ) {
+
+                            $catetoryResponse = $this->categoryRepository->findByAttribute('alias', $categories['_nicename']);
+                            if ($catetoryResponse) {
+
+                                array_push($categoriesToAdd, $catetoryResponse->id);
+                            }
+                        }
+                    }
+                }
+
                 $data = [
                     'title' =>  $news['title'],
                     'body' => $body,
                     'alias' => $news['post_name']['__cdata'],
                     'user_id' => $this->getUserIdByLogin($news['creator']['__cdata']),
                     'publication_date' => $this->dateWPToDefault($news['pubDate']),
-                    'publicated'=> $publicated,
-                    'open_to_comments'=> $openToComments,
-                    'created_at'=>  $this->dateWPToDefault($news['post_date']['__cdata']),
-                    'updated_at'=>$this->dateWPToDefault($news['post_modified']['__cdata']),
+                    'publicated' => $publicated,
+                    'open_to_comments' => $openToComments,
+                    'categories' =>  $categoriesToAdd,
+                    'created_at' =>  $this->dateWPToDefault($news['post_date']['__cdata']),
+                    'updated_at' => $this->dateWPToDefault($news['post_modified']['__cdata']),
 
                 ];
 
@@ -376,11 +411,12 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $news = $this->newsRepository->findByAttribute('alias', $data['alias']);
+                $news = $this->newsRepository->findByAttribute('alias', $data['alias']); //->firstOrFail();
                 echo "<br />";
                 if (!$news) {
                     DB::beginTransaction();
-                    $this->newsRepository->create($data);
+                    $newsResponse = $this->newsRepository->create($data);
+                    $newsResponse->category()->sync($data['categories']);
                     echo $data['title'];
                     DB::commit();
                 } else {
@@ -405,5 +441,19 @@ class MigratorService
         echo "<br />";
         echo "==========================================";
         echo "<br />";
+    }
+
+    private function handlerNewsCategories($data)
+    {
+
+        if (isset($data['rss']['channel']['item'])) {
+            $newsJson = $data['rss']['channel']['item'];
+
+            $newsData = [];
+            echo "<pre>";
+            foreach ($newsJson as $news) {
+                print_r($news);
+            }
+        }
     }
 }
