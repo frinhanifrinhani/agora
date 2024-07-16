@@ -90,18 +90,18 @@
         </section>
 
         <!-- Seção Flip Card !-->
-        <section class="col-md-10 mt-5">
+        <section class="col-md-10 mt-5 mb-5">
             <div class="content text-center">
                 <h2 class="h2">Agenda 2030 <span class="green-title">na Fiocruz</span></h2>
 
                 <HorizontalLine icon="info" class="mb-4"/>
             </div>
-            <div class="row mb-5 card-responsive">
+            <div class="row card-responsive flip-card-container">
                 <div class="col-md-4">
                     <div class="flip-card">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
-                                <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="">
+                                <img src="@/assets/images/solucoes-saude-flip-card.png" alt="">
                             </div>
 
                             <div class="flip-card-back">
@@ -109,23 +109,28 @@
                                 <p>
                                     Estruturada em três grandes eixos: Soluções de serviços; Soluções sociais, e; Soluções industriais, as feiras pretendem reunir profissionais e gestores da saúde em prol do alcance das metas da Agenda 2030.
                                 </p>
-                                <button class="btn btn-outline-success">Acesse</button>
+                                <button class="btn btn-outline-success d-block mx-auto">
+                                    <a class="text-reset text-decoration-none" href="https://solucoes.agora.fiocruz.br/" target="blank">Acesse</a>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-4">
                     <div class="flip-card">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
-                                <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="">
+                                <img src="@/assets/images/radar-ods-flip-card.png" alt="">
                             </div>
                             <div class="flip-card-back">
                                 <h3 class="h3">Radar ODS</h3>
                                 <p>
                                     O RADAR ODS é uma iniciativa que tem como função disseminar informações primárias e secundárias sobre os ODS e a Agenda 2030.
                                 </p>
-                                <button class="btn btn-outline-success">Acesse</button>
+                                <button class="btn btn-outline-success d-block mx-auto">
+                                    <a  class="text-reset text-decoration-none" href="https://cee.fiocruz.br/" target="blank">Acesse</a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -135,7 +140,7 @@
                     <div class="flip-card">
                         <div class="flip-card-inner">
                             <div class="flip-card-front">
-                                <img src="@/assets/images/saude-bem-estar-agenda-2030.png" alt="" >
+                                <img src="@/assets/images/saude-amanha-flip-card.png" alt="" >
                             </div>
 
                             <div class="flip-card-back">
@@ -143,7 +148,9 @@
                                 <p>
                                     O projeto Brasil Saúde Amanhã é uma rede multidisciplinar de pesquisa que investiga e propõe caminhos para o país e o setor Saúde no horizonte dos próximos 20 anos.
                                 </p>
-                                <button class="btn btn-outline-success">Acesse</button>
+                                <button class="btn btn-outline-success">
+                                    <a  class="text-reset text-decoration-none" href="https://saudeamanha.fiocruz.br/" target="blank">Acesse</a>
+                                </button>
                             </div>
                         </div>
                     </div>
