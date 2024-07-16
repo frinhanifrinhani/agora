@@ -11,7 +11,7 @@
               SAÚDE & CTI PARA A AGENDA 2030
             </h1>
           </div>
-          <div class="centered-button-detache">
+          <div class="centered-button-emphasis">
             <a class="btn" style="color: #fff;
               border-color: #6dab3c;
               background-color: #6dab3c;
@@ -55,7 +55,7 @@
               <select class="form-select" aria-label="Default select example">
                 <option selected>Status</option>
                 <option value="upcoming">Próximos</option>
-                <option value="incoming">Incoming</option>
+                <option value="incoming">Em andamento</option>
                 <option value="expired">Expirado</option>
               </select>
             </div>              
@@ -615,7 +615,7 @@
   
   <script>
   export default {
-    name: "News",
+    name: "Event",
   };
   </script>
   
