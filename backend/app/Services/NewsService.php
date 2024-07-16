@@ -46,6 +46,7 @@ class NewsService
             $newsResponse = $this->newsRepository->create($newsData);
 
             $newsResponse->category()->sync($newsData['categories']);
+            $newsResponse->tag()->sync($newsData['tags']);
 
             DB::commit();
 
@@ -96,7 +97,7 @@ class NewsService
     public function getNewsById($id)
     {
         try {
-            $news = $this->newsRepository->findByAttribute('id',$id)
+            $news = $this->newsRepository->findByAttributeWhitRelation('id',$id)
             ->with('category')
             ->firstOrFail();
 

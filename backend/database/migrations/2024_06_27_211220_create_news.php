@@ -26,11 +26,6 @@ return new class extends Migration
                 ->onDelete('restrict')
                 ->comment('Autor');
 
-            // $table->foreignId('category_id')
-            //     ->references('id')
-            //     ->on('categories')
-            //     ->onDelete('restrict');
-
             $table->timestamps();
         });
     }

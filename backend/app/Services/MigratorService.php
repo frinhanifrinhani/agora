@@ -11,6 +11,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\CategoryRepository;
 use App\Repositories\NewsRepository;
+use PhpParser\Node\Expr\Cast\Array_;
 
 class MigratorService
 {
@@ -62,7 +63,6 @@ class MigratorService
 
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
-
 
             DB::commit();
         } catch (\Exception $e) {
@@ -120,7 +120,9 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
+
                 $author = $this->userRepository->findByAttribute('name', $data['name']);
+
                 echo "<br />";
                 if (!$author) {
                     DB::beginTransaction();
@@ -171,6 +173,8 @@ class MigratorService
                                 'alias' => $categoryIn['_nicename'] ?? null,
                                 'status' => true,
                             ];
+
+                            array_push($categoriesData, $data);
                         }
                     } else {
 
@@ -184,10 +188,12 @@ class MigratorService
                                 'alias' => $category['category']['_nicename'] ?? null,
                                 'status' => true,
                             ];
+
+                            array_push($categoriesData, $data);
                         }
                     }
                 }
-                array_push($categoriesData, $data);
+
             }
 
             return $categoriesData;
@@ -206,9 +212,9 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $author = $this->categoryRepository->findByAttribute('alias', $data['alias']);
+                $category = $this->categoryRepository->findByAttribute('alias', $data['alias']);
                 echo "<br />";
-                if (!$author) {
+                if (!$category) {
                     DB::beginTransaction();
                     echo $this->categoryRepository->create($data);
                     DB::commit();
@@ -240,34 +246,32 @@ class MigratorService
     {
         if (isset($data['rss']['channel']['item'])) {
             $tags = $data['rss']['channel']['item'];
-
             $tagsData = [];
+            $arrayTag = [];
             foreach ($tags as $tag) {
 
                 foreach ($tag['category'] as $tagIn) {
 
                     if (gettype($tagIn) == 'array') {
-                        if (
-                            $tagIn['_domain'] == 'post_tag'
-                        ) {
-                            $data = [
+                        if ($tagIn['_domain'] == 'post_tag') {
+                            $arrayTag = [
                                 'name' => $tagIn['__cdata'] ?? null,
                                 'alias' => $tagIn['_nicename'] ?? null,
                             ];
+
+                            array_push($tagsData, $arrayTag);
                         }
                     } else {
 
-                        if (
-                            $tag['category']['_domain']  == 'post_tag'
-                        ) {
-                            $data = [
+                        if ($tag['category']['_domain']  == 'post_tag') {
+                            $arrayTag = [
                                 'name' => $tag['category']['__cdata'] ?? null,
                                 'alias' => $tag['category']['_nicename'] ?? null,
                             ];
+                            array_push($tagsData, $arrayTag);
                         }
                     }
                 }
-                array_push($tagsData, $data);
             }
 
             return $tagsData;
@@ -286,9 +290,9 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $author = $this->tagRepository->findByAttribute('alias', $data['alias']);
+                $tag = $this->tagRepository->findByAttribute('alias', $data['alias']);
                 echo "<br />";
-                if (!$author) {
+                if (!$tag) {
                     DB::beginTransaction();
                     echo $this->tagRepository->create($data);
                     DB::commit();
@@ -322,6 +326,7 @@ class MigratorService
             $newsJson = $data['rss']['channel']['item'];
 
             $newsData = [];
+
             foreach ($newsJson as $news) {
 
                 $body = strlen($news['encoded'][1]['__cdata']) > strlen($news['encoded'][0]['__cdata']) ? $news['encoded'][1]['__cdata'] : $news['encoded'][0]['__cdata'];
@@ -329,16 +334,72 @@ class MigratorService
                 $publicated = $news['status']['__cdata'] == 'publish' ? true : false;
                 $openToComments = $news['comment_status']['__cdata'] == 'open' ? true : false;
 
+                $categoriesToAdd = [];
+                if (isset($news['category']['_domain'])) {
+
+                    if (
+                        $news['category']['_domain'] == 'category'
+                        && $news['category']['_nicename'] != 'nao-categorizado'
+                        && $news['category']['_nicename'] != 'uncategorized'
+                    ) {
+                        $catetoryResponse = $this->categoryRepository->findByAttribute('alias', $news['category']['_nicename']);
+                        if ($catetoryResponse) {
+                            array_push($categoriesToAdd, $catetoryResponse->id);
+                        }
+                    }
+                } else {
+
+                    foreach ($news['category'] as $categories) {
+
+                        if (
+                            $categories['_domain'] == 'category'
+                            && $categories['_nicename'] != 'uncategorized'
+                            && $categories['_nicename'] != 'nao-categorizado'
+                        ) {
+
+                            $catetoryResponse = $this->categoryRepository->findByAttribute('alias', $categories['_nicename']);
+                            if ($catetoryResponse) {
+                                array_push($categoriesToAdd, $catetoryResponse->id);
+                            }
+                        }
+                    }
+                }
+
+                $tagsToAdd = [];
+                if (isset($news['category']['_domain'])) {
+
+                    if ($news['category']['_domain'] == 'post_tag') {
+                        $tagResponse = $this->tagRepository->findByAttribute('alias', $news['post_tag']['_nicename']);
+                        if ($tagResponse) {
+                            array_push($tagsToAdd, $tagResponse->id);
+                        }
+                    }
+                } else {
+
+                    foreach ($news['category'] as $tags) {
+
+                        if ($tags['_domain'] == 'post_tag') {
+
+                            $tagResponse = $this->tagRepository->findByAttribute('alias', $tags['_nicename']);
+                            if ($tagResponse) {
+                                array_push($tagsToAdd, $tagResponse->id);
+                            }
+                        }
+                    }
+                }
+
                 $data = [
                     'title' =>  $news['title'],
                     'body' => $body,
                     'alias' => $news['post_name']['__cdata'],
                     'user_id' => $this->getUserIdByLogin($news['creator']['__cdata']),
                     'publication_date' => $this->dateWPToDefault($news['pubDate']),
-                    'publicated'=> $publicated,
-                    'open_to_comments'=> $openToComments,
-                    'created_at'=>  $this->dateWPToDefault($news['post_date']['__cdata']),
-                    'updated_at'=>$this->dateWPToDefault($news['post_modified']['__cdata']),
+                    'publicated' => $publicated,
+                    'open_to_comments' => $openToComments,
+                    'categories' =>  $categoriesToAdd,
+                    'tags' => $tagsToAdd,
+                    'created_at' =>  $this->dateWPToDefault($news['post_date']['__cdata']),
+                    'updated_at' => $this->dateWPToDefault($news['post_modified']['__cdata']),
 
                 ];
 
@@ -376,11 +437,13 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $news = $this->newsRepository->findByAttribute('alias', $data['alias']);
+                $news = $this->newsRepository->findByAttribute('alias', $data['alias']); //->firstOrFail();
                 echo "<br />";
                 if (!$news) {
                     DB::beginTransaction();
-                    $this->newsRepository->create($data);
+                    $newsResponse = $this->newsRepository->create($data);
+                    $newsResponse->category()->sync($data['categories']);
+                    $newsResponse->tag()->sync($data['tags']);
                     echo $data['title'];
                     DB::commit();
                 } else {
