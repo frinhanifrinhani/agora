@@ -32,11 +32,14 @@ export default {
     color: #60BF6E;
 
   }
+  .flip-card-container{
+    margin-bottom: 100px;
+  }
 
   .flip-card {
     background-color: transparent;
-    width: 300px;
-    height: 200px;
+    width: 100%;
+    /* height: 300px; */
     margin-bottom: 100px;
     /* perspective: 1000px;  */
   }
@@ -56,13 +59,11 @@ export default {
 
   .flip-card-front, .flip-card-back {
     position: absolute;
-    width: 100%;
-    height: 100%;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
   }
 
-  .flip-card-front {
+  div.flip-card-front {
     background-color: #bbb;
     color: black;
   }
@@ -71,6 +72,18 @@ export default {
     color: gray;
     transform: rotateY(180deg);
     padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flip-card-back h3{
+    font-size: 1.2em;
+  }
+
+  .flip-card-back p, button{
+    font-size: 0.8em;
   }
 
   @media (max-width: 1112px) {
