@@ -46,6 +46,7 @@ class NewsService
             $newsResponse = $this->newsRepository->create($newsData);
 
             $newsResponse->category()->sync($newsData['categories']);
+            $newsResponse->tag()->sync($newsData['tags']);
 
             DB::commit();
 
