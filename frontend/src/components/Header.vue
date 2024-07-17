@@ -22,6 +22,9 @@
                         <a class="nav-link" href="/noticias">Notícias</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/evento">Eventos</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="https://redes.agora.fiocruz.br/" target="_blank">Redes</a>
                     </li>
                     <li class="nav-item">
