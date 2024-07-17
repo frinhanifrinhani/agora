@@ -37,13 +37,30 @@
             </a>
           </div>
           <img src="@/assets/images/banner-obj-des-sustentavel.jpg" class="img-fluid" alt="">
-          <div class="col-md-12 d-flex centered-form-time justify-content-center bg-white text-dark p-5">
-            
-            
+          <div class="col-md-12 d-flex centered-form-time justify-content-center text-dark p-2">
+            <div class="d-flex flex-column p-4">
+              <div class="text-center text-white display-3"><span>00</span></div>
+              <div class="text-center text-white"><span>DIAS</span></div>              
+            </div>
+            <div class="vertical-bar"></div>
+            <div class="d-flex flex-column p-4">
+              <div class="text-center text-white display-3"><span>00</span></div>
+              <div class="text-center text-white"><span>HORAS</span></div>
+            </div>
+            <div class="vertical-bar"></div>
+            <div class="d-flex flex-column p-4">
+              <div class="text-center text-white display-3"><span>00</span></div>
+              <div class="text-center text-white"><span>MINUTOS</span></div>
+            </div>
+            <div class="vertical-bar"></div>
+            <div class="d-flex flex-column p-4">
+              <div class="text-center text-white display-3"><span>00</span></div>
+              <div class="text-center text-white"><span>SEGUNDOS</span></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row justify-content-center pb-4">
+      <div class="row justify-content-center pb-4 mt-5">
         <div class="col-md-8 align-items-center">
           <div class="p-4 text-center">
             <p class="h1">Sobre SAÚDE & CTI <span style="color: #48773E;"><strong>PARA A AGENDA 2030 </strong></span></p>
