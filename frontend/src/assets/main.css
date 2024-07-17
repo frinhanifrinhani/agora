@@ -64,9 +64,16 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.centered-button-detache {
+.centered-button-emphasis {
     position: absolute;
     top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centered-button-emphasis-event {
+    position: absolute;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -78,9 +85,36 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.centered-title-event {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .centered-form {
     position: absolute;
     top: 94%;
     left: 31.68%;
     transform: translate(-30%, -60%);
+}
+
+.centered-form-time {
+    position: absolute;
+    top: 94%;
+    left: 29.68%;
+    transform: translate(-30%, -60%);  
+    background-color: #48773E;
+}
+
+.custom-icon {
+    color: #48773E;
+    transition: color 0.3s;
+}
+
+.vertical-bar {
+    width: 1px;
+    height: 50px;
+    background-color: white;
+    align-self: center;
 }
