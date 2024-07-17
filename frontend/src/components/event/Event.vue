@@ -116,8 +116,7 @@
               <div class="card-body">
                 <h5 class="card-title mb-0 pb-0">
                   <a
-                    href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
-                    target="_blank"
+                    href="/pagina-evento"
                     rel="noopener noreferrer"
                   >
                     <strong>Health & STI for 2030 Agenda</strong>
