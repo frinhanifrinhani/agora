@@ -20,12 +20,11 @@
                     <p class="h5" style="color: #FFFFFF; font-size: 15px; font-weight: 600;"><strong>MAPA DO SITE</strong></p>
                     <p>
                     <ul style="color: #FFFFFF; line-height: 1.42857143; font-size: 14px; font-weight: 400;">
-                        <li>Início</li>
-                        <li>Redes</li>
-                        <li>Ágora 2030</li>
-                        <li>Eventos</li>
-                        <li>Sobre</li>
-                        <li>Ajuda</li>
+                        <li><a href="/" class="text-reset text-decoration-none"> Início</a></li>
+                        <li><a href="https://redes.agora.fiocruz.br/" class="text-reset text-decoration-none"> Redes</a></li>
+                        <li><a href="/agenda-2030 " class="text-reset text-decoration-none"> Ágora 2030</a></li>
+                        <li><a href="/evento " class="text-reset text-decoration-none"> Eventos</a></li>
+                        <li><a href="/sobre " class="text-reset text-decoration-none"> Sobre</a></li>
                     </ul>
                     </p>
                 </div>

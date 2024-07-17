@@ -4,6 +4,7 @@ import News from '../views/news/News.vue'
 import Event from '../views/event/Event.vue'
 import EventPage from '../views/event/EventPage.vue'
 import About from '../views/About.vue'
+import Agenda2030 from '../views/Agenda2030.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -11,6 +12,7 @@ const routes = [
   { path: '/evento', name: 'Event', component: Event },
   { path: '/pagina-evento', name: 'EventPage', component: EventPage },
   { path: '/sobre', name: 'About', component: About },
+  { path: '/agenda-2030', name: 'Agenda2030', component: Agenda2030},
 ];
 
 const router = createRouter({
