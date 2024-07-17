@@ -27,15 +27,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://ifuturo.agora.fiocruz.br/" target="_blank">Ifuturo</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Aplicativos Ágora
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Ágora Meeting</a></li>
-                            <li><a class="dropdown-item" href="#">Ágora Class</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/sobre">Sobre</a>
                     </li>
