@@ -8,15 +8,3 @@ use Illuminate\Validation\ValidationException;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/home', function () {
-    return view('home');
-});
-
-Route::get('/noticia', function () {
-    return view('noticia.index');
-});
-
-Route::get('/noticia/destaque', function () {
-    return view('noticia.destaque');
-});

@@ -63,8 +63,8 @@
       <div class="row justify-content-center pb-4 mt-5">
         <div class="col-md-8 align-items-center">
           <div class="p-4 text-center">
-            <p class="h1">Sobre SAÚDE & CTI <span style="color: #48773E;"><strong>PARA A AGENDA 2030 </strong></span></p>
-            <hr class="text-muted">
+            <p class="h1">Sobre SAÚDE & CTI <span style="color: #48773E;"><strong>PARA A AGENDA 2030 </strong></span></p>            
+            <HorizontalLine icon="info" class="mb-4"/>
             <span>
               Este encontro será uma oportunidade para estabelecer uma melhor compreensão sobre a 
               relevância da Ciência, Tecnologia e Inovação para atingir o Objetivo de Desenvolvimento 
@@ -120,8 +120,8 @@
       <div class="row justify-content-center pb-4">
         <div class="col-md-8 align-items-center">
           <div class="p-4 text-center">
-            <p class="h1">CONFERÊNCIAS <span style="color: #48773E;"><strong>ABERTAS </strong></span></p>
-            <hr class="text-muted">
+            <p class="h1">CONFERÊNCIAS <span style="color: #48773E;"><strong>ABERTAS </strong></span></p>            
+            <HorizontalLine icon="users" class="mb-4"/>
             <span>
               Saiba mais sobre as conferências e palestrantes do Saúde & CTI para a Agenda 2030.
             </span>
@@ -193,8 +193,8 @@
         <div class="row justify-content-center pb-4">
           <div class="col-md-8 align-items-center">
             <div class="p-4 text-center">
-              <p class="h1">SAÚDE & CTI PARA A AGENDA 2030 <span style="color: #48773E;"><strong> | PROGRAMAÇÃO </strong></span></p>
-              <hr class="text-muted">
+              <p class="h1">SAÚDE & CTI PARA A AGENDA 2030 <span style="color: #48773E;"><strong> | PROGRAMAÇÃO </strong></span></p>              
+              <HorizontalLine icon="calendar" class="mb-4"/>
               <span>
                 Conheça a programação completa do Saúde & CTI para a Agenda 2030.
               </span>
@@ -214,8 +214,20 @@
         <div class="row justify-content-center pb-4">
           <div class="col-md-8 align-items-center">
             <div class="p-4 text-center">
-              <p class="h1">AGENDA <span style="color: #48773E;"><strong> 2030 </strong></span></p>
-              <hr class="text-muted">
+              <p class="h1">Onde?</p>              
+              <HorizontalLine icon="building" class="mb-4"/>
+              <span>
+                06-07 de Novembro: Rio Othon Palace - Avenida Atlântica - Copacabana, Rio de Janeiro - RJ.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center pb-4">
+          <div class="col-md-8 align-items-center">
+            <div class="p-4 text-center">
+              <p class="h1">AGENDA <span style="color: #48773E;"><strong> 2030 </strong></span></p>              
+              <HorizontalLine icon="book-open" class="mb-4"/>
               <span>
                 Saiba mais sobre a Agenda 2030.
               </span>
@@ -250,8 +262,8 @@
         <div class="row justify-content-center pb-4">
           <div class="col-md-8 align-items-center">
             <div class="p-4 text-center">
-              <p class="h1">Entre <span style="color: #48773E;"><strong> em contato </strong></span></p>
-              <hr class="text-muted">
+              <p class="h1">Entre <span style="color: #48773E;"><strong> em contato </strong></span></p>              
+              <HorizontalLine icon="envelope" class="mb-4"/>
               <div class="row">
                 <div class="pb-5">
                   <span>
@@ -285,8 +297,8 @@
         <div class="row justify-content-center pb-4">
           <div class="col-md-8 align-items-center">
             <div class="p-4 text-center">
-              <p class="h1">Patrocinadores</p>
-              <hr class="text-muted">
+              <p class="h1">Patrocinadores</p>              
+              <HorizontalLine icon="cube" class="mb-4"/>              
               <span>
                 Patrocinadores do Saúde & CTI para a Agenda 2030.
               </span>
@@ -351,8 +363,11 @@
   </template>
   
   <script>
+  import HorizontalLine from "../icons/HorizontalLine.vue"
   export default {
     name: "EventPage",
+    components: {
+        HorizontalLine,
+    },
   };
   </script>
-  
