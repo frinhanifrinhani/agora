@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="@/assets/images/logo_AgoraFiocruz.png" alt="Bootstrap" width="275" height="46">
