@@ -14,4 +14,7 @@ const app = createApp(App)
 
 app.use(router)
 
+let url = import.meta.env.VITE_SERVICE_URL;
+app.config.globalProperties.$API_URL = url + 'api/';
+
 app.mount('#app')
