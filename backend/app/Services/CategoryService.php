@@ -89,7 +89,7 @@ class CategoryService
     public function getCategoryById($id): JsonResponse
     {
         try {
-            $category = Category::findOrFail($id);
+            $category = $this->categoryRepository->findOrFailByAttribute('id',$id);
 
             return response()->json(
                 [

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('alias')->unique();
             $table->boolean('open_to_comments')->default(true);
             $table->boolean('publicated')->default(false);
-            $table->date('publication_date')->nullable();
+            $table->timestamp('publication_date')->nullable();
 
             $table->foreignId('user_id')
                 ->references('id')

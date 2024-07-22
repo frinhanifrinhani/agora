@@ -6,13 +6,17 @@ use App\Helpers\DateHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tag extends Model
+class EventSchedule extends Model
 {
     use HasFactory, DateHelper;
 
     protected $fillable = [
-        'name',
-        'alias',
+        'title',
+        'date',
+        'time',
+        'description',
+        'order',
+        'event_id',
     ];
 
     public function getCreatedAtAttribute($value)
@@ -27,20 +31,25 @@ class Tag extends Model
 
     public static function defaultSortAttribute(): string
     {
-        return 'name';
+        return 'title';
     }
 
     public static function rules(): array
     {
         return [
-            'name' => 'required|max:255'
+            'title' => 'required|max:255',
+            'date' => 'required',
+            'time' => 'required',
+            'description' => 'required',
+            'order' => '',
+            'created_at' => '',
+            'updated_at' => '',
         ];
     }
 
-    public function news()
+    public function event()
     {
-        return $this->belongsToMany(News::class, 'news_tags', 'news_id', 'tag_id');
+        return $this->belongsTo(Event::class);
     }
 
 }
-

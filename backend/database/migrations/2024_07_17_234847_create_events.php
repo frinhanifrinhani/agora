@@ -21,12 +21,17 @@ return new class extends Migration
             $table->date('end_date');
             $table->time('end_time');
             $table->text('organizer');
-            $table->text('phone');
-            $table->text('email');
+            $table->text('ddd',2)->nullable();
+            $table->text('phone',9)->nullable();
+            $table->text('email',80)->nullable();
             $table->text('address');
-            $table->text('sidebar_button_link');
+            $table->text('location')->nullable();
+            $table->text('location-alias')->nullable();
+            $table->text('venue')->nullable();
+            $table->text('venue-alias')->nullable();
+            $table->text('sidebar_button_link')->nullable();
             $table->boolean('publicated')->default(false);
-            $table->date('publication_date')->nullable();
+            $table->timestamp('publication_date')->nullable();
 
             $table->foreignId('user_id')
                 ->references('id')

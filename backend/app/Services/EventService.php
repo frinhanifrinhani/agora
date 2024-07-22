@@ -2,57 +2,63 @@
 
 namespace App\Services;
 
-use App\Models\Tag;
 use App\Helpers\MakeAlias;
-use Illuminate\Support\Str;
+use App\Helpers\DateHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\TagRepository;
+use App\Repositories\EventRepository;
+use App\Repositories\EventScheduleRepository;
 
-class TagService
+
+class EventService
 {
     use MakeAlias;
+    use DateHelper;
 
-    private TagRepository $tagRepository;
+    private EventRepository $eventRepository;
+    private EventScheduleService $eventScheduleService;
+    protected $request;
 
-    public function __construct(TagRepository $tagRepository)
+    public function __construct(EventRepository $eventRepository, EventScheduleService $eventScheduleService, Request $request)
     {
-        $this->tagRepository = $tagRepository;
+        $this->eventRepository = $eventRepository;
+        $this->eventScheduleService = $eventScheduleService;
+        $this->request = $request;
     }
 
-    public function getAllTag($request)
+    public function getAllEvents($request)
     {
-        return $this->tagRepository->paginate($request->limit,$request->page);
+        return $this->eventRepository->paginate($request->limit, $request->page);
     }
 
-    public function createTag($request): JsonResponse
+    public function createEvents($request): JsonResponse
     {
         try {
-            $tagData = $request->validated();
-
-            $tagAlias = $this->stringToAlias($tagData['name']);
-
-            $tagData['alias'] = $tagAlias;
-
             DB::beginTransaction();
 
-            $tag = $this->tagRepository->create($tagData);
+            $eventsData = $this->handlerEvent($request);
+
+            $eventsResponse = $this->eventRepository->create($eventsData);
+            $this->eventScheduleService->createEventSchedule($request->validated(['schedule']), $eventsResponse->id);
 
             DB::commit();
+
+            $eventsResponse = $eventsResponse->load(['eventSchedule']);
+
             return response()->json(
                 [
                     'success' => [
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Tag'
+                                'model' => 'Events'
                             ]
                         )
                     ],
                     'data' => [
-                        'tag' => $tag
+                        'events' => $eventsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -67,7 +73,7 @@ class TagService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Tag'
+                                    'model' => 'Events'
                                 ]
                             )
                         ]
@@ -85,15 +91,17 @@ class TagService
         }
     }
 
-    public function getTagById($id)
+    public function getEventsById($id)
     {
-
         try {
-            $tag = $this->tagRepository->findOrFailByAttribute('id',$id);
+            $events = $this->eventRepository
+                ->findByAttributeWhitRelation('id', $id)
+                ->with('eventSchedule')
+                ->firstOrFail();
 
             return response()->json(
                 [
-                    'data' => $tag
+                    'data' => $events
                 ],
                 Response::HTTP_OK
             );
@@ -107,19 +115,19 @@ class TagService
         }
     }
 
-    public function updateTag($request, $id)
+    public function updateEvents($request, $id)
     {
+
         try {
-
-            $tagData = $request->validated();
-
-            $tagAlias = $this->stringToAlias($tagData['name']);
-
-            $tagData['alias'] = $tagAlias;
-
+            $eventsData = $this->handlerEvent($request);
             DB::beginTransaction();
 
-            $tagResponse = $this->tagRepository->update($tagData,$id);
+            $eventsResponse = $this->eventRepository->update($eventsData, $id);
+
+            if ($request->has('schedule')) {
+                 $schedule = $request->input('schedule');
+                 $eventsResponse->syncEventSchedule($schedule);
+            }
 
             DB::commit();
 
@@ -129,35 +137,17 @@ class TagService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Tag'
+                                'model' => 'Events'
                             ]
                         )
                     ],
                     'data' => [
-                        'tag' => $tagResponse
+                        'events' => $eventsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
-
-            if ($e->getCode() == 23505) {
-                return response()->json(
-                    [
-                        'error' => [
-                            'message' =>
-                            __(
-                                'messages.erro.duplicateError',
-                                [
-                                    'model' => 'Tag'
-                                ]
-                            )
-                        ]
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
-
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -167,11 +157,11 @@ class TagService
         }
     }
 
-    public function deleteTag($id)
+    public function deleteEvents($id)
     {
         try {
 
-            $this->tagRepository->delete($id);
+            $this->eventRepository->delete($id);
 
             return response()->json(
                 [
@@ -179,7 +169,7 @@ class TagService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Tag'
+                                'model' => 'Events'
                             ]
                         )
                     ]
@@ -196,5 +186,28 @@ class TagService
         }
     }
 
+    private function handlerEvent($request)
+    {
+        $eventData = $request->validated();
+
+        if ($eventData['publicated']) {
+            $eventData['publication_date'] = $this->getNow();
+        }
+
+        if (!empty($eventData['location'])) {
+            $eventData['location-alias'] = $this->stringToAlias($eventData['location']);
+        }
+
+        if (!empty($eventData['venue'])) {
+            $eventData['venue-alias'] = $this->stringToAlias($eventData['venue']);
+        }
+
+        $eventAlias = $this->stringToAlias($eventData['title']);
+
+        $eventData['alias'] = $eventAlias;
+        $this->request->isMethod('post') ? $eventData['user_id'] = auth()->id() : null;
+
+        return $eventData;
+    }
 
 }

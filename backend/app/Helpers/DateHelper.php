@@ -10,7 +10,8 @@ trait DateHelper
     public function getNow()
     {
         $now = Carbon::now();
-        return $now->toDateTimeString();
+        //return $now->toDateTimeString();
+        return $now->format('Y-m-d H:i:s');
     }
 
     public function returnBrazilianDefaultDate($value){

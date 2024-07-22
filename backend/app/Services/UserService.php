@@ -77,7 +77,7 @@ class UserService
     public function getUserById($id): JsonResponse
     {
         try {
-            $user = User::findOrFail($id);
+            $user = $this->userRepository->findOrFailByAttribute('id',$id);
 
             return response()->json(
                 [

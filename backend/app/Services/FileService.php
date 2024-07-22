@@ -75,7 +75,7 @@ class FileService
     {
 
         try {
-            $file = File::findOrFail($id);
+            $file = $this->fileRepository->findOrFailByAttribute('id',$id);
 
             return response()->json(
                 [

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events_schedules', function (Blueprint $table) {
+        Schema::create('event_schedules', function (Blueprint $table) {
             $table->increments('id');
             $table->text('title');
             $table->date('date');
@@ -19,10 +19,11 @@ return new class extends Migration
             $table->text('description');
 
             $table->foreignId('event_id')
-                ->references('id')
-                ->on('events')
-                ->onDelete('restrict');
+            ->references('id')
+            ->on('events')
+            ->onDelete('cascade');
 
+            $table->integer('order')->nullable()->default(0);
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events_schedules');
+        Schema::dropIfExists('event_schedules');
     }
 };

@@ -76,7 +76,6 @@ abstract class BaseRepository
             $query->where('type', $type);
         }
 
-        $query->with(['category']);
         return $query->orderBy('id', 'desc')->paginate($limit, ['*'], 'page', $page);
     }
 
