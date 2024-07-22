@@ -1,55 +1,62 @@
 <template>
   <div>
-    <div class="row justify-content-center">
-      <div class="col-md-8 align-items-center">
-        <div class="p-4 text-center">
-          <p class="h2">Notícias</p>
-        </div>
+    <div v-if="loading" class="d-flex justify-content-center align-items-center vh-100">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
       </div>
     </div>
-    <div class="row justify-content-center">
-
-      <div v-for="(news, index) in paginatedNews" :key="index"
-        class="col-lg-5 col-md-5 mb-3 d-flex justify-content-center mx-1"
-      >
-      <div class="card w-100">
-        <img
-          src="#"
-          class="card-img-top"
-          alt=""
-        />
-        <div class="card-body">
-          <h5 class="card-title text-truncate" style="max-width: 100%;">
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <strong>{{ news.title }}</strong>
-            </a>
-          </h5>
-          <div class="card-text-container mb-5">
-            <p class="card-text" v-html="news.body"></p>
+    
+    <div v-else>
+      <div class="row justify-content-center">
+        <div class="col-md-8 align-items-center">
+          <div class="p-4 text-center">
+            <p class="h2">Notícias</p>
           </div>
-          <div class="card-info-area">
-            <div class="card-info">
-              <small> <i class="fas fa-calendar-alt"></i> <FormattedDate :date="news.publication_date" /></small>
-              <small> <i class="fas fa-comment"></i> {{ news.comments }}</small>
+        </div>
+      </div>
+    
+      <div class="row justify-content-center">
+        <div v-for="(news, index) in paginatedNews" :key="index"
+          class="col-lg-5 col-md-5 mb-3 d-flex justify-content-center mx-1"
+        >
+        <div class="card w-100">
+          <img
+            src="#"
+            class="card-img-top"
+            alt=""
+          />
+          <div class="card-body">
+            <h5 class="card-title text-truncate" style="max-width: 100%;">
+              <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <strong>{{ news.title }}</strong>
+              </a>
+            </h5>
+            <div class="card-text-container mb-5">
+              <p class="card-text" v-html="news.body"></p>
             </div>
-            <a class="btn btn-sm float-end" href="#">
-              <small class="text-white">MAIS</small>
-            </a>
+            <div class="card-info-area">
+              <div class="card-info">
+                <small> <i class="fas fa-calendar-alt"></i> <FormattedDate :date="news.publication_date" /></small>
+                <small> <i class="fas fa-comment"></i> {{ news.comments }}</small>
+              </div>
+              <a class="btn btn-sm float-end" href="#">
+                <small class="text-white">MAIS</small>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <Pagination
+        :currentPage="currentPage"
+        :totalPages="totalPages"
+        @page-changed="changePage"
+      />'
     </div>
-
-    <Pagination
-      :currentPage="currentPage"
-      :totalPages="totalPages"
-      @page-changed="changePage"
-    />
-
   </div>
 </div>
 </template>
