@@ -26,4 +26,17 @@ class FileRepository extends BaseRepository
     {
         return $this->model->findOrFail($id);
     }
+
+    public function storeFile($data)
+    {
+        return File::create([
+            'name' => $data['name'],
+            'path' => $data['path'],
+            'full_path' => $data['full_path'],
+            'file' => null,
+            'type' => $data['type'],
+            'size' => $data['size'],
+            'extension' => $data['extension']
+        ]);
+    }
 }

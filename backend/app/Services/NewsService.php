@@ -32,7 +32,8 @@ class NewsService
 
     public function getAllNews($request)
     {
-        return $this->newsRepository->paginate($request->limit, $request->page);
+        $search = $request->query();
+        return $this->newsRepository->paginate($request->limit, $request->page, $search);
     }
 
     public function createNews($request): JsonResponse
