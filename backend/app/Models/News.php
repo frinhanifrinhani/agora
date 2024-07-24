@@ -68,4 +68,13 @@ class News extends Model
         return $this->belongsToMany(Tag::class, 'news_tags', 'news_id','tag_id' );
     }
 
+    public function filesNews()
+    {
+        return $this->hasMany(FilesNews::class, 'news_id', 'id');
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany(File::class, 'files_news', 'news_id', 'file_id');
+    }
 }

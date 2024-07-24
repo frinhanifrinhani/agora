@@ -7,11 +7,14 @@ use App\Helpers\MakeAlias;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\TagRepository;
+use App\Repositories\FileRepository;
+use App\Repositories\NewsRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\File;
+use PhpParser\Node\Expr\Cast\Array_;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\CategoryRepository;
-use App\Repositories\NewsRepository;
-use PhpParser\Node\Expr\Cast\Array_;
+use App\Repositories\filesNewsRepository;
 
 class MigratorService
 {
@@ -21,17 +24,23 @@ class MigratorService
     private CategoryRepository $categoryRepository;
     private TagRepository $tagRepository;
     private NewsRepository $newsRepository;
+    private FileRepository $fileRepository;
+    private filesNewsRepository $filesNewsRepository;
 
     public function __construct(
         UserRepository $userRepository,
         CategoryRepository $categoryRepository,
         TagRepository $tagRepository,
-        NewsRepository $newsRepository
+        NewsRepository $newsRepository,
+        FileRepository $fileRepository,
+        filesNewsRepository $filesNewsRepository
     ) {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->tagRepository = $tagRepository;
         $this->newsRepository = $newsRepository;
+        $this->fileRepository = $fileRepository;
+        $this->filesNewsRepository = $filesNewsRepository;
     }
 
     public function migrateNews()
@@ -63,6 +72,9 @@ class MigratorService
 
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
+
+            $imagesData = $this->handlerImages($data);
+            $this->saveImages($imagesData);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -290,6 +302,7 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
+
                 $tag = $this->tagRepository->findByAttribute('alias', $data['alias']);
                 echo "<br />";
                 if (!$tag) {
@@ -315,6 +328,82 @@ class MigratorService
         }
 
         echo "FINALIZADA MIGRAÇÃO DE TAGS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+    }
+
+    private function handlerImages($data)
+    {
+        if (isset($data['rss']['channel']['item'])) {
+            $images = $data['rss']['channel']['item'];
+            $basePath = 'images/';
+            $fileInfoList = [];
+
+            foreach ($images as $item) {
+
+                if (isset($item['img']) && !is_null($item['img'])) {
+                    $imgPath = $basePath . $item['img'];
+
+                    if (File::exists($imgPath)) {
+                        $fileInfo = [
+                            'name' => pathinfo($imgPath, PATHINFO_FILENAME),
+                            'path' => $basePath,
+                            'full_path' => $imgPath,
+                            'type' => File::mimeType($imgPath),
+                            'size' => File::size($imgPath),
+                            'extension' => pathinfo($imgPath, PATHINFO_EXTENSION),
+                            'title' => isset($item['title']) ? $item['title'] : null,
+                        ];
+        
+                        $fileInfoList[] = $fileInfo;
+                    }
+                }
+            }
+
+            return $fileInfoList;
+        }
+    }
+
+    private function saveImages($arrayData)
+    {
+        echo "<br />";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRAÇÃO DE IMAGENS";
+        echo "<br />";
+
+        try {
+            foreach ($arrayData as $data) {
+
+                $news = $this->newsRepository->findByTitle($data['title']);
+
+                echo "<br />";
+
+                DB::beginTransaction();
+                $file = $this->fileRepository->storeFile($data);
+                DB::commit();
+
+                DB::beginTransaction();
+                echo $this->filesNewsRepository->storeFilesNews($news->id, $file->id);
+                DB::commit();
+            }
+
+            echo "<br />";
+            echo "<br />";
+            echo "Imagens migradas com sucesso";
+            echo "<br />";
+            echo "<br />";
+        } catch (\Exception $e) {
+            echo "<br />";
+            echo "<br />";
+            echo "Erro: " . 'Tags ' . $e;
+            echo "<br />";
+            echo "<br />";
+        }
+
+        echo "FINALIZADA MIGRAÇÃO DE IMAGENS";
         echo "<br />";
         echo "==========================================";
         echo "<br />";

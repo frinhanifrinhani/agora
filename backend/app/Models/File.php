@@ -42,4 +42,9 @@ class File extends Model
     {
         return $this->returnBrazilianDefaultDate($value);
     }
+
+    public function news()
+    {
+        return $this->belongsToMany(News::class, 'files_news', 'file_id', 'news_id');
+    }
 }

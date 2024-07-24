@@ -15,41 +15,43 @@
         </div>
       </div>
     
-      <div class="row justify-content-center">
+      <div class="row justify-content-center pb-3">
         <div v-for="(news, index) in paginatedNews" :key="index"
-          class="col-lg-5 col-md-5 mb-3 d-flex justify-content-center mx-1"
+          class="col-lg-5 col-md-5 mb-3 d-flex justify-content-center"
         >
-        <div class="card w-100">
-          <img
-            src="#"
-            class="card-img-top"
-            alt=""
-          />
-          <div class="card-body">
-            <h5 class="card-title text-truncate" style="max-width: 100%;">
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <strong>{{ news.title }}</strong>
-              </a>
-            </h5>
-            <div class="card-text-container mb-5">
-              <p class="card-text" v-html="news.body"></p>
-            </div>
-            <div class="card-info-area">
-              <div class="card-info">
-                <small> <i class="fas fa-calendar-alt"></i> <FormattedDate :date="news.publication_date" /></small>
-                <small> <i class="fas fa-comment"></i> {{ news.comments }}</small>
+          <div class="p-1">
+            <div class="card pb-4" style="width: 33rem; height: auto !important;">
+              <ImageComponent :imagePath="news.files_news[0].file.full_path" />
+              <div class="card-body">
+                <div class="pb-1">
+                  
+                  <h5 class="card-title text-truncate" style="max-width: 100%;">
+                    <a
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <strong>{{ news.title }}</strong>
+                    </a>
+                  </h5>
+                </div>
+                <div class="card-text-container mb-4">
+                  <p class="card-text" v-html="news.body"></p>
+                </div>
+                <div class="card-info-area mb-0">
+                  <div class="card-info">
+                    <small> <i class="fas fa-calendar-alt"></i> <FormattedDate :date="news.publication_date" /></small>
+                    <small> <i class="fas fa-comment"></i> {{ news.comments }}</small>
+                  </div>
+                  <a class="btn btn-sm float-end" href="#">
+                    <small class="text-white">MAIS</small>
+                  </a>
+                </div>
+                
               </div>
-              <a class="btn btn-sm float-end" href="#">
-                <small class="text-white">MAIS</small>
-              </a>
             </div>
           </div>
         </div>
-      </div>
 
       <Pagination
         :currentPage="currentPage"
@@ -66,12 +68,14 @@ import NewsService from '../../service/NewsService';
 import DOMPurify from 'dompurify';
 import FormattedDate from '../FormattedDate.vue';
 import Pagination from '../Pagination.vue';
+import ImageComponent from '../ImageComponent.vue';
 
 export default {
   name: "News",
   components: {
     FormattedDate,
-    Pagination
+    Pagination,
+    ImageComponent,
   },
   data() {
     return {
@@ -122,3 +126,21 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+</style>
