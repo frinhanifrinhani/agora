@@ -26,7 +26,7 @@ class NewsRepository extends BaseRepository
     {
         return $this->model->findOrFail($id);
     }
-    
+
     public function findByTitle($title)
     {
         return $this->model->select('id')->where('title', $title)->first();
@@ -64,6 +64,8 @@ class NewsRepository extends BaseRepository
         }
 
         $query->with(['filesNews.file']);
+        $query->with(['category']);
+        $query->with(['tag']);
 
         return $query->orderBy('id', 'desc')->paginate($limit, ['*'], 'page', $page);
     }
