@@ -100,6 +100,7 @@ class NewsService
         try {
             $news = $this->newsRepository->findByAttributeWhitRelation('id',$id)
             ->with('category')
+            ->with('tag')
             ->firstOrFail();
 
             return response()->json(
@@ -128,6 +129,7 @@ class NewsService
             $newsResponse = $this->newsRepository->update($newsData, $id);
 
             $newsResponse->category()->sync($newsData['categories']);
+            $newsResponse->tag()->sync($newsData['tags']);
             DB::commit();
 
             return response()->json(

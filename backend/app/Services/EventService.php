@@ -42,6 +42,7 @@ class EventService
 
             $eventsResponse = $this->eventRepository->create($eventsData);
             $this->eventScheduleService->createEventSchedule($request->validated(['schedule']), $eventsResponse->id);
+            $eventsResponse->tag()->sync($eventsData['tags']);
 
             DB::commit();
 
@@ -97,6 +98,7 @@ class EventService
             $events = $this->eventRepository
                 ->findByAttributeWhitRelation('id', $id)
                 ->with('eventSchedule')
+                ->with('tag')
                 ->firstOrFail();
 
             return response()->json(
@@ -128,6 +130,8 @@ class EventService
                  $schedule = $request->input('schedule');
                  $eventsResponse->syncEventSchedule($schedule);
             }
+
+            $eventsResponse->tag()->sync($eventsData['tags']);
 
             DB::commit();
 
