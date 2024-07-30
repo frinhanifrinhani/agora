@@ -76,12 +76,19 @@ class Event extends Model
             'location'=>'',
             'venue'=>'',
             'schedule'=>'',
+            'tags' => ''
         ];
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function tag()
+    {
+        return $this->belongsToMany(Tag::class, 'event_tags', 'event_id','tag_id' );
     }
 
     public function eventSchedule()

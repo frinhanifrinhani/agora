@@ -42,5 +42,10 @@ class Tag extends Model
         return $this->belongsToMany(News::class, 'news_tags', 'news_id', 'tag_id');
     }
 
+    public function event()
+    {
+        return $this->belongsToMany(Event::class, 'event_tags', 'event_id', 'tag_id');
+    }
+
 }
 
