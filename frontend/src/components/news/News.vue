@@ -41,7 +41,6 @@
                 <div class="card-info-area mb-0">
                   <div class="card-info">
                     <small> <i class="fas fa-calendar-alt"></i> <FormattedDate :date="news.publication_date" /></small>
-                    <small> <i class="fas fa-comment"></i> {{ news.comments }}</small>
                   </div>
                   <a class="btn btn-sm float-end" href="#">
                     <small class="text-white">MAIS</small>

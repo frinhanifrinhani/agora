@@ -1,105 +1,114 @@
 <?php
 
-namespace App\Services;
+namespace App\Jobs;
 
+use Exception;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Helpers\MakeAlias;
+use Illuminate\Support\Str;
 use Illuminate\Http\Response;
-use App\Jobs\MigrateImagesJob;
+use App\Helpers\ImagesMigrator;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\TagRepository;
+use Illuminate\Support\Facades\Log;
 use App\Repositories\FileRepository;
 use App\Repositories\NewsRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use PhpParser\Node\Expr\Cast\Array_;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\CategoryRepository;
+use Illuminate\Queue\InteractsWithQueue;
 use App\Repositories\filesNewsRepository;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use App\Notifications\JobCompletedNotification;
 
-class MigratorService
+class MigrateImagesJob implements ShouldQueue
 {
-    use MakeAlias;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    
+    // public $jobId;
+    
+    // public $userRepository;
+    // /* private $categoryRepository;
+    // private $tagRepository; */
+    // public $newsRepository;
+    // public $fileRepository;
+    // public $filesNewsRepository;
 
-    private UserRepository $userRepository;
-    private CategoryRepository $categoryRepository;
-    private TagRepository $tagRepository;
-    private NewsRepository $newsRepository;
-    private FileRepository $fileRepository;
-    private filesNewsRepository $filesNewsRepository;
-    private MigrateImagesJob $migrateImagesJob;
+    // public function __construct(
+    //     /* UserRepository $userRepository,
+    //     CategoryRepository $categoryRepository,
+    //     TagRepository $tagRepository,
+    //     NewsRepository $newsRepository,
+    //     FileRepository $fileRepository,
+    //     FilesNewsRepository $filesNewsRepository */
+    // ) {
+    //     /* $this->userRepository = $userRepository;
+    //     $this->categoryRepository = $categoryRepository;
+    //     $this->tagRepository = $tagRepository;
+    //     $this->newsRepository = $newsRepository;
+    //     $this->fileRepository = $fileRepository;
+    //     $this->filesNewsRepository = $filesNewsRepository; */
+    //     //$this->jobId = DB::table('jobs')->latest('id')->first()->id;
+    // }
 
-    public function __construct(
-        UserRepository $userRepository,
-        CategoryRepository $categoryRepository,
-        TagRepository $tagRepository,
-        NewsRepository $newsRepository,
-        FileRepository $fileRepository,
-        filesNewsRepository $filesNewsRepository,
-        MigrateImagesJob $migrateImagesJob
-    ) {
-        $this->userRepository = $userRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->tagRepository = $tagRepository;
-        $this->newsRepository = $newsRepository;
-        $this->fileRepository = $fileRepository;
-        $this->filesNewsRepository = $filesNewsRepository;
-        $this->migrateImagesJob = $migrateImagesJob;
-    }
 
-    public function migrateNews()
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
     {
+        Log::info('Iniciando migração de imagens...');
+        
+        $userRepository = app(UserRepository::class);
+        $categoryRepository = app(CategoryRepository::class);
+        $tagRepository = app(TagRepository::class);
+        $newsRepository = app(NewsRepository::class);
+        $fileRepository = app(FileRepository::class);
+        $filesNewsRepository = app(FilesNewsRepository::class);
+        
+        $json = Storage::get('migrator/posts.json');
+        $data = json_decode($json, true);
 
-        echo "==========================================";
-        echo "<br />";
-        echo "INICIANDO MIGRADOR DE NOTÍCIAS";
-        echo "<br />";
-        echo "==========================================";
-        echo "<br />";
-        echo "<br />";
-        echo "<br />";
+        $migrator = new ImagesMigrator();
+        $migrator->executeCrowler();
+        
+        $imagesJson = Storage::get('migrator/temp_images.json');
+        $imagesData = json_decode($imagesJson, true);
 
-        $this->migrateImagesJob->handle();
-        /* try {
-            $json = Storage::get('migrator/posts.json');
-            $data = json_decode($json, true);
+        DB::beginTransaction();
 
-            DB::beginTransaction();
+        $authorsData = $this->handlerAuthors($data, $userRepository);
+        $this->saveAuthors($authorsData, $userRepository);
 
-            $authorsData = $this->handlerAuthors($data);
-            $this->saveAuthors($authorsData);
+        $categoriesData = $this->handlerCategories($data, $categoryRepository);
+        $this->saveCategories($categoriesData, $categoryRepository);
 
-            $categoriesData = $this->handlerCategories($data);
-            $this->saveCategories($categoriesData);
+        $tagsData = $this->handlerTags($data, $tagRepository);
+        $this->saveTags($tagsData, $tagRepository);
 
-            $tagsData = $this->handlerTags($data);
-            $this->saveTags($tagsData);
+        $newsData = $this->handlerNews($data, $categoryRepository, $tagRepository, $userRepository);
+        $this->saveNews($newsData, $newsRepository);
+        
+        $this->addImagesToJson($data, $imagesData);
+        $this->saveImages($this->handlerImages($imagesData), $fileRepository, $filesNewsRepository, $newsRepository);
 
-            $newsData = $this->handlerNews($data);
-            $this->saveNews($newsData);
+        DB::commit();
 
-            $imagesData = $this->handlerImages($data);
-            $this->saveImages($imagesData);
+        //Storage::put('migrator/posts.json', json_encode($data, JSON_PRETTY_PRINT));
 
-            DB::commit();
-        } catch (\Exception $e) {
-
-            return response()->json(
-                [
-                    'error' => [$e->getMessage()]
-                ],
-                Response::HTTP_BAD_REQUEST
-            );
-        } */
-        echo "<br />";
-        echo "==========================================";
-        echo "<br />";
-        echo "MIGRAÇÃO FINALIZADA COM SUCESSO";
-        echo "<br />";
-        echo "==========================================";
+        $user = User::find(1);
+        $user->notify(new JobCompletedNotification());
+        
+        Log::info('Migração de imagens concluída.');
     }
 
-    /* private function handlerAuthors($data)
+    private function handlerAuthors($data)
     {
         if (isset($data['rss']['channel']['author'])) {
             $authors = $data['rss']['channel']['author'];
@@ -126,7 +135,7 @@ class MigratorService
         }
     }
 
-    private function saveAuthors($arrayData)
+    private function saveAuthors($arrayData, $userRepository)
     {
 
         echo "==========================================";
@@ -138,12 +147,12 @@ class MigratorService
 
             foreach ($arrayData as $data) {
 
-                $author = $this->userRepository->findByAttribute('name', $data['name']);
+                $author = $userRepository->findByAttribute('name', $data['name']);
 
                 echo "<br />";
                 if (!$author) {
                     DB::beginTransaction();
-                    echo $this->userRepository->create($data);
+                    echo $userRepository->create($data);
                     DB::commit();
                 } else {
                     echo "O Autor <b>" . $data['name'] . "</b> já se econtra cadastrado";
@@ -217,7 +226,7 @@ class MigratorService
         }
     }
 
-    private function saveCategories($arrayData)
+    private function saveCategories($arrayData, $categoryRepository)
     {
         echo "<br />";
         echo "<br />";
@@ -229,11 +238,11 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $category = $this->categoryRepository->findByAttribute('alias', $data['alias']);
+                $category = $categoryRepository->findByAttribute('alias', $data['alias']);
                 echo "<br />";
                 if (!$category) {
                     DB::beginTransaction();
-                    echo $this->categoryRepository->create($data);
+                    echo $categoryRepository->create($data);
                     DB::commit();
                 } else {
                     echo "A Categoria <b>" . $data['name'] . "</b> já se econtra cadastrada";
@@ -295,7 +304,7 @@ class MigratorService
         }
     }
 
-    private function saveTags($arrayData)
+    private function saveTags($arrayData, $tagRepository)
     {
         echo "<br />";
         echo "<br />";
@@ -308,11 +317,11 @@ class MigratorService
 
             foreach ($arrayData as $data) {
 
-                $tag = $this->tagRepository->findByAttribute('alias', $data['alias']);
+                $tag = $tagRepository->findByAttribute('alias', $data['alias']);
                 echo "<br />";
                 if (!$tag) {
                     DB::beginTransaction();
-                    echo $this->tagRepository->create($data);
+                    echo $tagRepository->create($data);
                     DB::commit();
                 } else {
                     echo "A Tag <b>" . $data['name'] . "</b> já se econtra cadastrada";
@@ -338,17 +347,30 @@ class MigratorService
         echo "<br />";
     }
 
-    private function handlerImages($data)
+    private function addImagesToJson(&$data, $imagesData)
     {
         if (isset($data['rss']['channel']['item'])) {
-            $images = $data['rss']['channel']['item'];
+            $items = &$data['rss']['channel']['item'];
+
+            foreach ($items as &$item) {
+                foreach ($imagesData as $imageData) {
+                    if (isset($item['titles']) && $item['titles'] === $imageData['titles']) {
+                        $item['img'] = 'images/' . basename($imageData['images']);
+                    }
+                }
+            }
+        }
+    }
+
+    private function handlerImages($data)
+    {
+        if (isset($data)) {
             $basePath = 'images/';
             $fileInfoList = [];
 
-            foreach ($images as $item) {
-
-                if (isset($item['img']) && !is_null($item['img'])) {
-                    $imgPath = $basePath . $item['img'];
+            foreach ($data as $item) {
+                if (isset($item['images']) && !is_null($item['images'])) {
+                    $imgPath = $basePath . $item['img'][0];
 
                     if (File::exists($imgPath)) {
                         $fileInfo = [
@@ -358,9 +380,9 @@ class MigratorService
                             'type' => File::mimeType($imgPath),
                             'size' => File::size($imgPath),
                             'extension' => pathinfo($imgPath, PATHINFO_EXTENSION),
-                            'title' => isset($item['title']) ? $item['title'] : null,
+                            'title' => isset($item['titles'][0]) ? $item['titles'][0] : null,
                         ];
-        
+
                         $fileInfoList[] = $fileInfo;
                     }
                 }
@@ -370,7 +392,7 @@ class MigratorService
         }
     }
 
-    private function saveImages($arrayData)
+    private function saveImages($arrayData, $fileRepository, $filesNewsRepository, $newsRepository)
     {
         echo "<br />";
         echo "<br />";
@@ -381,17 +403,16 @@ class MigratorService
 
         try {
             foreach ($arrayData as $data) {
-
-                $news = $this->newsRepository->findByTitle($data['title']);
-
+                $news = $newsRepository->findByTitle($data['title']);
+                Log::info($news);
                 echo "<br />";
 
                 DB::beginTransaction();
-                $file = $this->fileRepository->storeFile($data);
+                $file = $fileRepository->storeFile($data);
                 DB::commit();
-
+                Log::info($file);
                 DB::beginTransaction();
-                echo $this->filesNewsRepository->storeFilesNews($news->id, $file->id);
+                echo $filesNewsRepository->storeFilesNews($news->id, $file->id);
                 DB::commit();
             }
 
@@ -414,7 +435,7 @@ class MigratorService
         echo "<br />";
     }
 
-    private function handlerNews($data)
+    private function handlerNews($data, $categoryRepository, $tagRepository, $userRepository)
     {
         if (isset($data['rss']['channel']['item'])) {
             $newsJson = $data['rss']['channel']['item'];
@@ -436,7 +457,7 @@ class MigratorService
                         && $news['category']['_nicename'] != 'nao-categorizado'
                         && $news['category']['_nicename'] != 'uncategorized'
                     ) {
-                        $catetoryResponse = $this->categoryRepository->findByAttribute('alias', $news['category']['_nicename']);
+                        $catetoryResponse = $categoryRepository->findByAttribute('alias', $news['category']['_nicename']);
                         if ($catetoryResponse) {
                             array_push($categoriesToAdd, $catetoryResponse->id);
                         }
@@ -451,7 +472,7 @@ class MigratorService
                             && $categories['_nicename'] != 'nao-categorizado'
                         ) {
 
-                            $catetoryResponse = $this->categoryRepository->findByAttribute('alias', $categories['_nicename']);
+                            $catetoryResponse = $categoryRepository->findByAttribute('alias', $categories['_nicename']);
                             if ($catetoryResponse) {
                                 array_push($categoriesToAdd, $catetoryResponse->id);
                             }
@@ -463,7 +484,7 @@ class MigratorService
                 if (isset($news['category']['_domain'])) {
 
                     if ($news['category']['_domain'] == 'post_tag') {
-                        $tagResponse = $this->tagRepository->findByAttribute('alias', $news['post_tag']['_nicename']);
+                        $tagResponse = $tagRepository->findByAttribute('alias', $news['post_tag']['_nicename']);
                         if ($tagResponse) {
                             array_push($tagsToAdd, $tagResponse->id);
                         }
@@ -474,7 +495,7 @@ class MigratorService
 
                         if ($tags['_domain'] == 'post_tag') {
 
-                            $tagResponse = $this->tagRepository->findByAttribute('alias', $tags['_nicename']);
+                            $tagResponse = $tagRepository->findByAttribute('alias', $tags['_nicename']);
                             if ($tagResponse) {
                                 array_push($tagsToAdd, $tagResponse->id);
                             }
@@ -486,7 +507,7 @@ class MigratorService
                     'title' =>  $news['title'],
                     'body' => $body,
                     'alias' => $news['post_name']['__cdata'],
-                    'user_id' => $this->getUserIdByLogin($news['creator']['__cdata']),
+                    'user_id' => $this->getUserIdByLogin($news['creator']['__cdata'], $userRepository),
                     'publication_date' => $this->dateWPToDefault($news['pubDate']),
                     'publicated' => $publicated,
                     'open_to_comments' => $openToComments,
@@ -513,13 +534,13 @@ class MigratorService
         return $formattedDate;
     }
 
-    private function getUserIdByLogin($login)
+    private function getUserIdByLogin($login, $userRepository)
     {
-        $creator = $this->userRepository->findByAttribute('login', $login);
+        $creator = $userRepository->findByAttribute('login', $login);
         return $creator->id;
     }
 
-    private function saveNews($arrayData)
+    private function saveNews($arrayData, $newsRepository)
     {
         echo "<br />";
         echo "<br />";
@@ -531,11 +552,11 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $news = $this->newsRepository->findByAttribute('alias', $data['alias']); //->firstOrFail();
+                $news = $newsRepository->findByAttribute('alias', $data['alias']); //->firstOrFail();
                 echo "<br />";
                 if (!$news) {
                     DB::beginTransaction();
-                    $newsResponse = $this->newsRepository->create($data);
+                    $newsResponse = $newsRepository->create($data);
                     $newsResponse->category()->sync($data['categories']);
                     $newsResponse->tag()->sync($data['tags']);
                     echo $data['title'];
@@ -562,5 +583,5 @@ class MigratorService
         echo "<br />";
         echo "==========================================";
         echo "<br />";
-    } */
+    }
 }
