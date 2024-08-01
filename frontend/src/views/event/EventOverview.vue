@@ -59,40 +59,40 @@
   }
 
   .custom-button-tags {
-      background-color: #E9E9E9; 
-      color: #6D6D6D; 
-      border: none; 
-      border-radius: 5px;
-      padding: 8px 16px; 
-      text-align: left; 
-      text-decoration: none; 
-      display: inline-block;
-      cursor: pointer;
-      transition: background-color 0.3s, border-bottom 0.3s; 
+    background-color: #E9E9E9; 
+    color: #6D6D6D; 
+    border: none; 
+    border-radius: 5px;
+    padding: 8px 16px; 
+    text-align: left; 
+    text-decoration: none; 
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s, border-bottom 0.3s; 
   }
 
   .custom-button-tags:hover {
-     color: #55A649;
-     text-decoration: underline;
-     text-decoration-color: #55A649;
-    }
+    color: #55A649;
+    text-decoration: underline;
+    text-decoration-color: #55A649;
+  }
 
-    .form-search{
-      display: flex;
-      flex-wrap: nowrap;
+  .form-search{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .form-search {
+      display: block;
       width: 100%;
-    }
+  }
 
-    .form-search {
-        display: block;
-        width: 100%;
-    }
-
-    .form-search .form-control,
-    .form-search .btn {
-        width: 100%;
-        margin-bottom: 10px; 
-    }
+  .form-search .form-control,
+  .form-search .btn {
+      width: 100%;
+      margin-bottom: 10px; 
+  }
 
 </style>
 

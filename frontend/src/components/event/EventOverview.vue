@@ -137,7 +137,7 @@
 </template>
 
 <script>
-    export default {
-        name: "EventOverview",
-    };
+export default {
+    name: "EventOverview",
+};
 </script>
