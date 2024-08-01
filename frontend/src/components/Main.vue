@@ -3,7 +3,7 @@
   <div>
     <div class="row justify-content-center">
       <div class="col-md-12 position-relative image-container pb-5">
-          <img src="@/assets/images/banner.jpg" class="img-fluid" alt="">
+          <img src="@/assets/images/banner.png" class="img-fluid" alt="">
           <div class="centered-button">
             <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="/sobre">
                 <span class="me-2">Leia Mais</span>

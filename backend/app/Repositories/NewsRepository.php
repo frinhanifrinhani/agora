@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\News;
+use Illuminate\Support\Facades\Log;
 
 class NewsRepository extends BaseRepository
 {

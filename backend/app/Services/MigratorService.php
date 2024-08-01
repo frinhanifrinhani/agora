@@ -11,7 +11,6 @@ use App\Repositories\FileRepository;
 use App\Repositories\NewsRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
-use PhpParser\Node\Expr\Cast\Array_;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\CategoryRepository;
 use App\Repositories\filesNewsRepository;
@@ -33,7 +32,7 @@ class MigratorService
         TagRepository $tagRepository,
         NewsRepository $newsRepository,
         FileRepository $fileRepository,
-        filesNewsRepository $filesNewsRepository
+        filesNewsRepository $filesNewsRepository,
     ) {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
@@ -45,7 +44,6 @@ class MigratorService
 
     public function migrateNews()
     {
-
         echo "==========================================";
         echo "<br />";
         echo "INICIANDO MIGRADOR DE NOTÍCIAS";
@@ -58,6 +56,9 @@ class MigratorService
         try {
             $json = Storage::get('migrator/posts.json');
             $data = json_decode($json, true);
+
+            $imagesJson = Storage::get('migrator/temp_images.json');
+            $imagesData = json_decode($imagesJson, true);
 
             DB::beginTransaction();
 
@@ -73,8 +74,7 @@ class MigratorService
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
 
-            $imagesData = $this->handlerImages($data);
-            $this->saveImages($imagesData);
+            $this->saveImages($this->handlerImages($imagesData));
 
             DB::commit();
         } catch (\Exception $e) {
@@ -335,15 +335,13 @@ class MigratorService
 
     private function handlerImages($data)
     {
-        if (isset($data['rss']['channel']['item'])) {
-            $images = $data['rss']['channel']['item'];
+        if (isset($data)) {
             $basePath = 'images/';
             $fileInfoList = [];
 
-            foreach ($images as $item) {
-
-                if (isset($item['img']) && !is_null($item['img'])) {
-                    $imgPath = $basePath . $item['img'];
+            foreach ($data as $item) {
+                if (isset($item['images']) && !is_null($item['images'])) {
+                    $imgPath = $basePath . $item['img'][0];
 
                     if (File::exists($imgPath)) {
                         $fileInfo = [
@@ -353,16 +351,16 @@ class MigratorService
                             'type' => File::mimeType($imgPath),
                             'size' => File::size($imgPath),
                             'extension' => pathinfo($imgPath, PATHINFO_EXTENSION),
-                            'title' => isset($item['title']) ? $item['title'] : null,
+                            'title' => isset($item['titles'][0]) ? $item['titles'][0] : null,
                         ];
-        
+
                         $fileInfoList[] = $fileInfo;
                     }
                 }
             }
 
             return $fileInfoList;
-        }
+        } 
     }
 
     private function saveImages($arrayData)
@@ -376,8 +374,43 @@ class MigratorService
 
         try {
             foreach ($arrayData as $data) {
+                
+                $title = '';
 
-                $news = $this->newsRepository->findByTitle($data['title']);
+                switch ($data['title']) {
+                    case 'Parceria entre Fiocruz e FCT é reconhecida como “investimento transformador” pela CEPAL':
+                        break;
+                        
+                    case 'Pesquisa sobre o Sistema Nacional de Auditoria: “teremos condições de realizar um planejamento efetivo das ações”':
+                        break;
+                    
+                    case '“Uma atuação da estratégia da Fiocruz para a Agenda 2030 no território”':
+                        break;
+
+                    case 'Cúpula Climática COP28: urgência para ação global com foco na equidade – considerações sobre saúde e papel do Brasil, por Danielly Magalhães, Luiz Augusto Galvão, Paulo Buss e Mário Moreira':
+                        break;
+
+                    case 'Fiocruz Brasília lança Painel Interativo – Banco de Soluções':
+                        break;
+
+                    case '“Rotas críticas: Feminicídio” é tema de palestra na Semana Uma Só Saúde':
+                        break;
+                        
+                    case '“A Saúde no Brasil em 2030”: livro alcança mais de 300 mil downloads':
+                        break;
+
+                    case 'O que pensamos ou sentimos quando falamos a palavra “gênero”?':
+                        break;
+                        
+                    case 'Programa Mais Médicos – como sustentar um programa que contribui para a cobertura universal?':
+                        break;
+                        
+                    default:
+                        $title = self::normalizeText($data['title']);
+                        break;
+                }
+
+                $news = $this->newsRepository->findByTitle($title ? $title : $data['title']);
 
                 echo "<br />";
 
@@ -398,7 +431,7 @@ class MigratorService
         } catch (\Exception $e) {
             echo "<br />";
             echo "<br />";
-            echo "Erro: " . 'Tags ' . $e;
+            echo "Erro: " . 'Images ' . $e;
             echo "<br />";
             echo "<br />";
         }
@@ -407,6 +440,14 @@ class MigratorService
         echo "<br />";
         echo "==========================================";
         echo "<br />";
+    }
+
+    private function normalizeText($text) {
+        return str_replace(
+            ['“', '”', '‘', '’', '–', '—'],
+            ['"', '"', "'", "'", '-', '-'],
+            $text
+        );
     }
 
     private function handlerNews($data)

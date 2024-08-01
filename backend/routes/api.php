@@ -56,10 +56,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 });
 
-
-
 Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {
     Route::post('news', 'news');
 });
 
-
+Route::get('/job-status/{id}', function ($id) {
+    $job = DB::table('jobs')->find($id);
+    if (!$job) {
+        return response()->json(['status' => 'completed']);
+    }
+    return response()->json(['status' => 'pending']);
+});
