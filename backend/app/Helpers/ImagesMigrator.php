@@ -73,7 +73,7 @@ class ImagesMigrator
     {
         $allImages = [];
 
-        for ($i = 1; $i <= 2; $i++) {
+        for ($i = 1; $i <= 28; $i++) {
 
             $url = $i == 1 ? "https://agora.fiocruz.br/blog/" : "https://agora.fiocruz.br/blog/page/$i/";
 

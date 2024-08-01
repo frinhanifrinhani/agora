@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\News;
+use Illuminate\Support\Facades\Log;
 
 class NewsRepository extends BaseRepository
 {
@@ -26,7 +27,7 @@ class NewsRepository extends BaseRepository
     {
         return $this->model->findOrFail($id);
     }
-    
+
     public function findByTitle($title)
     {
         return $this->model->select('id')->where('title', $title)->first();
