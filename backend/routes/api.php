@@ -58,6 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {
     Route::post('news', 'news');
+    Route::post('events', 'event');
 });
 
 Route::get('/job-status/{id}', function ($id) {

@@ -39,7 +39,7 @@ class EventService
             DB::beginTransaction();
 
             $eventsData = $this->handlerEvent($request);
-
+dd($eventsData);
             $eventsResponse = $this->eventRepository->create($eventsData);
             $this->eventScheduleService->createEventSchedule($request->validated(['schedule']), $eventsResponse->id);
             $eventsResponse->tag()->sync($eventsData['tags']);
@@ -199,11 +199,11 @@ class EventService
         }
 
         if (!empty($eventData['location'])) {
-            $eventData['location-alias'] = $this->stringToAlias($eventData['location']);
+            $eventData['location_alias'] = $this->stringToAlias($eventData['location']);
         }
 
         if (!empty($eventData['venue'])) {
-            $eventData['venue-alias'] = $this->stringToAlias($eventData['venue']);
+            $eventData['venue_alias'] = $this->stringToAlias($eventData['venue']);
         }
 
         $eventAlias = $this->stringToAlias($eventData['title']);
