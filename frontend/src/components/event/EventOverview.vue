@@ -1,25 +1,23 @@
 <template>
-    <div>
-        <div class="row justify-content-center">
+    <div> 
+        <!--Seção breadcrumbs-->
+        <div class="breadcrumbs-background">
+            <div class="row justify-content-center m-2 p-2">
+                <section>
+                    <h1>
+                        Em evento na ONU sobre a Agenda 2030, Fiocruz apresenta suas ações na pandemia
+                    </h1>
 
-            <!--Seção breadcrumbs-->
-            <img src="@/assets/images/breadcrumbs-bg.jpg" class="img-fluid" alt="Imagem de fundo breadcrumbs">
-
-            <section class="col-md-10">
-                <h1>
-                    Em evento na ONU sobre a Agenda 2030, Fiocruz apresenta suas ações na pandemia
-                </h1>
-
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Ágora Fiocruz</a></li>
-                        <li class="breadcrumb-item"><a href="#">2030 Agenda</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Em evento na ONU sobre a Agenda 2030, Fiocruz apresenta suas ações na pandemia</li>
-                    </ol>
-                </nav>
-            </section>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Ágora Fiocruz</a></li>
+                            <li class="breadcrumb-item"><a href="#">2030 Agenda</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Em evento na ONU sobre a Agenda 2030, Fiocruz apresenta suas ações na pandemia</li>
+                        </ol>
+                    </nav>
+                </section>
+            </div>
         </div>
-
         <!--Seção notícia-->
         <section class="row justify-content-center">
             <section class="col-md-10">
@@ -121,15 +119,14 @@
         </section>
 
         <!--Seção buscar e tags-->
-        <section>
-           <nav class="navbar navbar-light bg-light">
-                <form class="form-inline form-inline-equal">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                    <button class="btn btn-outline-success btn-block" type="submit">BUSCAR</button>
-                </form>
-            </nav>
-
+        <section class="row justify-content-center">
             <section class="col-md-2">
+                <nav class="navbar navbar-light bg-light">
+                <form class="form-search">
+                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+                    <button class="btn btn-outline-success btn-sm custom-button-border" type="submit">BUSCAR</button>
+                </form>
+             </nav>
                 <div>
                     <h5 class="mt-5 color-green">POSTS RECENTES</h5>
                     <hr/>
@@ -141,7 +138,7 @@
                 <div>
                     <h5 class="mt-5 color-green">TAGS</h5>
                     <hr/>
-                    <button type="button" class="custom-button-tags">
+                    <button type="button" class=" btn btn-outline-success custom-button-tags custom-button-border">
                         TAGS
                     </button>
                 </div>
@@ -151,11 +148,7 @@
 </template>
 
 <script>
-import HorizontalLine from '../icons/HorizontalLine.vue';
     export default {
-    name: "EventOverview",
-    components: {
-        HorizontalLine,
-    }
-};
+        name: "EventOverview",
+    };
 </script>
