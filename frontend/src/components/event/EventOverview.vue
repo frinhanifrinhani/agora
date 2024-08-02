@@ -18,7 +18,6 @@
                 </section>
             </div>
         </div>
-
         <!--Seção notícia-->
         <div class="container justify-content-center">
             <div class="row no-gutters mt-5">
