@@ -111,5 +111,23 @@
         margin-bottom: 10px; 
     }
 
+    .form-search{
+      display: flex;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+
+    .form-search {
+        display: block;
+        width: 100%;
+    }
+
+    .form-search .form-control,
+    .form-search .btn {
+        width: 100%;
+        margin-bottom: 10px; 
+    }
+
+
 </style>
 
