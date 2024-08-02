@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Helpers\MakeAlias;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\TagRepository;
@@ -11,6 +12,8 @@ use App\Repositories\FileRepository;
 use App\Repositories\NewsRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
+use App\Repositories\EventRepository;
+use App\Services\EventScheduleService;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\CategoryRepository;
 use App\Repositories\filesNewsRepository;
@@ -23,6 +26,9 @@ class MigratorService
     private CategoryRepository $categoryRepository;
     private TagRepository $tagRepository;
     private NewsRepository $newsRepository;
+    private EventRepository $eventRepository;
+    private EventScheduleService $eventScheduleService;
+
     private FileRepository $fileRepository;
     private filesNewsRepository $filesNewsRepository;
 
@@ -31,15 +37,19 @@ class MigratorService
         CategoryRepository $categoryRepository,
         TagRepository $tagRepository,
         NewsRepository $newsRepository,
+        EventRepository $eventRepository,
         FileRepository $fileRepository,
         filesNewsRepository $filesNewsRepository,
+        EventScheduleService $eventScheduleService,
     ) {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->tagRepository = $tagRepository;
         $this->newsRepository = $newsRepository;
+        $this->eventRepository = $eventRepository;
         $this->fileRepository = $fileRepository;
         $this->filesNewsRepository = $filesNewsRepository;
+        $this->eventScheduleService = $eventScheduleService;
     }
 
     public function migrateNews()
@@ -68,13 +78,61 @@ class MigratorService
             $categoriesData = $this->handlerCategories($data);
             $this->saveCategories($categoriesData);
 
-            $tagsData = $this->handlerTags($data);
+            $tagsData = $this->handlerTags($data,'post_tag');
             $this->saveTags($tagsData);
 
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
 
             $this->saveImages($this->handlerImages($imagesData));
+
+            DB::commit();
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "MIGRAÇÃO FINALIZADA COM SUCESSO";
+        echo "<br />";
+        echo "==========================================";
+    }
+
+    public function migrateEvent()
+    {
+
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRADOR DE EVENTOS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "<br />";
+        echo "<br />";
+
+        try {
+            $json = Storage::get('migrator/paginas.json');
+            $data = json_decode($json, true);
+
+            DB::beginTransaction();
+
+            $authorsData = $this->handlerAuthors($data);
+            $this->saveAuthors($authorsData);
+
+            $tagsData = $this->handlerTags($data,'event_tags');
+            $this->saveTags($tagsData);
+
+            $eventData = $this->handlerEvent($data);
+            $this->saveEvent($eventData);
+
+            $imagesData = $this->handlerImages($data);
+            $this->saveImages($imagesData);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -205,7 +263,6 @@ class MigratorService
                         }
                     }
                 }
-
             }
 
             return $categoriesData;
@@ -254,7 +311,7 @@ class MigratorService
         echo "<br />";
     }
 
-    private function handlerTags($data)
+    private function handlerTags($data,$type)
     {
         if (isset($data['rss']['channel']['item'])) {
             $tags = $data['rss']['channel']['item'];
@@ -265,7 +322,7 @@ class MigratorService
                 foreach ($tag['category'] as $tagIn) {
 
                     if (gettype($tagIn) == 'array') {
-                        if ($tagIn['_domain'] == 'post_tag') {
+                        if ($tagIn['_domain'] == $type) {
                             $arrayTag = [
                                 'name' => $tagIn['__cdata'] ?? null,
                                 'alias' => $tagIn['_nicename'] ?? null,
@@ -540,6 +597,124 @@ class MigratorService
         return $newsData;
     }
 
+    private function handlerEvent($data)
+    {
+        if (isset($data['rss']['channel']['item'])) {
+            $eventJson = $data['rss']['channel']['item'];
+
+            $eventData = [];
+
+            foreach ($eventJson as $event) {
+
+                $body = strlen($event['encoded'][1]['__cdata']) > strlen($event['encoded'][0]['__cdata']) ? $event['encoded'][1]['__cdata'] : $event['encoded'][0]['__cdata'];
+
+                $publicated = $event['status']['__cdata'] == 'publish' ? true : false;
+
+                $collection = collect($event['postmeta']);
+                $getMetaValue = function ($key) use ($collection) {
+                    return $collection->firstWhere('meta_key.__cdata', $key)['meta_value']['__cdata'] ?? null;
+                };
+
+                $organizers = array_filter($event['category'], function ($item) {
+                    return $item['_domain'] === 'organizer';
+                });
+
+                $organizerCdataValues = array_map(function ($item) {
+                    return $item['__cdata'];
+                }, $organizers);
+
+                $organizersToSave = implode(', ', $organizerCdataValues);
+
+
+                $location = array_filter($event['category'], function ($item) {
+                    return $item['_domain'] === 'location';
+                });
+
+                $locationCdataValues = array_map(function ($item) {
+                    return $item['__cdata'];
+                }, $location);
+
+                $locationToSave = implode(', ', $locationCdataValues);
+
+                $locationNiceNameValues = array_map(function ($item) {
+                    return $item['_nicename'];
+                }, $location);
+
+                $locationNiceNameToSave = implode(', ', $locationNiceNameValues);
+
+                $serializedArrayEventSchedule = $getMetaValue('event_schedule');
+
+                $unserializedArrayEventSchedule = unserialize($serializedArrayEventSchedule);
+
+                $eventSchedules = json_encode($unserializedArrayEventSchedule, JSON_PRETTY_PRINT);
+
+                $schedules = json_decode($eventSchedules);
+
+                $sheduleData = [];
+
+                if (!empty($schedules) && count($schedules) > 0) {
+
+                    foreach ($schedules as  $schedule) {
+
+                        $dataSchedule = [
+                            'title' => $schedule->title,
+                            'date' => $schedule->event_schedule_date,
+                            'time' => $schedule->event_schedule_time,
+                            'description' => $schedule->event_schedule_description,
+                        ];
+
+                        array_push($sheduleData, $dataSchedule);
+                    }
+                }
+
+                $tagsToAdd = [];
+
+                foreach ($event['category'] as $tags) {
+
+                    if ($tags['_domain'] == 'event_tags') {
+
+                        $tagResponse = $this->tagRepository->findByAttribute('alias', $tags['_nicename']);
+                        if ($tagResponse) {
+                            array_push($tagsToAdd, $tagResponse->id);
+                        }
+                    }
+                }
+
+                $data = [
+                    'user_id' => $this->getUserIdByLogin($event['creator']['__cdata']),
+                    'title' =>  $event['title'],
+                    'body' => $body,
+                    'alias' => $event['post_name']['__cdata'],
+                    'publicated' => $publicated,
+                    'publication_date' => $this->dateWPToDefault($event['pubDate']),
+                    'start_date' => $getMetaValue('event_start_date'),
+                    'start_time' => $getMetaValue('event_start_time'),
+                    'end_date' => $getMetaValue('event_end_date'),
+                    'end_time' =>  $getMetaValue('event_end_time'),
+                    'organizer' => $organizersToSave,
+                    //'ddd'=> '',
+                    'phone' => $getMetaValue('event_phone'),
+                    'email' => $getMetaValue('event_email'),
+                    'address' => $getMetaValue('event_detailed_address'),
+                    'location' => $locationToSave,
+                    'location_alias' => $locationNiceNameToSave,
+                    'venue' => $getMetaValue('event_venue'),
+                    'sidebar_button_link' => $getMetaValue('event_extra_sidebar_button_link'),
+                    'created_at' =>  $this->dateWPToDefault($event['post_date']['__cdata']),
+                    'updated_at' => $this->dateWPToDefault($event['post_modified']['__cdata']),
+                    'schedule' => [
+                        $sheduleData
+                    ],
+                    'tags' => $tagsToAdd
+                ];
+
+                array_push($eventData, $data);
+            }
+        }
+
+        return $eventData;
+    }
+
     private function dateWPToDefault($date)
     {
         $date = Carbon::parse($date);
@@ -590,6 +765,51 @@ class MigratorService
             echo "<br />";
             echo "<br />";
             echo "Erro: " . 'Notícias ' . $e;
+            echo "<br />";
+            echo "<br />";
+        }
+
+        echo "FINALIZADA MIGRAÇÃO DE NOTÍCAS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+    }
+
+    private function saveEvent($arrayData)
+    {
+        echo "<br />";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRAÇÃO DE EVENTOS";
+        echo "<br />";
+
+        try {
+
+            foreach ($arrayData as $data) {
+                $event = $this->eventRepository->findByAttribute('alias', $data['alias']); //->firstOrFail();
+                echo "<br />";
+                if (!$event) {
+                    DB::beginTransaction();
+                    $eventResponse = $this->eventRepository->create($data);
+                    $this->eventScheduleService->createEventSchedule($data['schedule'][0], $eventResponse->id);
+                    $eventResponse->tag()->sync($data['tags']);
+                    echo $data['title'];
+                    DB::commit();
+                } else {
+                    echo "O Evento <b>" . $data['title'] . "</b> já se econtra cadastrada";
+                }
+            }
+
+            echo "<br />";
+            echo "<br />";
+            echo "Notícas migradas com sucesso";
+            echo "<br />";
+            echo "<br />";
+        } catch (\Exception $e) {
+            echo "<br />";
+            echo "<br />";
+            echo "Erro: " . 'Evento ' . $e;
             echo "<br />";
             echo "<br />";
         }
