@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\CommentRepository;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class CommentService
@@ -22,14 +23,13 @@ class CommentService
         $this->request = $request;
     }
 
-    public function createComments($request, $id): JsonResponse
+    public function createComments($request): JsonResponse
     {
         try {
             DB::beginTransaction();
 
             $commentData = $request->validated();
 
-            $commentData['news_id'] = $id;
             $commentData['user_id'] =  auth()->id();
 
             $commentsResponse = $this->commentRepository->create($commentData);
@@ -79,103 +79,89 @@ class CommentService
         }
     }
 
-    // public function getCommentsById($id)
-    // {
-    //     try {
-    //         $comments = $this->commentRepository
-    //             ->findByAttributeWhitRelation('id', $id)
-    //             ->with('commentSchedule')
-    //             ->with('tag')
-    //             ->firstOrFail();
+    public function updateComments($request, $id)
+    {
 
-    //         return response()->json(
-    //             [
-    //                 'data' => $comments
-    //             ],
-    //             Response::HTTP_OK
-    //         );
-    //     } catch (\Exception  $e) {
-    //         return response()->json(
-    //             [
-    //                 'error' => [$e->getMessage()]
-    //             ],
-    //             Response::HTTP_BAD_REQUEST
-    //         );
-    //     }
-    // }
+        try {
+            DB::beginTransaction();
 
-    // public function updateComments($request, $id)
-    // {
+            $commentData = $request->validated();
 
-    //     try {
-    //         $commentsData = $this->handlerComment($request);
-    //         DB::beginTransaction();
+            $comment = $this->commentRepository->findByAttribute('id', $id);
 
-    //         $commentsResponse = $this->commentRepository->update($commentsData, $id);
+            if($comment->user_id != auth()->id()){
+                throw new HttpException(
+                    Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'Este comentário pertence a outro usuário.'
+                );
+            }
 
-    //         if ($request->has('schedule')) {
-    //              $schedule = $request->input('schedule');
-    //              $commentsResponse->syncCommentSchedule($schedule);
-    //         }
+            $commentsResponse = $this->commentRepository->update($commentData, $id);
 
-    //         $commentsResponse->tag()->sync($commentsData['tags']);
+            DB::commit();
 
-    //         DB::commit();
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.updated',
+                            [
+                                'model' => 'Comments'
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'comments' => $commentsResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
 
-    //         return response()->json(
-    //             [
-    //                 'success' => [
-    //                     'message' => __(
-    //                         'messages.updated',
-    //                         [
-    //                             'model' => 'Comments'
-    //                         ]
-    //                     )
-    //                 ],
-    //                 'data' => [
-    //                     'comments' => $commentsResponse
-    //                 ]
-    //             ],
-    //             Response::HTTP_CREATED
-    //         );
-    //     } catch (\Exception $e) {
-    //         return response()->json(
-    //             [
-    //                 'error' => [$e->getMessage()]
-    //             ],
-    //             Response::HTTP_BAD_REQUEST
-    //         );
-    //     }
-    // }
+    public function deleteComments($id)
+    {
+        try {
 
-    // public function deleteComments($id)
-    // {
-    //     try {
+            $comment = $this->commentRepository->findByAttribute('id', $id);
 
-    //         $this->commentRepository->delete($id);
+            if($comment->user_id != auth()->id()){
+                throw new HttpException(
+                    Response::HTTP_UNPROCESSABLE_ENTITY,
+                    'Este comentário pertence a outro usuário.'
+                );
+            }
 
-    //         return response()->json(
-    //             [
-    //                 'success' => [
-    //                     'message' => __(
-    //                         'messages.deleted',
-    //                         [
-    //                             'model' => 'Comments'
-    //                         ]
-    //                     )
-    //                 ]
-    //             ],
-    //             Response::HTTP_OK
-    //         );
-    //     } catch (\Exception $e) {
-    //         return response()->json(
-    //             [
-    //                 'error' => [$e->getMessage()]
-    //             ],
-    //             Response::HTTP_BAD_REQUEST
-    //         );
-    //     }
-    // }
+            $this->commentRepository->delete($id);
 
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.deleted',
+                            [
+                                'model' => 'Comments'
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
 
 }

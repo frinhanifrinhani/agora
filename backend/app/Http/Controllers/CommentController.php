@@ -17,24 +17,18 @@ class CommentController extends Controller
         $this->newsService = $newsService;
     }
 
-
-    public function stores(CommentRequest $request, int $id)
+    public function store(CommentRequest $request)
     {
-        return $this->newsService->createComments($request, $id);
+        return $this->newsService->createComments($request);
     }
 
-    // public function show(string $id): JsonResponse
-    // {
-    //     return $this->newsService->getCommentsById($id);
-    // }
+    public function update(CommentRequest $request, int $id)
+    {
+        return $this->newsService->updateComments($request, $id);
+    }
 
-    // public function update(CommentRequest $request, int $id): JsonResponse
-    // {
-    //     return $this->newsService->updateComments($request, $id);
-    // }
-
-    // public function destroy(int $id): JsonResponse
-    // {
-    //     return $this->newsService->deleteComments($id);
-    // }
+    public function destroy(int $id): JsonResponse
+    {
+        return $this->newsService->deleteComments($id);
+    }
 }

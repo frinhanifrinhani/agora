@@ -36,6 +36,7 @@ class Comment extends Model
     {
         return [
             'id'=>'',
+            'news_id'=>'required',
             'description' => 'required|max:255',
         ];
     }

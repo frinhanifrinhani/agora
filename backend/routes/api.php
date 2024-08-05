@@ -49,9 +49,10 @@ Route::controller(NewsController::class)->group(function () {
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
 
-Route::prefix('comments')->middleware('auth:sanctum')->controller(CommentController::class)->group(function () {
-    Route::post('/news/{id}', 'stores');
+Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group(function () {
+    Route::resource('comments', CommentController::class);
 });
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
