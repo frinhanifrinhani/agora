@@ -146,5 +146,15 @@
     }
 
 
+  .flex-container {
+    display: flex;
+  }
+
+
+  .column-right {
+    flex: 1; 
+  }
+
+
 </style>
 
