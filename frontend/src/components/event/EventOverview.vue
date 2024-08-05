@@ -71,7 +71,6 @@
                     <p>
                         “O Brasil, sob a liderança do presidente Lula, demonstra um compromisso renovado com a Agenda 2030, enfatizando a equidade e a solidariedade para os mais vulneráveis, com o objetivo de ‘não deixar ninguém para trás’. Na Paris Summit for Global Finance, ele disse, em alto e bom som: ‘(…) Já temos uma bússola acordada multilateralmente: a Agenda 2030’”, concluiu Gadelha.
                     </p>
-
                     <h4 class="mt-4 color-green">Reconstrução</h4>
 
                     <p>
@@ -81,7 +80,6 @@
                     <p>
                         Do Governo Federal participaram também a secretária de Povos e Comunidades Tradicionais e Desenvolvimento Rural Sustentável, Edel Moraes, que falou sobre o desenvolvimento sustentável nas cidades amazônicas; a subsecretária de Desenvolvimento Econômico Sustentável, Cristina Reis, que comentou sobre o Plano de Transformação Ecológica; e o embaixador Antonio da Costa e Silva, assessor especial do Ministério das Cidades. Entre os representantes da sociedade civil estavam o diretor-presidente do Instituto Cidades Sustentáveis, Jorge Abrahão, que apresentou um instrumento de monitoramento dos ODS nas cidades brasileiras, e a co-fundadora e coordenadora-geral da Gestos e co-facilitadora do GT Agenda 2030, Alessandra Nilo, que falou sobre como o Spotlight Report pode ser um  instrumento de monitoramento da Agenda 2030 pela sociedade civil. 
                     </p>
-
                     <h4 class="mt-4 color-green">Experiência da América Latina</h4>
 
                     <p>
