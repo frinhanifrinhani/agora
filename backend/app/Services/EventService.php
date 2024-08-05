@@ -39,7 +39,7 @@ class EventService
             DB::beginTransaction();
 
             $eventsData = $this->handlerEvent($request);
-dd($eventsData);
+
             $eventsResponse = $this->eventRepository->create($eventsData);
             $this->eventScheduleService->createEventSchedule($request->validated(['schedule']), $eventsResponse->id);
             $eventsResponse->tag()->sync($eventsData['tags']);
