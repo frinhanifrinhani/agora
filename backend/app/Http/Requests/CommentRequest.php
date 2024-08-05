@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\NewsComment;
+use App\Models\Comment;
 use App\Traits\Sanitize;
 
-class NewsCommentRequest extends FormRequest
+class CommentRequest extends FormRequest
 {
 
     use Sanitize;
@@ -26,7 +26,7 @@ class NewsCommentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return NewsComment::rules();
+        return Comment::rules();
     }
 
 }

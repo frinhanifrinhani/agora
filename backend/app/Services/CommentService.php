@@ -6,33 +6,33 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\NewsCommentRepository;
+use App\Repositories\CommentRepository;
 
 
-class NewsCommentService
+class CommentService
 {
-    private NewsCommentRepository $newsCommentRepository;
+    private CommentRepository $commentRepository;
     protected $request;
 
     public function __construct(
-        NewsCommentRepository $newsCommentRepository,
+        CommentRepository $commentRepository,
         Request $request
     ) {
-        $this->newsCommentRepository = $newsCommentRepository;
+        $this->commentRepository = $commentRepository;
         $this->request = $request;
     }
 
-    public function createNewsComments($request, $id): JsonResponse
+    public function createComments($request, $id): JsonResponse
     {
         try {
             DB::beginTransaction();
 
-            $newsCommentData = $request->validated();
+            $commentData = $request->validated();
 
-            $newsCommentData['news_id'] = $id;
-            $newsCommentData['user_id'] =  auth()->id();
+            $commentData['news_id'] = $id;
+            $commentData['user_id'] =  auth()->id();
 
-            $newsCommentsResponse = $this->newsCommentRepository->create($newsCommentData);
+            $commentsResponse = $this->commentRepository->create($commentData);
 
             DB::commit();
 
@@ -42,12 +42,12 @@ class NewsCommentService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'NewsComments'
+                                'model' => 'Comments'
                             ]
                         )
                     ],
                     'data' => [
-                        'newsComments' => $newsCommentsResponse
+                        'comments' => $commentsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -79,18 +79,18 @@ class NewsCommentService
         }
     }
 
-    // public function getNewsCommentsById($id)
+    // public function getCommentsById($id)
     // {
     //     try {
-    //         $newsComments = $this->newsCommentRepository
+    //         $comments = $this->commentRepository
     //             ->findByAttributeWhitRelation('id', $id)
-    //             ->with('newsCommentSchedule')
+    //             ->with('commentSchedule')
     //             ->with('tag')
     //             ->firstOrFail();
 
     //         return response()->json(
     //             [
-    //                 'data' => $newsComments
+    //                 'data' => $comments
     //             ],
     //             Response::HTTP_OK
     //         );
@@ -104,21 +104,21 @@ class NewsCommentService
     //     }
     // }
 
-    // public function updateNewsComments($request, $id)
+    // public function updateComments($request, $id)
     // {
 
     //     try {
-    //         $newsCommentsData = $this->handlerNewsComment($request);
+    //         $commentsData = $this->handlerComment($request);
     //         DB::beginTransaction();
 
-    //         $newsCommentsResponse = $this->newsCommentRepository->update($newsCommentsData, $id);
+    //         $commentsResponse = $this->commentRepository->update($commentsData, $id);
 
     //         if ($request->has('schedule')) {
     //              $schedule = $request->input('schedule');
-    //              $newsCommentsResponse->syncNewsCommentSchedule($schedule);
+    //              $commentsResponse->syncCommentSchedule($schedule);
     //         }
 
-    //         $newsCommentsResponse->tag()->sync($newsCommentsData['tags']);
+    //         $commentsResponse->tag()->sync($commentsData['tags']);
 
     //         DB::commit();
 
@@ -128,12 +128,12 @@ class NewsCommentService
     //                     'message' => __(
     //                         'messages.updated',
     //                         [
-    //                             'model' => 'NewsComments'
+    //                             'model' => 'Comments'
     //                         ]
     //                     )
     //                 ],
     //                 'data' => [
-    //                     'newsComments' => $newsCommentsResponse
+    //                     'comments' => $commentsResponse
     //                 ]
     //             ],
     //             Response::HTTP_CREATED
@@ -148,11 +148,11 @@ class NewsCommentService
     //     }
     // }
 
-    // public function deleteNewsComments($id)
+    // public function deleteComments($id)
     // {
     //     try {
 
-    //         $this->newsCommentRepository->delete($id);
+    //         $this->commentRepository->delete($id);
 
     //         return response()->json(
     //             [
@@ -160,7 +160,7 @@ class NewsCommentService
     //                     'message' => __(
     //                         'messages.deleted',
     //                         [
-    //                             'model' => 'NewsComments'
+    //                             'model' => 'Comments'
     //                         ]
     //                     )
     //                 ]

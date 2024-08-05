@@ -73,8 +73,13 @@ class News extends Model
         return $this->hasMany(FilesNews::class, 'news_id', 'id');
     }
 
-    public function files()
+    public function file()
     {
         return $this->belongsToMany(File::class, 'files_news', 'news_id', 'file_id');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

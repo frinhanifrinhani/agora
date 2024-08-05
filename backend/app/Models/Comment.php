@@ -6,7 +6,7 @@ use App\Helpers\DateHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class NewsComment extends Model
+class Comment extends Model
 {
     use HasFactory, DateHelper;
 
@@ -45,9 +45,9 @@ class NewsComment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comment()
+    public function news()
     {
-        return $this->hasMany(News::class)->orderBy('id');
+        return $this->belongsTo(News::class);
     }
 
 }

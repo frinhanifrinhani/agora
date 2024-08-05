@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\NewsComment;
+use App\Models\Comment;
 
-class NewsCommentRepository extends BaseRepository
+class CommentRepository extends BaseRepository
 {
     /**
      * @inheritDoc
      */
     public function getFieldsSearchable()
     {
-        return NewsComment::searchable();
+        return Comment::searchable();
     }
 
     /**
@@ -19,7 +19,7 @@ class NewsCommentRepository extends BaseRepository
      */
     public function model()
     {
-        return NewsComment::class;
+        return Comment::class;
     }
 
     public function findOrFail($id)
@@ -35,7 +35,7 @@ class NewsCommentRepository extends BaseRepository
             $query->where('type', $type);
         }
 
-        $query->with(['NewsComment']);
+        $query->with(['Comment']);
 
         return $query->orderBy('id', 'desc')->paginate($limit, ['*'], 'page', $page);
     }
