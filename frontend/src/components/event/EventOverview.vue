@@ -18,14 +18,13 @@
                 </section>
             </div>
         </div>
-        <!--Seção notícia-->
-        <div class="flex-container">
-            <div class="row justify-content-center column-left">
-                <section class="col-md-10">
-                    <img src="@/assets/images/estrategia-fiocruz-para-a-agenda-2030.png" class="w-75" alt="Imagem com o texto soluções estratégicas para a agenda 2030" >
-                </section>
 
-                <section class="col-md-10">
+        <!--Seção notícia-->
+        <div class="container justify-content-center">
+            <div class="row no-gutters mt-5">
+                <div class="col-9">
+                    <img src="@/assets/images/estrategia-fiocruz-para-a-agenda-2030.png" class="w-75" alt="Imagem com o texto soluções estratégicas para a agenda 2030" >
+
                     <h3 class="mt-5 color-green">Agência Fiocruz de Notícias</h3>
 
                     <p>
@@ -73,9 +72,7 @@
                     <p>
                         “O Brasil, sob a liderança do presidente Lula, demonstra um compromisso renovado com a Agenda 2030, enfatizando a equidade e a solidariedade para os mais vulneráveis, com o objetivo de ‘não deixar ninguém para trás’. Na Paris Summit for Global Finance, ele disse, em alto e bom som: ‘(…) Já temos uma bússola acordada multilateralmente: a Agenda 2030’”, concluiu Gadelha.
                     </p>
-                </section>
 
-                <section class="col-md-10">
                     <h4 class="mt-4 color-green">Reconstrução</h4>
 
                     <p>
@@ -85,60 +82,47 @@
                     <p>
                         Do Governo Federal participaram também a secretária de Povos e Comunidades Tradicionais e Desenvolvimento Rural Sustentável, Edel Moraes, que falou sobre o desenvolvimento sustentável nas cidades amazônicas; a subsecretária de Desenvolvimento Econômico Sustentável, Cristina Reis, que comentou sobre o Plano de Transformação Ecológica; e o embaixador Antonio da Costa e Silva, assessor especial do Ministério das Cidades. Entre os representantes da sociedade civil estavam o diretor-presidente do Instituto Cidades Sustentáveis, Jorge Abrahão, que apresentou um instrumento de monitoramento dos ODS nas cidades brasileiras, e a co-fundadora e coordenadora-geral da Gestos e co-facilitadora do GT Agenda 2030, Alessandra Nilo, que falou sobre como o Spotlight Report pode ser um  instrumento de monitoramento da Agenda 2030 pela sociedade civil. 
                     </p>
-                </section>
 
-                <section class="col-md-10">
                     <h4 class="mt-4 color-green">Experiência da América Latina</h4>
 
                     <p>
                         Às 19h30, ocorreu o segundo evento paralelo organizado pelo governo e com co-realização da Fiocruz. No evento da noite, o foco se virou para a experiência da América Latina na implementação da Agenda 2030, reunindo representantes governamentais de países da região. O pesquisador da Fiocruz Romulo Paes de Souza representou o Brasil no debate.
                     </p>
-                </section>
-            </div>
+                </div>
 
-            <div class="column-right">
-                <div>
-                    <section class="row justify-content-center">
-                        <section class="col-md-2">
-                            <nav class="navbar navbar-light bg-light">
-                            <form class="form-search">
-                                <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
-                                <button class="btn btn-outline-success btn-sm custom-button-border" type="submit">BUSCAR</button>
-                            </form>
-                        </nav>
-                            <div>
-                                <h5 class="mt-5 color-green">POSTS RECENTES</h5>
-                                <hr/>
-                                <button type="button" class="custom-button-tags">
-                                    <small>Da ideia ao produto, Feira fomenta soluções em saúde digital</small>
-                                </button>
-                            </div>
+                <div class="col-3">
+                    <nav class="navbar navbar-light bg-light">
+                        <form class="form-search">
+                            <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+                            <button class="btn btn-outline-success btn-sm custom-button-border" type="submit">BUSCAR</button>
+                        </form>
+                    </nav>
 
-                            <div>
-                                <h5 class="mt-5 color-green">TAGS</h5>
-                                <hr/>
-                                <button type="button" class=" btn btn-outline-success custom-button-tags custom-button-border">
-                                    TAGS
-                                </button>
-                            </div>
-                        </section>
-                    </section>
+                    <div>
+                        <h5 class="mt-5 color-green">POSTS RECENTES</h5>
+                        <hr/>
+                        <button type="button" class="custom-button-tags">
+                            <small>Da ideia ao produto, Feira fomenta soluções em saúde digital</small>
+                        </button>
+                    </div>
+
+                    <div>
+                        <h5 class="mt-5 color-green">TAGS</h5>
+                        <hr/>
+                        <button type="button" class=" btn btn-outline-success custom-button-tags custom-button-border">
+                            TAGS
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <!--Seção entre em contato-->
-        
-        <section class="row justify-content-center">
+        <section class="container justify-content-center mb-5">
             <section class="col-md-10">
                 <div class="mb-3">
                     <i class="fa-solid fa-calendar-days color-green"></i>
                     <span class="ms-2 color-grey">20/07/2023</span>
                 </div>
-
-                <!-- <div>
-                    <i class="fa-solid fa-comment"></i>
-                    <span>Comments</span>
-                </div> -->
 
                 <div>
                     <span class="color-grey">Compartilhar</span>
@@ -149,33 +133,6 @@
                 </div>
             </section>
         </section>
-        
-        <!--Seção buscar e tags-->
-        <section class="row justify-content-center">
-            <section class="col-md-2">
-                <nav class="navbar navbar-light bg-light">
-                <form class="form-search">
-                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
-                    <button class="btn btn-outline-success btn-sm custom-button-border" type="submit">BUSCAR</button>
-                </form>
-             </nav>
-                <div>
-                    <h5 class="mt-5 color-green">POSTS RECENTES</h5>
-                    <hr/>
-                    <button type="button" class="custom-button-tags">
-                        <small>Da ideia ao produto, Feira fomenta soluções em saúde digital</small>
-                    </button>
-                </div>
-
-                <div>
-                    <h5 class="mt-5 color-green">TAGS</h5>
-                    <hr/>
-                    <button type="button" class=" btn btn-outline-success custom-button-tags custom-button-border">
-                        TAGS
-                    </button>
-                </div>
-            </section>
-        </section> 
     </div>
 </template>
 
