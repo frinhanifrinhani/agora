@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Helpers\MakeAlias;
+use App\Constants\Entities;
 use App\Helpers\DateHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -54,7 +55,7 @@ class EventService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Events'
+                                'model' => ucfirst(Entities::EVENT),
                             ]
                         )
                     ],
@@ -74,7 +75,7 @@ class EventService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Events'
+                                    'model' => ucfirst(Entities::EVENT),
                                 ]
                             )
                         ]
@@ -141,7 +142,7 @@ class EventService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Events'
+                                'model' => ucfirst(Entities::EVENT),
                             ]
                         )
                     ],
@@ -173,7 +174,7 @@ class EventService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Events'
+                                'model' => ucfirst(Entities::EVENT),
                             ]
                         )
                     ]

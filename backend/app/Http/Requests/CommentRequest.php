@@ -29,4 +29,11 @@ class CommentRequest extends FormRequest
         return Comment::rules();
     }
 
+    public function attributes()
+    {
+        return [
+            "news_id"=> "Notícia",
+            "description"=> "Descrição",
+        ];
+    }
 }

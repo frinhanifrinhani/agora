@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Helpers\MakeAlias;
+use App\Constants\Entities;
 use App\Helpers\DateHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -47,7 +48,7 @@ class EventScheduleService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'EventSchedules'
+                                'model' => ucfirst(Entities::EVENT_SCHEDULE),
                             ]
                         )
                     ]

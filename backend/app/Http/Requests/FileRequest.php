@@ -26,13 +26,12 @@ class FileRequest extends FormRequest
         return File::rules();
     }
 
-    public function messages(){
-        return[
-             'name' => config('global.PARAM_NAME_REQUIRED'),
-             'file' => config('global.PARAM_FILE_REQUIRED'),
+    public function attributes()
+    {
+        return [
+            "name"=> "Nome",
+            "file"=> "Arquivo",
         ];
-
     }
-
 
 }

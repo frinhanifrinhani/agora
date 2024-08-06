@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\File;
 use App\Helpers\MakeAlias;
+use App\Constants\Entities;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -50,7 +51,7 @@ class FileService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'File'
+                               'model' => ucfirst(Entities::FILE),
                             ]
                         )
                     ],
@@ -110,7 +111,7 @@ class FileService
                             'message' => __(
                                 'messages.deleted',
                                 [
-                                    'model' => 'File'
+                                   'model' => ucfirst(Entities::FILE),
                                 ]
                             )
                         ]

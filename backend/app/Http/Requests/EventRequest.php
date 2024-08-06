@@ -44,4 +44,18 @@ class EventRequest extends FormRequest
         $this->replace($data);
     }
 
+    public function attributes()
+    {
+        return [
+            "title"=> "Titulo",
+            "body"=> "Evento",
+            "start_date"=> "Data início",
+            "start_time"=> "Hora início",
+            "end_date"=> "Data fim",
+            "end_time"=> "Hora fim",
+            "organizer"=> "Organizador",
+            "address"=> "Endereço",
+        ];
+    }
+
 }
