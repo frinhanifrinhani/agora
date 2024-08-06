@@ -100,6 +100,8 @@ class NewsService
             $news = $this->newsRepository->findByAttributeWhitRelation('id',$id)
             ->with('category')
             ->with('tag')
+            ->with('comment')
+            ->with('comment.user')
             ->firstOrFail();
 
             return response()->json(

@@ -11,6 +11,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MigratorController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/check-db-connection', function () {
     try {
@@ -47,6 +48,11 @@ Route::controller(NewsController::class)->group(function () {
     Route::middleware('auth:sanctum')->put('/news/{id}', 'update');
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
 });
+
+Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group(function () {
+    Route::resource('comments', CommentController::class);
+});
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
