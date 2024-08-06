@@ -36,7 +36,7 @@ services:
       - agoras
     ports:
       #- '5173:80'
-      - 5173:5173
+      - 5175:5175
     volumes:
       - ./frontend:/app:delegated
       - /app/node_modules
@@ -46,10 +46,10 @@ services:
     restart: always
 
   postgres_agora:
-    container_name: banco_agora
+    container_name: bd_agora
     image: postgres:13
     ports:
-      - '5432:5432'
+      - '5435:5432'
     restart: always
     tty: true
     environment:

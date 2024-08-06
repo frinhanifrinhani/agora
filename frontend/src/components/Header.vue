@@ -13,10 +13,10 @@
                         <a class="nav-link active" aria-current="page" href="/">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/agenda-2030">EFA 2030</a>
+                        <a class="nav-link" href="/agenda-2030">Agenda 2030</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://solucoes.agora.fiocruz.br/" target="_blank">Soluções para Saúde</a>
+                        <a class="nav-link" href="https://solucoes.agora.fiocruz.br/" target="_blank">FEIRA</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/noticias">Notícias</a>

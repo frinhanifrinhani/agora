@@ -14,7 +14,7 @@ COPY . .
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-EXPOSE 5174
+EXPOSE 5175
 
 #RUN npm run build
 #FROM nginx:latest
