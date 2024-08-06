@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Helpers\MakeAlias;
+use App\Constants\Entities;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,7 @@ class CategoryService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Category'
+                                'model' => ucfirst(Entities::CATEGORY)
                             ]
                         )
                     ],
@@ -137,7 +138,7 @@ class CategoryService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Category'
+                                'model' => ucfirst(Entities::CATEGORY)
                             ]
                         )
                     ],
@@ -187,7 +188,7 @@ class CategoryService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Category'
+                                'model' => ucfirst(Entities::CATEGORY)
                             ]
                         )
                     ]

@@ -26,14 +26,12 @@ class NewsRequest extends FormRequest
         return News::rules();
     }
 
-    public function messages(){
-        return[
-            'title' => config('global.PARAM_TITLE_REQUIRED'),
-            'title' => config('global.PARAM_TITLE_MAX'),
-            'body' => config('global.PARAM_BODY_REQUIRED'),
+    public function attributes()
+    {
+        return [
+            "title"=> "Título",
+            "body"=> "Notícia",
         ];
-
     }
-
 
 }

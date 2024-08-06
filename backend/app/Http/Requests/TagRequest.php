@@ -26,12 +26,11 @@ class TagRequest extends FormRequest
         return Tag::rules();
     }
 
-    public function messages(){
-        return[
-
+    public function attributes()
+    {
+        return [
+            "name"=> "Nome",
         ];
-
     }
-
 
 }

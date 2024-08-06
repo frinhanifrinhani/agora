@@ -26,12 +26,11 @@ class CategoryRequest extends FormRequest
         return Category::rules();
     }
 
-
-    public function messages(){
-        return[
-            'name' => config('global.PARAM_NAME_REQUIRED'),
+    public function attributes()
+    {
+        return [
+            "name"=> "Nome",
         ];
-
     }
 
 }

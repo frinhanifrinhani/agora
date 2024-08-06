@@ -106,7 +106,7 @@ class UserControllerTest extends TestCase
 
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('messages.saved', $responseData['success']['message']);
+        $this->assertEquals('Usuário salvo(a) com sucesso.', $responseData['success']['message']);
     }
 
     public function testStoreEmptyFieldsError()
@@ -120,7 +120,7 @@ class UserControllerTest extends TestCase
 
         $responseData = $response->json();
 
-        $this->assertEquals(['CPF inválido.'], $responseData['error']['cpf']);
+        $this->assertEquals(['O campo CPF é obrigatório.'], $responseData['error']['cpf']);
         $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
         $this->assertEquals(['O campo E-mail é obrigatório.'], $responseData['error']['email']);
         $this->assertEquals(['O campo Senha é obrigatório.'], $responseData['error']['password']);
@@ -182,7 +182,7 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals(['CPF inválido.'], $responseData['error']['cpf']);
+        $this->assertEquals(['O CPF informado não é válido.'], $responseData['error']['cpf']);
     }
 
     public function testUpdateSuccess()
@@ -227,7 +227,7 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('messages.updated', $responseData['success']['message']);
+        $this->assertEquals('Usuário alterado(a) com sucesso.', $responseData['success']['message']);
     }
 
     public function testUpdateEmptyFieldsError()
@@ -259,7 +259,7 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals(['CPF inválido.'], $responseData['error']['cpf']);
+        $this->assertEquals(['O campo CPF é obrigatório.'], $responseData['error']['cpf']);
         $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
         $this->assertEquals(['O campo E-mail é obrigatório.'], $responseData['error']['email']);
         $this->assertEquals(['O campo Senha é obrigatório.'], $responseData['error']['password']);
@@ -336,6 +336,6 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('messages.deleted', $responseData['success']['message']);
+        $this->assertEquals('Usuário excluído(a) com sucesso.', $responseData['success']['message']);
     }
 }

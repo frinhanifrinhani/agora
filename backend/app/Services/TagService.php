@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Tag;
 use App\Helpers\MakeAlias;
+use App\Constants\Entities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -47,7 +48,7 @@ class TagService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Tag'
+                                'model' => ucfirst(Entities::TAG),
                             ]
                         )
                     ],
@@ -67,7 +68,7 @@ class TagService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Tag'
+                                    'model' => ucfirst(Entities::TAG),
                                 ]
                             )
                         ]
@@ -129,7 +130,7 @@ class TagService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Tag'
+                                'model' => ucfirst(Entities::TAG),
                             ]
                         )
                     ],
@@ -149,7 +150,7 @@ class TagService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Tag'
+                                    'model' => ucfirst(Entities::TAG),
                                 ]
                             )
                         ]
@@ -179,7 +180,7 @@ class TagService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Tag'
+                                'model' => ucfirst(Entities::TAG),
                             ]
                         )
                     ]

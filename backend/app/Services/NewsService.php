@@ -5,14 +5,15 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\News;
-use App\Helpers\MakeAlias;
-use App\Helpers\DateHelper;
 use App\Models\Category;
+use App\Helpers\MakeAlias;
+use App\Constants\Entities;
+use App\Helpers\DateHelper;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\NewsRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -56,7 +57,7 @@ class NewsService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'News'
+                                'model' => ucfirst(Entities::NEWS),
                             ]
                         )
                     ],
@@ -76,7 +77,7 @@ class NewsService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'News'
+                                    'model' => ucfirst(Entities::NEWS),
                                 ]
                             )
                         ]
@@ -139,7 +140,7 @@ class NewsService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'News'
+                                'model' => ucfirst(Entities::NEWS),
                             ]
                         )
                     ],
@@ -171,7 +172,7 @@ class NewsService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'News'
+                                'model' => ucfirst(Entities::NEWS),
                             ]
                         )
                     ]

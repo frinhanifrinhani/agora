@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\Entities;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -42,7 +43,7 @@ class CommentService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'Comments'
+                                'model' => ucfirst(Entities::COMMENT),
                             ]
                         )
                     ],
@@ -106,7 +107,7 @@ class CommentService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'Comments'
+                                'model' => ucfirst(Entities::COMMENT),
                             ]
                         )
                     ],
@@ -147,7 +148,7 @@ class CommentService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'Comments'
+                                'model' => ucfirst(Entities::COMMENT),
                             ]
                         )
                     ]

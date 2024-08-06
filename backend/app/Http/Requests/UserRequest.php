@@ -37,4 +37,14 @@ class UserRequest extends FormRequest
 
     }
 
+    public function attributes()
+    {
+        return [
+            "name"=> "Nome",
+            "cpf"=> "CPF",
+            "email"=> "E-mail",
+            "password"=> "Senha",
+        ];
+    }
+
 }

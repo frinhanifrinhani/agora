@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Constants\Entities;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -44,7 +45,7 @@ class UserService
                         'message' => __(
                             'messages.saved',
                             [
-                                'model' => 'User'
+                                'model' => ucfirst(Entities::USER),
                             ]
                         )
                     ],
@@ -118,7 +119,7 @@ class UserService
                         'message' => __(
                             'messages.updated',
                             [
-                                'model' => 'User'
+                                'model' => ucfirst(Entities::USER),
                             ]
                         )
                     ],
@@ -159,7 +160,7 @@ class UserService
                         'message' => __(
                             'messages.deleted',
                             [
-                                'model' => 'User'
+                                'model' => ucfirst(Entities::USER),
                             ]
                         )
                     ]
