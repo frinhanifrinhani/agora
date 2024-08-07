@@ -1,5 +1,3 @@
-//import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
@@ -23,8 +21,8 @@ export default defineConfig({
     },
     hmr: {
       host: 'localhost',
-      port: 5175,
+      port: 5173,
     },
-    port: 5175
+    port: 5173
   }
 })

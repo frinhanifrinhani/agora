@@ -17,10 +17,10 @@
 
       <div class="row justify-content-center pb-3">
         <div v-for="(news, index) in tableNews.data" :key="index"
-          class="col-lg-5 col-md-5 mb-3 d-flex justify-content-center"
+          class="col-lg-5 col-md-5 mb-3 d-flex justify-content-center custom-card"
         >
           <div class="p-1">
-            <div class="card pb-4" style="width: 33rem; height: auto !important;">
+            <div class="card pb-4" :class="{ 'large-card': isLargeScreen, 'small-card': !isLargeScreen }">
               <ImageComponent 
                 v-if="news.files_news && news.files_news.length > 0" 
                 :imagePath="news.files_news[0].file.full_path" 
@@ -42,7 +42,7 @@
                 <div class="card-info-area mb-0">
                   <div class="card-info">
                     <small>
-                      <i class="fas fa-calendar-alt"></i>
+                      <i class="fas fa-calendar-alt me-2"></i> 
                       <FormattedDate :date="news.publication_date" />
                     </small>
                   </div>
@@ -71,6 +71,7 @@ import DOMPurify from 'dompurify';
 import FormattedDate from '../FormattedDate.vue';
 import Pagination from '../Pagination.vue';
 import ImageComponent from '../ImageComponent.vue';
+import ResizeMixin from '../mixins/resize.js';
 
 export default {
   name: "News",
@@ -79,6 +80,7 @@ export default {
     Pagination,
     ImageComponent,
   },
+  mixins: [ResizeMixin],
   data() {
     return {
       tableNews: {
@@ -126,6 +128,7 @@ export default {
 .card {
   display: flex;
   flex-direction: column;
+  height: auto !important;
 }
 
 .card-body {
@@ -136,5 +139,24 @@ export default {
   max-height: 200px;
   object-fit: cover;
   width: 100%;
+}
+
+.large-card {
+  width: 40rem;
+}
+
+.small-card {
+  width: 32rem;
+}
+
+@media (min-width: 1900px) {
+  .custom-card {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .col-lg-5 {
+    flex: 0 0 37%;
+    max-width: 48%;
+  }
 }
 </style>
