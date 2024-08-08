@@ -69,7 +69,7 @@ class CategoryService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Tag'
+                                    'model' =>  ucfirst(Entities::CATEGORY)
                                 ]
                             )
                         ]
@@ -101,7 +101,15 @@ class CategoryService
         } catch (ModelNotFoundException $e){
             return response()->json(
                 [
-                    'error'=>'Categoria não encontrada.'
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY),
+                            ]
+                        )
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -159,7 +167,7 @@ class CategoryService
                             __(
                                 'messages.erro.duplicateError',
                                 [
-                                    'model' => 'Tag'
+                                    'model' =>  ucfirst(Entities::CATEGORY)
                                 ]
                             )
                         ]
@@ -194,6 +202,21 @@ class CategoryService
                     ]
                 ],
                 Response::HTTP_OK
+            );
+        } catch (ModelNotFoundException  $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         } catch (\Exception $e) {
             return response()->json(
