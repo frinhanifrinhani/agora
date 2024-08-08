@@ -11,6 +11,8 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\TagRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Renderer\Exception;
 
 class TagService
 {
@@ -25,7 +27,7 @@ class TagService
 
     public function getAllTag($request)
     {
-        return $this->tagRepository->paginate($request->limit,$request->page);
+        return $this->tagRepository->paginate($request->limit, $request->page);
     }
 
     public function createTag($request): JsonResponse
@@ -90,7 +92,7 @@ class TagService
     {
 
         try {
-            $tag = $this->tagRepository->findOrFailByAttribute('id',$id);
+            $tag = $this->tagRepository->findOrFail($id);
 
             return response()->json(
                 [
@@ -98,10 +100,18 @@ class TagService
                 ],
                 Response::HTTP_OK
             );
-        } catch (\Exception  $e) {
+        } catch (ModelNotFoundException  $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::TAG),
+                            ]
+                        )
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -120,7 +130,7 @@ class TagService
 
             DB::beginTransaction();
 
-            $tagResponse = $this->tagRepository->update($tagData,$id);
+            $tagResponse = $this->tagRepository->update($tagData, $id);
 
             DB::commit();
 
@@ -187,7 +197,23 @@ class TagService
                 ],
                 Response::HTTP_OK
             );
+        } catch (ModelNotFoundException  $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::TAG),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (\Exception $e) {
+
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -196,6 +222,4 @@ class TagService
             );
         }
     }
-
-
 }
