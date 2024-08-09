@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->string('full_path');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('type');
             $table->string('size');
             $table->string('extension');

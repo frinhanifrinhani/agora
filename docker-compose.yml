@@ -44,10 +44,10 @@ services:
     restart: always
 
   postgres_agora:
-    container_name: bd_agora
+    container_name: banco_agora
     image: postgres:13
     ports:
-      - '5432:5432'
+      - '5433:5432'
     restart: always
     tty: true
     environment:
