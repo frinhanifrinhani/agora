@@ -31,7 +31,7 @@
               <div class="card-body">
                 <div class="pb-1">
                   <h5 class="card-title text-truncate" style="max-width: 100%;">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                    <a href="/evento-resumo" rel="noopener noreferrer">
                       <strong>{{ news.title }}</strong>
                     </a>
                   </h5>
