@@ -103,10 +103,50 @@
             <span class="text-white">MAIS</span>
         </a>
     </div>
-      <div class="row justify-content-center">
+<!--       <div class="row justify-content-center">
         <div class="col-md-10 pb-5 d-flex  justify-content-center">          
+           -->
+          <div class="row justify-content-center pb-3">
+            <div v-for="(event, index) in tableEvent.data" :key="index"
+              class="col-md-10 pb-5 d-flex  justify-content-center"
+            >
+              <div class="p-1">
+                <div class="card pb-4" :class="{ 'large-card': isLargeScreen, 'small-card': !isLargeScreen }">
+                  <ImageComponent 
+                    v-if="event.files_events && event.files_events.length > 0" 
+                    :imagePath="event.files_events[0].file.full_path" 
+                  />
+                  <div v-else class="no-image">
+                    <p></p>
+                  </div>
+                  <div class="card-body">
+                    <div class="pb-1">
+                      <h5 class="card-title text-truncate" style="max-width: 100%;">
+                        <a href="/evento-resumo" rel="noopener noreferrer">
+                          <strong>{{ event.title }}</strong>
+                        </a>
+                      </h5>
+                    </div>
+                    <div class="card-text-container mb-4">
+                      <p class="card-text" v-html="event.body"></p>
+                    </div>
+                    <div class="card-info-area mb-0">
+                      <div class="card-info">
+                        <small>
+                          <i class="fas fa-calendar-alt me-2"></i> 
+                          <FormattedDate :date="event.publication_date" />
+                        </small>
+                      </div>
+                      <a class="btn btn-sm float-end" href="#">
+                        <small class="text-white">MAIS</small>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           
-          <div class="p-3">
+          <!-- <div class="p-3">
             <div class="card" style="width: 24rem; height: auto !important;">
               <img
                 src="@/assets/images/banner-obj-des-sustentavel.jpg"
@@ -148,473 +188,76 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >IX Curso de Especialização em Direito Sanitário</strong
-                    >
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    Capacitar o corpo discente com conhecimentos jurídico-político-sanitários
-                    de forma a desenvolver expertise para compreensão e atuação nas questões
-                    sanitárias contemporâneas.
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- </div> -->
 
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <img
-                src="http://localhost:8000/images/nt-vigilancia.jpg"
-                class="card-img-top"
-                alt=""
-              />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >Curso de Especialização em Saúde Coletiva</strong
-                    >
-                  </a>
-                </h5><div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                  O Programa de Especialização em Saúde Coletiva proposto pela Escola de Governo em
-                  Saúde tem como objetivo proporcionar uma formação reflexiva e crítica sobre o
-                  campo da Saúde Coletiva e o aprofundamento de estudos em uma das seguintes
-                  áreas temáticas da Política de Saúde
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-10 pb-5 d-flex  justify-content-center">          
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title mb-0 pb-0">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong>Health & STI for 2030 Agenda</strong>
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">2030 AGENDA</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    BACKGROUND The holistic nature of 2030 Agenda and SDGs demands an
-                    integrated and systematic approach while dealing with the specificities
-                    of each of the 17 Sustainable Development Goals (SDGs). The relevance
-                    of social and environmental determinants in health outcomes and the
-                    strong role of the health sector in the productive and economic development,
-                    make the...
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-comment"></i> Rio de Janeiro, Brasil </small>
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >IX Curso de Especialização em Direito Sanitário</strong
-                    >
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    Capacitar o corpo discente com conhecimentos jurídico-político-sanitários
-                    de forma a desenvolver expertise para compreensão e atuação nas questões
-                    sanitárias contemporâneas.
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <img
-                src="http://localhost:8000/images/nt-vigilancia.jpg"
-                class="card-img-top"
-                alt=""
-              />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >Curso de Especialização em Saúde Coletiva</strong
-                    >
-                  </a>
-                </h5><div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                  O Programa de Especialização em Saúde Coletiva proposto pela Escola de Governo em
-                  Saúde tem como objetivo proporcionar uma formação reflexiva e crítica sobre o
-                  campo da Saúde Coletiva e o aprofundamento de estudos em uma das seguintes
-                  áreas temáticas da Política de Saúde
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-10 pb-5 d-flex  justify-content-center">          
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title mb-0 pb-0">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong>Health & STI for 2030 Agenda</strong>
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">2030 AGENDA</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    BACKGROUND The holistic nature of 2030 Agenda and SDGs demands an
-                    integrated and systematic approach while dealing with the specificities
-                    of each of the 17 Sustainable Development Goals (SDGs). The relevance
-                    of social and environmental determinants in health outcomes and the
-                    strong role of the health sector in the productive and economic development,
-                    make the...
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-comment"></i> Rio de Janeiro, Brasil </small>
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >IX Curso de Especialização em Direito Sanitário</strong
-                    >
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    Capacitar o corpo discente com conhecimentos jurídico-político-sanitários
-                    de forma a desenvolver expertise para compreensão e atuação nas questões
-                    sanitárias contemporâneas.
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <img
-                src="http://localhost:8000/images/nt-vigilancia.jpg"
-                class="card-img-top"
-                alt=""
-              />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >Curso de Especialização em Saúde Coletiva</strong
-                    >
-                  </a>
-                </h5><div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                  O Programa de Especialização em Saúde Coletiva proposto pela Escola de Governo em
-                  Saúde tem como objetivo proporcionar uma formação reflexiva e crítica sobre o
-                  campo da Saúde Coletiva e o aprofundamento de estudos em uma das seguintes
-                  áreas temáticas da Política de Saúde
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-10 pb-5 d-flex  justify-content-center">          
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title mb-0 pb-0">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong>Health & STI for 2030 Agenda</strong>
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">2030 AGENDA</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    BACKGROUND The holistic nature of 2030 Agenda and SDGs demands an
-                    integrated and systematic approach while dealing with the specificities
-                    of each of the 17 Sustainable Development Goals (SDGs). The relevance
-                    of social and environmental determinants in health outcomes and the
-                    strong role of the health sector in the productive and economic development,
-                    make the...
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-comment"></i> Rio de Janeiro, Brasil </small>
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >IX Curso de Especialização em Direito Sanitário</strong
-                    >
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    Capacitar o corpo discente com conhecimentos jurídico-político-sanitários
-                    de forma a desenvolver expertise para compreensão e atuação nas questões
-                    sanitárias contemporâneas.
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <img
-                src="http://localhost:8000/images/nt-vigilancia.jpg"
-                class="card-img-top"
-                alt=""
-              />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong
-                      >Curso de Especialização em Saúde Coletiva</strong
-                    >
-                  </a>
-                </h5><div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">CURSO</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 09/11/2017</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                  O Programa de Especialização em Saúde Coletiva proposto pela Escola de Governo em
-                  Saúde tem como objetivo proporcionar uma formação reflexiva e crítica sobre o
-                  campo da Saúde Coletiva e o aprofundamento de estudos em uma das seguintes
-                  áreas temáticas da Política de Saúde
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">   
-          <div class="col-md-12 p-5 d-flex justify-content-center">
-            <a class="btn btn-secondary" style="background-color:#fff; color:#888888; font-size: 14px;" href="#">
-              Todos os eventos
-            </a>
-          </div>
-        </div>
+        <Pagination
+          :currentPage="tableEvent.current_page"
+          :totalPages="tableEvent.last_page"
+          @page-changed="changePage"
+        />
       </div>
     </div>
+    <!-- </div> -->
   </template>
   
-  <script>
-  export default {
-    name: "Event",
-  };
-  </script>
+<script>
+import EventService from '../../service/EventService';
+import DOMPurify from 'dompurify';
+import FormattedDate from '../FormattedDate.vue';
+import Pagination from '../Pagination.vue';
+import ImageComponent from '../ImageComponent.vue';
+import ResizeMixin from '../mixins/resize.js';
+
+export default {
+  name: "Event",
+  components: {
+    FormattedDate,
+    Pagination,
+    ImageComponent,
+  },
+  mixins: [ResizeMixin],
+  data() {
+    return {
+      tableEvent: {
+        data: [],
+        current_page: 1,
+        last_page: 1
+      },
+      loading: false
+    };
+  },
+  created() {
+    this.EventService = new EventService();
+  },
+  mounted() {
+    this.getEvent();
+  },
+  methods: {
+    async getEvent(page = 1) {
+      this.loading = true;
+      const response = await this.EventService.getIndexEvent(this.perPage, page);
+      
+      if (response) {
+        this.tableEvent = {
+          data: response.data.map(event => ({
+            ...event,
+            body: DOMPurify.sanitize(event.body)
+          })),
+          current_page: response.current_page,
+          last_page: response.last_page
+        };
+      }
+
+      this.loading = false;
+    },
+    changePage(page) {
+      if (page > 0 && page <= this.tableEvent.last_page) {
+        this.getEvent(page);
+      }
+    }
+  }
+};
+</script>
   
