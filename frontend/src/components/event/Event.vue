@@ -83,7 +83,7 @@
         </a>
         <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
           <span class="text-white">CURSO</span>
-      </a>
+        </a>
         <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
             <span class="text-white">ENCONTRO</span>
         </a>
@@ -102,104 +102,65 @@
         <a class="btn m-2" style="border-radius: 20px; color: #48773E; background-color: #48773E;" href="#">
             <span class="text-white">MAIS</span>
         </a>
-    </div>
-<!--       <div class="row justify-content-center">
-        <div class="col-md-10 pb-5 d-flex  justify-content-center">          
-           -->
-          <div class="row justify-content-center pb-3">
-            <div v-for="(event, index) in tableEvent.data" :key="index"
-              class="col-md-10 pb-5 d-flex  justify-content-center"
-            >
-              <div class="p-1">
-                <div class="card pb-4" :class="{ 'large-card': isLargeScreen, 'small-card': !isLargeScreen }">
-                  <ImageComponent 
-                    v-if="event.files_events && event.files_events.length > 0" 
-                    :imagePath="event.files_events[0].file.full_path" 
-                  />
-                  <div v-else class="no-image">
-                    <p></p>
-                  </div>
-                  <div class="card-body">
-                    <div class="pb-1">
-                      <h5 class="card-title text-truncate" style="max-width: 100%;">
-                        <a href="/evento-resumo" rel="noopener noreferrer">
-                          <strong>{{ event.title }}</strong>
-                        </a>
-                      </h5>
-                    </div>
-                    <div class="card-text-container mb-4">
-                      <p class="card-text" v-html="event.body"></p>
-                    </div>
-                    <div class="card-info-area mb-0">
-                      <div class="card-info">
-                        <small>
-                          <i class="fas fa-calendar-alt me-2"></i> 
-                          <FormattedDate :date="event.publication_date" />
-                        </small>
-                      </div>
-                      <a class="btn btn-sm float-end" href="#">
-                        <small class="text-white">MAIS</small>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          
-          <!-- <div class="p-3">
-            <div class="card" style="width: 24rem; height: auto !important;">
-              <img
-                src="@/assets/images/banner-obj-des-sustentavel.jpg"
-                class="card-img-top"
-                alt=""
-              />
-              <div class="card-body">
-                <h5 class="card-title mb-0 pb-0">
-                  <a
-                    href="/pagina-evento"
-                    rel="noopener noreferrer"
-                  >
-                    <strong>Health & STI for 2030 Agenda</strong>
-                  </a>
-                </h5>
-                <div class="card-info-area">
-                  <div class="card-info">
-                    <a class="btn btn-sm float-end" href="#">
-                      <small class="text-white">2030 AGENDA</small>
-                    </a>
-                    <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
-                  </div>                  
-                </div>
-                <p>
-                  <span class="card-text">
-                    BACKGROUND The holistic nature of 2030 Agenda and SDGs demands an
-                    integrated and systematic approach while dealing with the specificities
-                    of each of the 17 Sustainable Development Goals (SDGs). The relevance
-                    of social and environmental determinants in health outcomes and the
-                    strong role of the health sector in the productive and economic development,
-                    make the...
-                  </span>
-                </p>
-                <div class="card-info-area">
-                  <div class="card-info">                    
-                    <small><i class="fas fa-comment"></i> Rio de Janeiro, Brasil </small>
-                    <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
-                  </div>                  
-                </div>
-              </div>
-            </div>
-          </div> -->
+      </div>
 
-        <!-- </div> -->
+      <div v-if="loading" class="d-flex justify-content-center align-items-center vh-100">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Carregando...</span>
+        </div>
+      </div>
+  
+      <div v-else>
+
+        <div class="row justify-content-center pb-3">
+          <div v-for="(event, index) in tableEvent.data" :key="index"
+            class="col-lg-3 col-md-5 m-3 d-flex justify-content-center custom-card"
+          >
+            <div class="p-3">
+              <div class="card pb-4" :class="{ 'large-card': isLargeScreen, 'small-card': !isLargeScreen }">
+                <ImageComponent 
+                  v-if="event.files_events && event.files_events.length > 0" 
+                  :imagePath="event.files_events[0].file.full_path" 
+                />
+                <div v-else class="no-image">
+                  <p></p>
+                </div>
+                <div class="card-body">
+                  <div class="pb-1">
+                    <h5 class="card-title text-truncate" style="max-width: 100%;">
+                      <a href="/evento-resumo" rel="noopener noreferrer">
+                        <strong>{{ event.title }}</strong>
+                      </a>
+                    </h5>
+                  </div>
+                  <div class="card-text-container mb-4">
+                    <p class="card-text" v-html="event.body"></p>
+                  </div>
+                  <div class="card-info-area mb-0">
+                    <div class="card-info">
+                      <small>
+                        <i class="fas fa-calendar-alt me-2"></i> 
+                        <FormattedDate :date="event.publication_date" />
+                      </small>
+                    </div>
+                    <a class="btn btn-sm float-end" href="#">
+                      <small class="text-white">MAIS</small>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <Pagination
           :currentPage="tableEvent.current_page"
           :totalPages="tableEvent.last_page"
           @page-changed="changePage"
         />
-      </div>
+      
     </div>
-    <!-- </div> -->
+  </div>
   </template>
   
 <script>
@@ -260,4 +221,41 @@ export default {
   }
 };
 </script>
-  
+
+<style scoped>
+.card {
+  display: flex;
+  flex-direction: column;
+  height: auto !important;
+}
+
+.card-body {
+  flex: 1;
+}
+
+.card-img-top {
+  max-height: 200px;
+  min-height: 100px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.large-card {
+  width: 40rem;
+}
+
+.small-card {
+  width: 22rem;
+}
+
+@media (min-width: 1900px) {
+  .custom-card {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .col-lg-5 {
+    flex: 0 0 37%;
+    max-width: 48%;
+  }
+}
+</style>
