@@ -112,12 +112,12 @@
   
       <div v-else>
 
-        <div class="row justify-content-center pb-3">
+        <div class="row justify-content-center">
           <div v-for="(event, index) in tableEvent.data" :key="index"
-            class="col-lg-3 col-md-5 m-3 d-flex justify-content-center custom-card"
+            class="col-lg-4 col-md-6 mb-4 d-flex justify-content-center custom-card"
           >
-            <div class="p-3">
-              <div class="card pb-4" :class="{ 'large-card': isLargeScreen, 'small-card': !isLargeScreen }">
+            <div class="p-3 custom-card">
+              <div class="card " :class="{ 'large-card': isLargeScreen, 'small-card': !isLargeScreen }">
                 <ImageComponent 
                   v-if="event.files_events && event.files_events.length > 0" 
                   :imagePath="event.files_events[0].file.full_path" 
@@ -133,8 +133,10 @@
                       </a>
                     </h5>
                   </div>
-                  <div class="card-text-container mb-4">
+                  <div class="card-text-container mb-4" v-if="event.body.trim()" style="max-width: 100%;">
                     <p class="card-text" v-html="event.body"></p>
+                  </div>
+                  <div v-else>
                   </div>
                   <div class="card-info-area mb-0">
                     <div class="card-info">
@@ -204,7 +206,7 @@ export default {
         this.tableEvent = {
           data: response.data.map(event => ({
             ...event,
-            body: DOMPurify.sanitize(event.body)
+            body: event.body
           })),
           current_page: response.current_page,
           last_page: response.last_page
@@ -234,24 +236,23 @@ export default {
 }
 
 .card-img-top {
-  max-height: 200px;
-  min-height: 100px;
+  max-height: 20rem;
   object-fit: cover;
   width: 100%;
 }
 
 .large-card {
-  width: 40rem;
+  width: 37em;
 }
 
 .small-card {
-  width: 22rem;
+  width: 26rem;
 }
 
 @media (min-width: 1900px) {
   .custom-card {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
   .col-lg-5 {
     flex: 0 0 37%;

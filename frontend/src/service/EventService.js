@@ -3,7 +3,7 @@ import { getCurrentInstance } from 'vue';
 export default class EventService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
-    async getIndexEvent(limit = 10, page = 1) {
+    async getIndexEvent(limit = 12, page = 1) {
         try {
             const url = new URL(this.API_URL + 'events');
             url.searchParams.append('limit', limit);
