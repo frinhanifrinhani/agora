@@ -35,9 +35,15 @@ class EventRepository extends BaseRepository
             $query->where('type', $type);
         }
 
+        $query->with(['filesEvents.file']);
         $query->with(['eventSchedule']);
         $query->with(['tag']);
 
         return $query->orderBy('id', 'desc')->paginate($limit, ['*'], 'page', $page);
+    }
+
+    public function findByTitle($title)
+    {
+        return $this->model->select('id')->where('title', $title)->first();
     }
 }

@@ -85,6 +85,15 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function filesEvents()
+    {
+        return $this->hasMany(FilesEvents::class, 'events_id', 'id');
+    }
+
+    public function file()
+    {
+        return $this->belongsToMany(File::class, 'files_events', 'events_id', 'file_id');
+    }
 
     public function tag()
     {

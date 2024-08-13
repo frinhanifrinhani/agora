@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
@@ -53,24 +52,14 @@ Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group
     Route::resource('comments', CommentController::class);
 });
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
-    Route::resource('tags', TagController::class);
-    Route::resource('events', EventController::class);
-
+    Route::resource('tags', TagController::class);    
 });
+Route::resource('events', EventController::class);
 
 Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {
     Route::post('news', 'news');
     Route::post('events', 'event');
-});
-
-Route::get('/job-status/{id}', function ($id) {
-    $job = DB::table('jobs')->find($id);
-    if (!$job) {
-        return response()->json(['status' => 'completed']);
-    }
-    return response()->json(['status' => 'pending']);
 });
