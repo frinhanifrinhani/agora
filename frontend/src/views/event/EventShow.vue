@@ -1,16 +1,16 @@
 <template>
     <div class="content">
-        <EventOverviewComponent />
+        <EventShowComponent :id="$route.params.id" />
     </div>
 </template>
 
 <script>
-  import EventOverviewComponent from "../../components/event/EventOverview.vue";
+  import EventShowComponent from "../../components/event/EventShow.vue";
   
   export default {
-    name: "EventOverview",
+    name: "EventShow",
     components: {
-        EventOverviewComponent,
+        EventShowComponent,
     },
   };
 </script>

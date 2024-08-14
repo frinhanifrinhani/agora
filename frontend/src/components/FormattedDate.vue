@@ -13,8 +13,9 @@
     },
     computed: {
       formattedDate() {
-        const [year, month, day] = this.date.split('-');
-        return `${day}/${month}/${year}`;
+        const [datePart, timePart] = this.date.split(' ');
+        const [year, month, day] = datePart.split('-');
+        return `${day}/${month}/${year} ${timePart}`;
       }
     }
   };
