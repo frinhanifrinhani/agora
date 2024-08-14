@@ -20,4 +20,16 @@ export default class NewsService {
             return false;
         }
     }
+
+    async getShowNews(id) {
+        try {
+            const url = new URL(this.API_URL + `news/${id}`);
+            const response = await fetch(url);
+
+            return await response.json();
+        } catch (error) {
+            console.error("Erro ao buscar os detalhes da notícia:", error);
+            throw error;
+        }
+    }
 }

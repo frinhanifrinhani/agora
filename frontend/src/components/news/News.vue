@@ -31,9 +31,9 @@
               <div class="card-body">
                 <div class="pb-1">
                   <h5 class="card-title text-truncate" style="max-width: 100%;">
-                    <a href="/evento-resumo" rel="noopener noreferrer">
+                    <router-link :to="{ name: 'NewsShow', params: { id: news.id } }" rel="noopener noreferrer">
                       <strong>{{ news.title }}</strong>
-                    </a>
+                    </router-link>
                   </h5>
                 </div>
                 <div class="card-text-container mb-4">
@@ -46,9 +46,9 @@
                       <FormattedDate :date="news.publication_date" />
                     </small>
                   </div>
-                  <a class="btn btn-sm float-end" href="#">
+                  <router-link :to="{ name: 'NewsShow', params: { id: news.id } }" class="btn btn-sm float-end">
                     <small class="text-white">MAIS</small>
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </div>

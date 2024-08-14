@@ -31,5 +31,5 @@ export default class EventService {
             console.error("Erro ao buscar os detalhes do evento:", error);
             throw error;
         }
-      }
+    }
 }
