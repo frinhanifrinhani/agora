@@ -30,7 +30,7 @@ class NewsRequest extends FormRequest
     {
         return [
             "title"=> "Título",
-            "body"=> "Notícia",
+            "body"=> "Corpo da Notícia",
         ];
     }
 

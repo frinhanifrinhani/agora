@@ -59,13 +59,13 @@ class News extends Model
 
     public function category()
     {
-        return $this->belongsToMany(Category::class, 'news_categories', 'news_id','category_id' );
+        return $this->belongsToMany(Category::class, 'news_categories', 'news_id','category_id' )->withTimestamps();
     }
 
 
     public function tag()
     {
-        return $this->belongsToMany(Tag::class, 'news_tags', 'news_id','tag_id' );
+        return $this->belongsToMany(Tag::class, 'news_tags', 'news_id','tag_id' )->withTimestamps();
     }
 
     public function filesNews()

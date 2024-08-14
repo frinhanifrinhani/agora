@@ -3,9 +3,6 @@
 namespace App\Services;
 
 
-use Carbon\Carbon;
-use App\Models\News;
-use App\Models\Category;
 use App\Helpers\MakeAlias;
 use App\Constants\Entities;
 use App\Helpers\DateHelper;
@@ -14,7 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\NewsRepository;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class NewsService
@@ -25,7 +22,7 @@ class NewsService
     private NewsRepository $newsRepository;
     protected $request;
 
-    public function __construct(NewsRepository $newsRepository,Request $request )
+    public function __construct(NewsRepository $newsRepository, Request $request)
     {
         $this->newsRepository = $newsRepository;
         $this->request = $request;
@@ -46,8 +43,13 @@ class NewsService
 
             $newsResponse = $this->newsRepository->create($newsData);
 
-            $newsResponse->category()->sync($newsData['categories']);
-            $newsResponse->tag()->sync($newsData['tags']);
+            if ($request->has("categories")) {
+                $newsResponse->category()->sync($newsData['categories']);
+            }
+
+            if ($request->has("tags")) {
+                $newsResponse->tag()->sync($newsData['tags']);
+            }
 
             DB::commit();
 
@@ -88,7 +90,9 @@ class NewsService
 
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -98,12 +102,12 @@ class NewsService
     public function getNewsById($id)
     {
         try {
-            $news = $this->newsRepository->findByAttributeWhitRelation('id',$id)
-            ->with('category')
-            ->with('tag')
-            ->with('comment')
-            ->with('comment.user')
-            ->firstOrFail();
+            $news = $this->newsRepository->findByAttributeWhitRelation('id', $id)
+                ->with('category')
+                ->with('tag')
+                ->with('comment')
+                ->with('comment.user')
+                ->firstOrFail();
 
             return response()->json(
                 [
@@ -111,10 +115,27 @@ class NewsService
                 ],
                 Response::HTTP_OK
             );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (\Exception  $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -130,8 +151,14 @@ class NewsService
 
             $newsResponse = $this->newsRepository->update($newsData, $id);
 
-            $newsResponse->category()->sync($newsData['categories']);
-            $newsResponse->tag()->sync($newsData['tags']);
+            if ($request->has("categories")) {
+                $newsResponse->category()->sync($newsData['categories']);
+            }
+
+            if ($request->has("tags")) {
+                $newsResponse->tag()->sync($newsData['tags']);
+            }
+
             DB::commit();
 
             return response()->json(
@@ -150,10 +177,45 @@ class NewsService
                 ],
                 Response::HTTP_CREATED
             );
-        } catch (\Exception $e) {
+        } catch (ModelNotFoundException  $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => ucfirst(Entities::NEWS),
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -179,10 +241,27 @@ class NewsService
                 ],
                 Response::HTTP_OK
             );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -193,7 +272,7 @@ class NewsService
     {
         $newsData = $request->validated();
 
-        if ($newsData['publicated']) {
+        if ($request->has("publicated")) {
             $newsData['publication_date'] = $this->getNow();
         }
 
