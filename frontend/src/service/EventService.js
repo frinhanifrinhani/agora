@@ -20,4 +20,16 @@ export default class EventService {
             return false;
         }
     }
+
+    async getShowEvent(id) {
+        try {
+            const url = new URL(this.API_URL + `events/${id}`);
+            const response = await fetch(url);
+
+            return await response.json();
+        } catch (error) {
+            console.error("Erro ao buscar os detalhes do evento:", error);
+            throw error;
+        }
+      }
 }

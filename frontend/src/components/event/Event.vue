@@ -17,13 +17,13 @@
               background-color: #6dab3c;
               border-radius: 20px;
               font-size: 14px;"
-              href="/sobre">
+              href="#">
               <i class="fa-solid fa-calendar-days"></i>
               <span class="ms-2"> 06 a 08 de novembro de 2017</span>
             </a>
           </div>
           <div class="centered-button">              
-            <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="#">
+            <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="/pagina-evento">
               <span class="me-2">Detalhes</span>
               <i class="fa-solid fa-angle-right"></i>
             </a>              
@@ -128,9 +128,9 @@
                 <div class="card-body">
                   <div class="pb-1">
                     <h5 class="card-title text-truncate" style="max-width: 100%;">
-                      <a href="/evento-resumo" rel="noopener noreferrer">
+                      <router-link :to="{ name: 'EventShow', params: { id: event.id } }" rel="noopener noreferrer">
                         <strong>{{ event.title }}</strong>
-                      </a>
+                      </router-link>
                     </h5>
                   </div>
                   <div class="card-text-container mb-4" v-if="event.body.trim()" style="max-width: 100%;">
@@ -145,9 +145,9 @@
                         <FormattedDate :date="event.publication_date" />
                       </small>
                     </div>
-                    <a class="btn btn-sm float-end" href="#">
+                    <router-link :to="{ name: 'EventShow', params: { id: event.id } }" class="btn btn-sm float-end">
                       <small class="text-white">MAIS</small>
-                    </a>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -163,11 +163,10 @@
       
     </div>
   </div>
-  </template>
+</template>
   
 <script>
 import EventService from '../../service/EventService';
-import DOMPurify from 'dompurify';
 import FormattedDate from '../FormattedDate.vue';
 import Pagination from '../Pagination.vue';
 import ImageComponent from '../ImageComponent.vue';
