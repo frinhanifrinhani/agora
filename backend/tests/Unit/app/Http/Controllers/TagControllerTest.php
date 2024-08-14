@@ -59,7 +59,7 @@ class TagControllerTest extends TestCase
         $this->assertNotEmpty($responseData);
 
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('A rota não foi encontrada.', $responseData['error']);
+        $this->assertEquals('A rota não foi encontrada.', $responseData['error']['message']);
     }
 
     public function testShowSuccess()
@@ -88,8 +88,6 @@ class TagControllerTest extends TestCase
 
     public function testStoreSuccess()
     {
-        $faker = \Faker\Factory::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
 
         $tagData = [
             'name' => $this->title
@@ -118,14 +116,11 @@ class TagControllerTest extends TestCase
 
         $responseData = $response->json();
 
-        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
+        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['message']['name']);
     }
 
     public function testStoreDuplicatedRegisterError()
     {
-        $faker = \Faker\Factory::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
-
         $tagData = [
             'name' => $this->title
         ];
@@ -145,7 +140,6 @@ class TagControllerTest extends TestCase
 
     public function testUpdateEmptyFieldsError()
     {
-
         $tagData = [
             'name' => $this->title,
         ];
@@ -162,13 +156,11 @@ class TagControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
+        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['message']['name']);
     }
 
     public function testUpdateSuccess()
     {
-        $faker = \Faker\Factory::create('pt_BR');
-        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
 
         $tagData = [
             'name' => $this->title,
@@ -180,8 +172,6 @@ class TagControllerTest extends TestCase
         $tagDataUpdate = [
             'name' => $this->title . ' updated',
         ];
-
-        $response = $this->put('/api/tags/' . $tagCreateResponse['data']['tag']['id'], $tagDataUpdate);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->put('/api/tags/' . $tagCreateResponse['data']['tag']['id'], $tagDataUpdate);
@@ -208,7 +198,7 @@ class TagControllerTest extends TestCase
             'name' =>$titleTwo
         ];
 
-        $tagCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+        $this->withHeader('Authorization', 'Bearer ' . $this->token)
             ->post('/api/tags', $tagData);
 
         $tagCreateResponse2 = $this->withHeader('Authorization', 'Bearer ' . $this->token)

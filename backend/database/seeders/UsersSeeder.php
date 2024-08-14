@@ -13,15 +13,25 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name'=>'admin',
-            'cpf' => '12345678901',
-            'email' => 'administrdor@agora',
-            'password' => Hash::make('123456'),
-            'status' => true,
-            'role_id' => '1',
-
-        ]);
-
+        DB::table('users')->insert(
+            [
+                [
+                    'name' => 'admin',
+                    'cpf' => '12345678901',
+                    'email' => 'administrdor@agora',
+                    'password' => Hash::make('123456'),
+                    'status' => true,
+                    'role_id' => '1',
+                ],
+                [
+                    'name' => 'user one',
+                    'cpf' => '12345678902',
+                    'email' => 'user.one@agora',
+                    'password' => Hash::make('123456'),
+                    'status' => true,
+                    'role_id' => '2',
+                ]
+            ]
+        );
     }
 }

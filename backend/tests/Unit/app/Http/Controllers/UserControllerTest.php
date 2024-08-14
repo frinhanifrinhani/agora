@@ -55,7 +55,7 @@ class UserControllerTest extends TestCase
         $this->assertNotEmpty($responseData);
 
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('A rota não foi encontrada.', $responseData['error']);
+        $this->assertEquals('A rota não foi encontrada.', $responseData['error']['message']);
     }
 
     public function testShowSuccess()
@@ -77,7 +77,7 @@ class UserControllerTest extends TestCase
 
         $responseData = $response->json();
 
-        $this->assertEquals('Usuário não encontrado.', $responseData['error']);
+        $this->assertEquals('Usuário não encontrado.', $responseData['error']['message']);
     }
 
     public function testStoreSuccess()
@@ -120,10 +120,10 @@ class UserControllerTest extends TestCase
 
         $responseData = $response->json();
 
-        $this->assertEquals(['O campo CPF é obrigatório.'], $responseData['error']['cpf']);
-        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
-        $this->assertEquals(['O campo E-mail é obrigatório.'], $responseData['error']['email']);
-        $this->assertEquals(['O campo Senha é obrigatório.'], $responseData['error']['password']);
+        $this->assertEquals(['O campo CPF é obrigatório.'], $responseData['error']['message']['cpf']);
+        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['message']['name']);
+        $this->assertEquals(['O campo E-mail é obrigatório.'], $responseData['error']['message']['email']);
+        $this->assertEquals(['O campo Senha é obrigatório.'], $responseData['error']['message']['password']);
     }
 
     public function testStoreDuplicatedRegisterError()
@@ -153,7 +153,7 @@ class UserControllerTest extends TestCase
 
         $responseData = $response->json();
 
-        $this->assertEquals('Registro duplicado, email e/ou CPF já cadastrado(s).', $responseData['error']);
+        $this->assertEquals('Registro duplicado, email e/ou CPF já cadastrado(s).', $responseData['error']['message']);
     }
 
     public function testStoreInvalidCpfError()
@@ -182,7 +182,7 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals(['O CPF informado não é válido.'], $responseData['error']['cpf']);
+        $this->assertEquals(['O CPF informado não é válido.'], $responseData['error']['message']['cpf']);
     }
 
     public function testUpdateSuccess()
@@ -259,10 +259,10 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals(['O campo CPF é obrigatório.'], $responseData['error']['cpf']);
-        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
-        $this->assertEquals(['O campo E-mail é obrigatório.'], $responseData['error']['email']);
-        $this->assertEquals(['O campo Senha é obrigatório.'], $responseData['error']['password']);
+        $this->assertEquals(['O campo CPF é obrigatório.'], $responseData['error']['message']['cpf']);
+        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['message']['name']);
+        $this->assertEquals(['O campo E-mail é obrigatório.'], $responseData['error']['message']['email']);
+        $this->assertEquals(['O campo Senha é obrigatório.'], $responseData['error']['message']['password']);
     }
 
     public function testUpdateDuplicatedRegisterError()
@@ -322,7 +322,7 @@ class UserControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('Registro duplicado, email e/ou CPF já cadastrado(s).', $responseData['error']);
+        $this->assertEquals('Registro duplicado, email e/ou CPF já cadastrado(s).', $responseData['error']['message']);
     }
 
     public function testDeleteSuccess()

@@ -47,7 +47,7 @@ class EventRequest extends FormRequest
     public function attributes()
     {
         return [
-            "title"=> "Titulo",
+            "title"=> "Título",
             "body"=> "Evento",
             "start_date"=> "Data início",
             "start_time"=> "Hora início",

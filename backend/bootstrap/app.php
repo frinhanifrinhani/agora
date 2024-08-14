@@ -28,7 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('*')) {
                 return response()->json(
                     [
-                        'error' =>  'A rota não foi encontrada.'
+                        'error' => [
+                            'message' =>  'A rota não foi encontrada.'
+                        ]
                     ],
                     Response::HTTP_NOT_FOUND
                 );
@@ -39,7 +41,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json(
                 [
-                    'error' => $e->errors()
+                    'error' => [
+                        'message' =>   $e->errors()
+                    ]
                 ],
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );

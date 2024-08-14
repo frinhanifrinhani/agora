@@ -43,11 +43,13 @@ class Category extends Model
             'name' => 'required',
             'description' => '',
             'status' => '',
+            'created_at' => '',
+            'updated_at' => '',
         ];
     }
 
     public function news()
     {
-        return $this->belongsToMany(News::class, 'news_categories', 'news_id', 'category_id');
+        return $this->belongsToMany(News::class, 'news_categories', 'news_id', 'category_id')->withTimestamps();
     }
 }
