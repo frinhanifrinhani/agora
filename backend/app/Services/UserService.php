@@ -60,7 +60,9 @@ class UserService
             if ($e->getCode() == 23505) {
                 return response()->json(
                     [
-                        'error' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
+                        'error' => [
+                            'message' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
+                        ]
                     ],
                     Response::HTTP_BAD_REQUEST
                 );
@@ -68,7 +70,9 @@ class UserService
 
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -89,7 +93,9 @@ class UserService
         } catch (ModelNotFoundException $e){
             return response()->json(
                 [
-                    'error'=>'Usuário não encontrado.'
+                    'error' => [
+                        'message' => 'Usuário não encontrado.'
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -97,7 +103,9 @@ class UserService
         }catch (\Exception  $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -134,7 +142,9 @@ class UserService
             if ($e->getCode() == 23505) {
                 return response()->json(
                     [
-                        'error' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
+                        'error' => [
+                            'message' => 'Registro duplicado, email e/ou CPF já cadastrado(s).'
+                        ]
                     ],
                     Response::HTTP_BAD_REQUEST
                 );
@@ -142,7 +152,9 @@ class UserService
 
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -170,7 +182,9 @@ class UserService
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
