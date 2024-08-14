@@ -2,17 +2,19 @@
 
 namespace App\Services;
 
+use App\Helpers\MakeAlias;
 use App\Constants\Entities;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\CommentRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
 
 class CommentService
 {
+    use MakeAlias;
     private CommentRepository $commentRepository;
     protected $request;
 
@@ -33,6 +35,8 @@ class CommentService
 
             $commentData['user_id'] =  auth()->id();
 
+            $this->compareComment($commentData, $request);
+
             $commentsResponse = $this->commentRepository->create($commentData);
 
             DB::commit();
@@ -48,32 +52,18 @@ class CommentService
                         )
                     ],
                     'data' => [
-                        'comments' => $commentsResponse
+                        'comment' => $commentsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
         } catch (\Exception $e) {
-
-            if ($e->getCode() == 23503) {
-                return response()->json(
-                    [
-                        'error' => [
-                            'message' =>
-                            __(
-                                'messages.erro.invalidForeignKey',
-                                [
-                                    'model' => 'Events'
-                                ]
-                            )
-                        ]
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
+            DB::rollBack();
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -88,14 +78,20 @@ class CommentService
 
             $commentData = $request->validated();
 
-            $comment = $this->commentRepository->findByAttribute('id', $id);
+            $comment = $this->commentRepository->findOrFail($id);
 
-            if($comment->user_id != auth()->id()){
-                throw new HttpException(
-                    Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'Este comentário pertence a outro usuário.'
+            if ($comment->user_id != auth()->id()) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' => 'Este comentário pertence a outro usuário.'
+                        ]
+                    ],
+                    Response::HTTP_FORBIDDEN
                 );
             }
+
+            $this->compareComment($commentData, $request);
 
             $commentsResponse = $this->commentRepository->update($commentData, $id);
 
@@ -112,18 +108,55 @@ class CommentService
                         )
                     ],
                     'data' => [
-                        'comments' => $commentsResponse
+                        'comment' => $commentsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
-        } catch (\Exception $e) {
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::COMMENT),
+                            ]
+                        )
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    private function compareComment($commentData, $request)
+    {
+        $userComments = $this->commentRepository->findByAttributes([
+            'user_id' => auth()->id(),
+            'news_id' => $request->news_id
+        ]);
+
+        $commentData = $this->stringToAlias($commentData['description']);
+
+
+        foreach ($userComments as $userComment) {
+
+            if ($this->stringToAlias($userComment['description']) == $commentData) {
+                throw new HttpException(Response::HTTP_BAD_REQUEST, 'Você já fez este comentário.');
+            }
         }
     }
 
@@ -131,12 +164,16 @@ class CommentService
     {
         try {
 
-            $comment = $this->commentRepository->findByAttribute('id', $id);
+            $comment = $this->commentRepository->findOrFail($id);
 
-            if($comment->user_id != auth()->id()){
-                throw new HttpException(
-                    Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'Este comentário pertence a outro usuário.'
+            if ($comment->user_id != auth()->id()) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' => 'Este comentário pertence a outro usuário.'
+                        ]
+                    ],
+                    Response::HTTP_FORBIDDEN
                 );
             }
 
@@ -155,14 +192,32 @@ class CommentService
                 ],
                 Response::HTTP_OK
             );
-        } catch (\Exception $e) {
+        } catch (ModelNotFoundException $e) {
+
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::COMMENT),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
         }
     }
-
 }
