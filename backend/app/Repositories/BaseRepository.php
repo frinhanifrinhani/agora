@@ -173,6 +173,20 @@ abstract class BaseRepository
         return $query->where($key, $value);
     }
 
+    public function findByAttributes(array $attributes, $columns = ['*'])
+    {
+        $query = $this->model->newQuery();
+
+
+        foreach ($attributes as $key => $value) {
+            $query->where($key, $value);
+        }
+
+
+        return $query->get($columns);
+    }
+
+
     public function findOrFailByAttribute($key, $value, $columns = ['*'])
     {
         $query = $this->model->newQuery();

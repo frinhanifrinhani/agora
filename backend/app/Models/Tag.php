@@ -33,13 +33,16 @@ class Tag extends Model
     public static function rules(): array
     {
         return [
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'created_at' => '',
+            'updated_at' => '',
+
         ];
     }
 
     public function news()
     {
-        return $this->belongsToMany(News::class, 'news_tags', 'news_id', 'tag_id');
+        return $this->belongsToMany(News::class, 'news_tags', 'news_id', 'tag_id')->withTimestamps();
     }
 
     public function event()

@@ -55,7 +55,8 @@ Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
-    Route::resource('tags', TagController::class);    
+    Route::resource('tags', TagController::class);
+    Route::resource('events', EventController::class);
 });
 Route::resource('events', EventController::class);
 

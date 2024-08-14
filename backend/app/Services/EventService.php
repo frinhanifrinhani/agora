@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\EventRepository;
 use App\Repositories\EventScheduleRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class EventService
@@ -42,8 +43,13 @@ class EventService
             $eventsData = $this->handlerEvent($request);
 
             $eventsResponse = $this->eventRepository->create($eventsData);
-            $this->eventScheduleService->createEventSchedule($request->validated(['schedule']), $eventsResponse->id);
-            $eventsResponse->tag()->sync($eventsData['tags']);
+            if ($request->has("schedule")) {
+                $this->eventScheduleService->createEventSchedule($request->validated(['schedule']), $eventsResponse->id);
+            }
+
+            if ($request->has("tags")) {
+                $eventsResponse->tag()->sync($eventsData['tags']);
+            }
 
             DB::commit();
 
@@ -60,7 +66,7 @@ class EventService
                         )
                     ],
                     'data' => [
-                        'events' => $eventsResponse
+                        'event' => $eventsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
@@ -86,7 +92,9 @@ class EventService
 
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -108,10 +116,27 @@ class EventService
                 ],
                 Response::HTTP_OK
             );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::EVENT),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (\Exception  $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -128,8 +153,8 @@ class EventService
             $eventsResponse = $this->eventRepository->update($eventsData, $id);
 
             if ($request->has('schedule')) {
-                 $schedule = $request->input('schedule');
-                 $eventsResponse->syncEventSchedule($schedule);
+                $schedule = $request->input('schedule');
+                $eventsResponse->syncEventSchedule($schedule);
             }
 
             $eventsResponse->tag()->sync($eventsData['tags']);
@@ -147,15 +172,50 @@ class EventService
                         )
                     ],
                     'data' => [
-                        'events' => $eventsResponse
+                        'event' => $eventsResponse
                     ]
                 ],
                 Response::HTTP_CREATED
             );
-        } catch (\Exception $e) {
+        } catch (ModelNotFoundException $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::EVENT),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' => ucfirst(Entities::EVENT),
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -181,10 +241,27 @@ class EventService
                 ],
                 Response::HTTP_OK
             );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::EVENT),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (\Exception $e) {
             return response()->json(
                 [
-                    'error' => [$e->getMessage()]
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
                 ],
                 Response::HTTP_BAD_REQUEST
             );
@@ -214,5 +291,4 @@ class EventService
 
         return $eventData;
     }
-
 }
