@@ -59,7 +59,7 @@ class CategoryControllerTest extends TestCase
         $this->assertNotEmpty($responseData);
 
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('A rota não foi encontrada.', $responseData['error']);
+        $this->assertEquals('A rota não foi encontrada.', $responseData['error']['message']);
     }
 
     public function testShowSuccess()
@@ -118,7 +118,7 @@ class CategoryControllerTest extends TestCase
 
         $responseData = $response->json();
 
-        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
+        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['message']['name']);
     }
 
     public function testStoreDuplicatedRegisterError()
@@ -162,7 +162,7 @@ class CategoryControllerTest extends TestCase
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['name']);
+        $this->assertEquals(['O campo Nome é obrigatório.'], $responseData['error']['message']['name']);
     }
 
     public function testUpdateSuccess()
