@@ -4,12 +4,14 @@ import News from '../views/news/News.vue'
 import Event from '../views/event/Event.vue'
 import EventPage from '../views/event/EventPage.vue'
 import EventShow from '../views/event/EventShow.vue'
+import NewsShow from '../views/news/NewsShow.vue'
 import About from '../views/About.vue'
 import Agenda2030 from '../views/Agenda2030.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/noticias', name: 'News', component: News },
+  { path: '/noticias/:id', name: 'NewsShow', component: NewsShow, props: true },
   { path: '/evento', name: 'Event', component: Event },
   { path: '/pagina-evento', name: 'EventPage', component: EventPage },
   { path: '/sobre', name: 'About', component: About },

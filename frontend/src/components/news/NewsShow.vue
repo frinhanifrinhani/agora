@@ -6,20 +6,20 @@
             </div>
         </div>
         
-        <div v-if="event">
+        <div v-if="news">
             <!--Seção breadcrumbs-->
             <div class="breadcrumbs-background">
                 <div class="row justify-content-center m-2 p-2">
                     <section>
                         <h1>
-                            {{ event.title }}
+                            {{ news.title }}
                         </h1>
 
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Ágora Fiocruz</a></li>
                                 <li class="breadcrumb-item"><a href="#">2030 Agenda</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ event.title }}</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ news.title }}</li>
                             </ol>
                         </nav>
                     </section>
@@ -30,7 +30,7 @@
             <div class="container justify-content-center">
                 <div class="row no-gutters mt-5">
                     <div class="col-9">
-                        <p class="card-text" v-html="event.body"></p>
+                        <p class="card-text" v-html="news.body"></p>
                     </div>
 
                     <div class="col-3">
@@ -65,7 +65,7 @@
                     <div class="mb-3">
                         <i class="fa-solid fa-calendar-days color-green"></i>
                         <span class="ms-2 color-grey">
-                            <FormattedDate :date="event.publication_date" />
+                            <FormattedDate :date="news.publication_date" />
                         </span>
                     </div>
 
@@ -83,11 +83,11 @@
 </template>
 
 <script>
-import EventService from '../../service/EventService';
+import NewsService from '../../service/NewsService';
 import FormattedDate from '../FormattedDate.vue';
 
 export default {
-    name: "EventShow",
+    name: "NewsShow",
     components: {
         FormattedDate,
     },
@@ -99,29 +99,29 @@ export default {
     },
     data() {
     return {
-        event: null,
+        news: null,
         loading: false
     };
   },
   created() {
-    this.EventService = new EventService();
-    this.fetchEventDetails();
+    this.NewsService = new NewsService();
+    this.fetchNewsDetails();
   },
   methods: {
-    async fetchEventDetails() {
+    async fetchNewsDetails() {
 
         this.loading = true;
         try {
-            const response = await this.EventService.getShowEvent(this.id);
+            const response = await this.NewsService.getShowNews(this.id);
 
             if (response && response.data) {
-                this.event = response.data;
+                this.news = response.data;
             } else {
-                console.error('Evento não encontrado.');
+                console.error('Notícia não encontrada.');
             }
             
         } catch (error) {
-            console.error('Erro ao buscar o evento:', error);
+            console.error('Erro ao buscar a notícia:', error);
         } finally {
             this.loading = false;
         }
