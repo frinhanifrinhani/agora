@@ -377,7 +377,7 @@ class NewsControllerTest extends TestCase
         $this->assertEquals('Notícia alterado(a) com sucesso.', $responseData['success']['message']);
     }
 
-    public function testDeleteNotFoundSuccess()
+    public function testDeleteNotFoundError()
     {
         $news = News::factory()->create();
 

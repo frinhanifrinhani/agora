@@ -219,7 +219,7 @@ class TagControllerTest extends TestCase
         $this->assertEquals('Tag já cadastrado(a).', $responseData['error']['message']);
     }
 
-    public function testDeleteNotFoundSuccess()
+    public function testDeleteNotFoundError()
     {
         $tag = Tag::factory()->create();
 

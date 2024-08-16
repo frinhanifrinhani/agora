@@ -229,7 +229,7 @@ class CategoryControllerTest extends TestCase
         $this->assertEquals('Categoria já cadastrado(a).', $responseData['error']['message']);
     }
 
-    public function testDeleteNotFoundSuccess()
+    public function testDeleteNotFoundError()
     {
         $category = Category::factory()->create();
 

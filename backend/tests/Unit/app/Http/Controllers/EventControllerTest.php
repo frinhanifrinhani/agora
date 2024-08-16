@@ -790,7 +790,7 @@ class EventControllerTest extends TestCase
         $this->assertEquals('Evento alterado(a) com sucesso.', $responseData['success']['message']);
     }
 
-    public function testDeleteNotFoundSuccess()
+    public function testDeleteNotFoundError()
     {
         $event = Event::factory()->create();
 
