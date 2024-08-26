@@ -122,8 +122,8 @@
     </div>
 
     <!--Eventos-->
-    <div class="col-md-12 bg-light">
-        <div class="row justify-content-center pb-4">
+    <div class="eventos-background">
+        <div class="row justify-content-center">
             <div class="col-md-8 align-items-center">
                 <div class="p-4 text-center">
                     <p class="h2 titles"><strong>Eventos</strong></p>
@@ -131,7 +131,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-center pb-3">
+        <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="col-md-12 d-flex flex-column justify-content-center">
                     <div class="p-4">
@@ -144,16 +144,14 @@
                                             target="_blank" rel="noopener noreferrer"
                                             style="color: #222222; text-decoration: none; font-size: 19px; line-height: 1.4; font-weight: 700;">
                                             <strong>Planejamento Urbano e Segurança Hídrica</strong>
+                                            <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span>                       
                                         </a>
                                     </h5>
                                     <div class="card-info-area">
                                         <div class="card-info">
                                             <span class="badge text-bg-success">PALESTRA</span>
-                                            <small> <i class="fas fa-calendar-alt"></i> 11/02/2020</small>
+                                            <small>11/02/2020</small>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <small><i class="fas fa-hourglass" style="color: #48773E;"></i> Expirado</small>
                                     </div>
                                 </div>
                             </div>
@@ -170,18 +168,20 @@
                                             target="_blank" rel="noopener noreferrer"
                                             style="color: #222222; text-decoration: none; font-size: 19px; line-height: 1.4; font-weight: 700;">
                                             <strong>3º Ciclo de Debates – Manaus</strong>
+                                            <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span> 
                                         </a>
                                     </h5>
-                                    <div class="card-info-area">
-                                        <div class="card-info">
-                                            <span class="badge text-bg-success">ENCONTRO</span>
-                                            <small> <i class="fas fa-calendar-alt"></i> 02/09/2019</small>
-                                        </div>
-                                    </div>
                                     <div>
                                         <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
                                             A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade. Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde, Ambiente e Sustentabilidade com o objetivo...
                                         </p>
+                                    </div>
+
+                                    <div class="card-info-area">
+                                        <div class="card-info">
+                                            <span class="badge text-bg-success">ENCONTRO</span>
+                                            <small>02/09/2019</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -198,25 +198,28 @@
                                             target="_blank" rel="noopener noreferrer"
                                             style="color: #222222; text-decoration: none; font-size: 19px; line-height: 1.4; font-weight: 700;">
                                             <strong>Experiências de Ciência Cidadã para Biodiversidade e Saúde</strong>
+                                            <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span> 
                                         </a>
                                     </h5>
-                                    <div class="card-info-area">
-                                        <div class="card-info">
-                                            <span class="badge text-bg-success">SEMINÁRIO</span>
-                                            <small> <i class="fas fa-calendar-alt"></i> 30/11/2018</small>
-                                        </div>
-                                    </div>
+                                    
                                     <div>
                                         <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
                                             Descrição O seminário visa abordar oportunidades e desafios em projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que tenham relação com esta temática. O enfoque será dado tanto em projetos voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda em resultados de pesquisas com dados advindos desta prática. Para se...
                                         </p>
+                                    </div>
+
+                                    <div class="card-info-area">
+                                        <div class="card-info">
+                                            <span class="badge text-bg-success">SEMINÁRIO</span>
+                                            <small>30/11/2018</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-center align-items-center my-4">
+                    <div class="d-flex justify-content-center align-items-center mb-4">
                         <a class="btn btn-success buttons" href="">
                             <span class="me-2">Mais eventos</span>
                             <i class="fa-solid fa-angle-right"></i>
@@ -281,6 +284,14 @@
     color: #404040;
     font-weight: lighter;
   }
+
+  .eventos-background {
+    position: relative;
+    width: 100%;
+    background: url('@/assets/images/fundo-eventos.png') repeat-x top center; 
+    background-size: 100%; 
+    
+}
 
   i {
     display: flex;
