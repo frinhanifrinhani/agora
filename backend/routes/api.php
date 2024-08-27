@@ -62,5 +62,7 @@ Route::resource('events', EventController::class);
 
 Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {
     Route::post('news', 'news');
-    Route::post('events', 'event');
+    Route::post('news', 'fileNews');
+    Route::post('filesNews', 'filesNews');
+    Route::post('filesEvent', 'filesEvent');
 });
