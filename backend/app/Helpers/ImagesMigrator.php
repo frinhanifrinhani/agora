@@ -75,7 +75,7 @@ class ImagesMigrator
 
         for ($i = 1; $i <= 2; $i++) {
 
-            $url = $i == 1 ? "https://agora.fiocruz.br/blog/event/page/1/" : "https://agora.fiocruz.br/blog/event/page/$i/";
+            $url = $i == 1 ? "https://agora.fiocruz.br/blog/event/" : "https://agora.fiocruz.br/blog/event/page/$i/";
 
             Log::info("Url crowler: $url");
             $news = $this->scrapeNews($url);
@@ -86,10 +86,11 @@ class ImagesMigrator
         if (!empty($allImages)) {
             Storage::put('migrator/temp_images_events.json', json_encode($allImages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
-            $saveDir = 'images';
-            $this->downloadImages($allImages, $saveDir);
+            //$saveDir = 'images';
+            //$this->downloadImages($allImages, $saveDir);
 
-            echo "Todas as imagens foram baixadas e salvas em: $saveDir\n";
+            //echo "Todas as imagens foram baixadas e salvas em: $saveDir\n";
+            echo "fim do crowler";
         } else {
             Log::warning('Nenhuma imagem foi encontrada para salvar.');
             echo "Nenhuma imagem foi encontrada para salvar.\n";

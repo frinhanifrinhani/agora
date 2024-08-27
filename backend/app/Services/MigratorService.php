@@ -89,10 +89,53 @@ class MigratorService
 
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
+            
+            DB::commit();
+
+            DB::beginTransaction();
+            
+            $this->saveImages($this->handlerImages($imagesData));
+
+            DB::commit();
+            
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "MIGRAÇÃO FINALIZADA COM SUCESSO";
+        echo "<br />";
+        echo "==========================================";
+    }
+    
+    public function migrateFilesNews()
+    {
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRADOR DE ARQUIVO DE NOTÍCIAS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "<br />";
+        echo "<br />";
+
+        try {
+            $imagesJson = Storage::get('migrator/temp_images.json');
+            $imagesData = json_decode($imagesJson, true);
+
+            DB::beginTransaction();
 
             $this->saveImages($this->handlerImages($imagesData));
 
             DB::commit();
+            
         } catch (\Exception $e) {
 
             return response()->json(
@@ -126,9 +169,6 @@ class MigratorService
             $json = Storage::get('migrator/paginas.json');
             $data = json_decode($json, true);
 
-            $imagesJson = Storage::get('migrator/temp_images_events.json');
-            $imagesData = json_decode($imagesJson, true);
-
             DB::beginTransaction();
 
             $authorsData = $this->handlerAuthors($data);
@@ -139,10 +179,49 @@ class MigratorService
 
             $eventData = $this->handlerEvent($data);
             $this->saveEvent($eventData);
+            
+        } catch (\Exception $e) {
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "MIGRAÇÃO FINALIZADA COM SUCESSO";
+        echo "<br />";
+        echo "==========================================";
+    }
+    
+    public function migrateFilesEvent()
+    {
+
+        echo "==========================================";
+        echo "<br />";
+        echo "INICIANDO MIGRADOR DE ARQUIVO DE EVENTOS";
+        echo "<br />";
+        echo "==========================================";
+        echo "<br />";
+        echo "<br />";
+        echo "<br />";
+
+        try {
+            /* $migrator = new ImagesMigrator();
+            $migrator->executeCrowler(); */
+
+            $imagesJson = Storage::get('migrator/temp_images_events.json');
+            $imagesData = json_decode($imagesJson, true);
+
+            DB::beginTransaction();
 
             $this->saveImagesEvents($this->handlerImagesEvents($imagesData));
-
+            
             DB::commit();
+            
         } catch (\Exception $e) {
 
             return response()->json(
@@ -564,12 +643,11 @@ class MigratorService
             foreach ($arrayData as $data) {
                 $events = $this->eventRepository->findByTitle($data['title']);
                 echo "<br />";
-                Log::info($events);
+
                 DB::beginTransaction();
                 $file = $this->fileRepository->storeFile($data);
                 DB::commit();
-                Log::info($events);
-                Log::info($file);
+
                 DB::beginTransaction();
                 echo $this->filesEventsRepository->storeFilesEvents($events->id, $file->id);
                 DB::commit();
@@ -883,13 +961,12 @@ class MigratorService
         try {
 
             foreach ($arrayData as $data) {
-                $event = $this->eventRepository->findByAttribute('alias', $data['alias']); //->firstOrFail();
+
+                $event = $this->eventRepository->findByAttribute('alias', $data['alias']);
                 echo "<br />";
                 if (!$event) {
                     DB::beginTransaction();
-                    $eventResponse = $this->eventRepository->create($data);
-                    $this->eventScheduleService->createEventSchedule($data['schedule'][0], $eventResponse->id);
-                    $eventResponse->tag()->sync($data['tags']);
+                    $this->eventRepository->create($data);
                     echo $data['title'];
                     DB::commit();
                 } else {
