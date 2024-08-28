@@ -24,7 +24,7 @@
                         </p>
                     </div>
                     
-                    <div class="col-2">
+                    <div class="col-12 col-md-2 mt-3 mt-md-0">
                         <a class="btn btn-success buttons" href="">
                             <span class="me-2">Leia Mais</span>
                             <i class="fa-solid fa-angle-right"></i>
@@ -35,8 +35,8 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-md-8 d-flex justify-content-between align-items-center">
-                <div class="p-4">
+            <div class="col-md-8 d-flex flex-wrap justify-content-between align-items-center">
+                <div class="p-4 col-12 col-md-4">
                     <img src="@/assets/images/cx01-396x275.png" class="img-fluid rounded" alt="">
 
                     <div class="py-3">
@@ -55,7 +55,7 @@
                     <p class="fw-bolder lh-sm">Da ideia ao produto, Feira fomenta soluções em saúde digital</p>
                     </small>
                 </div>
-                <div class="p-4">
+                <div class="p-4 col-12 col-md-4">
                     <img src="@/assets/images/cx02-396x275.png" class="img-fluid rounded" alt="">
 
                     <div class="py-3">
@@ -74,7 +74,7 @@
                     <p class="fw-bolder lh-sm">Vigilância popular atuando de forma estruturada com o SUS</p>
                     </small>
                 </div>
-                <div class="p-4">
+                <div class="p-4 col-12 col-md-4">
                     <img src="@/assets/images/cx03-396x275.png" class="img-fluid rounded" alt="">
 
                     <div class="py-3">
@@ -102,7 +102,7 @@
         <div class="col-md-12 background-container">
             <div class="row w-100">
                 <div class="col-md-6 d-flex justify-content-end align-items-center">
-                    <img src="@/assets/images/cxredes.png" class="foreground-image" width="400" height="400" alt="">
+                    <img src="@/assets/images/cxredes.png" class="foreground-image img-fluid" width="400" height="400" alt="">
                 </div>
                 <div class="col-md-4 d-flex flex-column justify-content-center">
                     <div class="py-4 pr-4 text-start">
@@ -141,12 +141,17 @@
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
-                                            target="_blank" rel="noopener noreferrer"
-                                            style="color: #222222; text-decoration: none; font-size: 19px; line-height: 1.4; font-weight: 700;">
-                                            <strong>Planejamento Urbano e Segurança Hídrica</strong>
-                                            <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span>                       
+                                            target="_blank" rel="noopener noreferrer">
+                                            <p class="responsive-title">
+                                                <strong>
+                                                    Planejamento Urbano e Segurança Hídrica
+                                                </strong>
+                                                <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span>  
+                                            </p>
+                                                                
                                         </a>
                                     </h5>
+                                
                                     <div class="card-info-area">
                                         <div class="card-info">
                                             <span class="badge text-bg-success">PALESTRA</span>
@@ -165,14 +170,18 @@
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
-                                            target="_blank" rel="noopener noreferrer"
-                                            style="color: #222222; text-decoration: none; font-size: 19px; line-height: 1.4; font-weight: 700;">
-                                            <strong>3º Ciclo de Debates – Manaus</strong>
-                                            <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span> 
+                                            target="_blank" rel="noopener noreferrer">
+                                            <p class="responsive-title">
+                                                <strong>
+                                                    3º Ciclo de Debates – Manaus
+                                                </strong>
+                                                <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span> 
+                                            </p>
+                                            
                                         </a>
                                     </h5>
                                     <div>
-                                        <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
+                                        <p class="card-text d-none d-md-block" style="font-size: 12px; line-height: 1.42857143;">
                                             A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade. Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde, Ambiente e Sustentabilidade com o objetivo...
                                         </p>
                                     </div>
@@ -195,21 +204,24 @@
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
-                                            target="_blank" rel="noopener noreferrer"
-                                            style="color: #222222; text-decoration: none; font-size: 19px; line-height: 1.4; font-weight: 700;">
-                                            <strong>Experiências de Ciência Cidadã para Biodiversidade e Saúde</strong>
-                                            <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span> 
+                                            target="_blank" rel="noopener noreferrer">
+                                            <p class="responsive-title">
+                                                <strong>
+                                                    Experiências de Ciência Cidadã para Biodiversidade e Saúde
+                                                </strong>
+                                                <span style="float: right; color: #414B5A;"><i class="fas fa-bookmark"></i></span> 
+                                            </p>
                                         </a>
                                     </h5>
                                     
                                     <div>
-                                        <p class="card-text" style="font-size: 12px; line-height: 1.42857143;">
+                                        <p class="card-text d-none d-md-block" style="font-size: 12px; line-height: 1.42857143;">
                                             Descrição O seminário visa abordar oportunidades e desafios em projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que tenham relação com esta temática. O enfoque será dado tanto em projetos voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda em resultados de pesquisas com dados advindos desta prática. Para se...
                                         </p>
                                     </div>
 
                                     <div class="card-info-area">
-                                        <div class="card-info">
+                                        <div class="card-info d-flex flex-column flex-md-row">
                                             <span class="badge text-bg-success">SEMINÁRIO</span>
                                             <small>30/11/2018</small>
                                         </div>
@@ -286,12 +298,21 @@
   }
 
   .eventos-background {
+    background: url('@/assets/images/fundo-eventos.png') repeat-x top center;
+    background-repeat: repeat-y; 
     position: relative;
     width: 100%;
-    background: url('@/assets/images/fundo-eventos.png') repeat-x top center; 
     background-size: 100%; 
     
 }
+
+/* .events-title{
+    color: #222222; 
+    text-decoration: none; 
+    font-size: 19px; 
+    line-height: 1.4; 
+    font-weight: 700;
+} */
 
   i {
     display: flex;
@@ -352,6 +373,14 @@
       display: none;
     }
   }
+
+  @media (max-width: 768px) {
+    .responsive-title {
+            font-size: 14px;
+            line-height: 1.2;
+        }
+    }
+
 </style>
   
 <script>
