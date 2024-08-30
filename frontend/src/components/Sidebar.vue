@@ -9,11 +9,17 @@
       <li :class="{ active: isActive('/') }">
         <a href="/" @click.prevent="setActive('/')" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</a>
       </li>
-      <li :class="{ active: isActive('/users') }">
-        <a href="/users" @click.prevent="setActive('/users')" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</a>
+      <li :class="{ active: isActive('/news') }">
+        <a href="/news" @click.prevent="setActive('/news')" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</a>
       </li>
-      <li :class="{ active: isActive('/settings') }">
-        <a href="/settings" @click.prevent="setActive('/settings')" class="pb-3 mb-2"><i class="fa-solid fa-calendar-days me-2"></i>Eventos</a>
+      <li :class="{ active: isActive('/event') }">
+        <a href="/event" @click.prevent="setActive('/event')" class="pb-3 mb-2"><i class="fa-solid fa-calendar-days me-2"></i>Eventos</a>
+      </li>
+      <li :class="{ active: isActive('/user') }">
+        <!-- <a href="/dashboard/user" @click.prevent="setActive('/dashboard/user')" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Usuários</a> -->
+        <router-link class="nav-link pb-3 mb-2" to="/dashboard/user">
+          <i class="fa-solid fa-users me-2"></i>Usuários
+        </router-link>
       </li>
     </ul>
   </nav>

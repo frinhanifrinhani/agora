@@ -11,6 +11,7 @@ import Agenda2030 from '@/views/Agenda2030.vue'
 import Dashboard from '@/views/dashboard/Dashboard.vue'
 import Login from '@/views/login/Login.vue'
 import HomeDashboard from '@/views/dashboard/HomeDashboard.vue'
+import User from '@/views/user/User.vue';
 
 const routes = [
   { path: '/',
@@ -34,6 +35,21 @@ const routes = [
         path: '',
         name: 'HomeDashboard',
         component: HomeDashboard,
+      },
+      /* { 
+        path: 'news',
+        name: 'News',
+        component: NewsDashboard,
+      },
+      { 
+        path: 'event',
+        name: 'Event',
+        component: EventDashboard,
+      }, */
+      { 
+        path: 'user',
+        name: 'User',
+        component: User,
       },
     ],
     meta: { hideHeader: true, hideFooter: true },
