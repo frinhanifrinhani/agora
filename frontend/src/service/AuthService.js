@@ -36,7 +36,7 @@ export default class AuthService {
         await fetch(url, {
           method: 'POST',
           headers: {
-            'Auth-Type': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
           },
         });
 
