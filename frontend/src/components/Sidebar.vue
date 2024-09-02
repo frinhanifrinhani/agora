@@ -6,20 +6,17 @@
     </div>
     <hr class="separator" />
     <ul class="list-unstyled p-3">
-      <li :class="{ active: isActive('/') }">
-        <a href="/" @click.prevent="setActive('/')" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</a>
+      <li :class="{ active: $route.path === '/dashboard' }">
+        <router-link to="/dashboard" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</router-link>
       </li>
-      <li :class="{ active: isActive('/news') }">
-        <a href="/news" @click.prevent="setActive('/news')" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</a>
+      <li :class="{ active: $route.path === '/news' }">
+        <router-link to="/news" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</router-link>
       </li>
-      <li :class="{ active: isActive('/event') }">
-        <a href="/event" @click.prevent="setActive('/event')" class="pb-3 mb-2"><i class="fa-solid fa-calendar-days me-2"></i>Eventos</a>
+      <li :class="{ active: $route.path === '/event' }">
+        <router-link to="/event" class="pb-3 mb-2"><i class="fa-solid fa-calendar-days me-2"></i>Eventos</router-link>
       </li>
-      <li :class="{ active: isActive('/user') }">
-        <!-- <a href="/dashboard/user" @click.prevent="setActive('/dashboard/user')" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Usuários</a> -->
-        <router-link class="nav-link pb-3 mb-2" to="/dashboard/user">
-          <i class="fa-solid fa-users me-2"></i>Usuários
-        </router-link>
+      <li :class="{ active: $route.path === '/dashboard/user' }">
+        <router-link to="/dashboard/user" class="pb-3 mb-2"><i class="fa-solid fa-users me-2"></i>Usuários</router-link>
       </li>
     </ul>
   </nav>
@@ -27,20 +24,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      activePath: '/'
-    };
-  },
-  methods: {
-    setActive(path) {
-      this.activePath = path;
-      this.$router.push(path);
-    },
-    isActive(path) {
-      return this.activePath === path;
-    }
-  }
 };
 </script>
 
