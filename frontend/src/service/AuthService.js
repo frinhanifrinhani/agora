@@ -28,8 +28,7 @@ export default class AuthService {
 
   async logout() {
     try {
-      const url = this.API_URL + 'logout'
-      
+      const url = this.API_URL + 'logout'      
       const token = localStorage.getItem('authToken');
 
       if (token) {
@@ -41,7 +40,6 @@ export default class AuthService {
         });
 
         localStorage.removeItem('authToken');
-        this.$router.push({ name: 'Login' });
       }
 
     } catch (error) {

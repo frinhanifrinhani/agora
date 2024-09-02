@@ -1,4 +1,3 @@
-// mixins/resize.js
 export default {
   data() {
     return {
