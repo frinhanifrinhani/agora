@@ -67,7 +67,7 @@ const routes = [
       { 
         path: 'user',
         name: 'User',
-        component: import('@/views/user/User.vue'),
+        component: () => import('@/views/user/User.vue'),
       },
     ],
     meta: { hideHeader: true, hideFooter: true },
