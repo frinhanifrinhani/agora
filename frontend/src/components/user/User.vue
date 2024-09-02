@@ -1,6 +1,6 @@
 <template>
   <div class="user-list">
-    <h2 class="mb-4">Lista de Usuários</h2>
+    <h2 class="mb-4">Gerenciamento de Usuários</h2>
     
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
       <div class="spinner-border text-primary" role="status">
