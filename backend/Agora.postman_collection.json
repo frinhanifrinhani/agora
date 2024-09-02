@@ -925,7 +925,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "{{BEARER}}",
 									"type": "string"
 								}
 							]
@@ -933,14 +933,14 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/migrator/events",
+							"raw": "{{URL}}/api/migrator/event",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
 								"migrator",
-								"events"
+								"event"
 							]
 						}
 					},
@@ -954,7 +954,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "{{BEARER}}",
 									"type": "string"
 								}
 							]
@@ -983,7 +983,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "{{BEARER}}",
 									"type": "string"
 								}
 							]
