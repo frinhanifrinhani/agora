@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6983bc9c-7a88-42b6-b2bb-928188bd3ddc",
+		"_postman_id": "3b5bb5ce-3454-4e1b-921b-04dbc92445da",
 		"name": "Agora",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "5906446"
+		"_exporter_id": "4954353"
 	},
 	"item": [
 		{
@@ -33,14 +33,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/noticia/4",
+							"raw": "{{URL}}/api/news/2",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
-								"noticia",
-								"4"
+								"news",
+								"2"
 							]
 						}
 					},
@@ -49,11 +49,21 @@
 				{
 					"name": "store",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"Titulo 1\",\r\n    \"news\":\"Noticia 1\"\r\n}",
+							"raw": "{\r\n   \r\n    \"title\":\"CEE: Acompanhamento da Agenda 2030 - 3\" ,\r\n    \"body\":\"No âmbito da Comissão Fiocruz sobre os Objetivos do Desenvolvimento Sustentável, o CEE-Fiocruz acompanha o cumprimento da Agenda 2030. O monitoramento dos 17 ODSs e respectivas metas é compartilhado com o público por meio do site <a href=\\\"http://radarods.e-seed.com.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\">Radar ODS</a>, com conteúdos atualizados periodicamente, a partir de análises de especialistas. Pelo site, fica disponível também uma biblioteca de acesso aberto com títulos que oferecem subsídios ao aprofundamento dos temas trazidos à tona pela Agenda 2030.\\r\\n<div class=\\\"materias_nivel_05\\\">\\r\\n<div class=\\\"field field-name-body field-type-text-with-summary field-label-hidden\\\">\\r\\n<div class=\\\"field-items\\\">\\r\\n<div class=\\\"field-item even\\\">\\r\\n\\r\\n<a href=\\\"http://radarods.e-seed.com.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\">Acesse o Radar ODS</a>.\\r\\n\\r\\n<a href=\\\"http://radarods.e-seed.com.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\"><img src=\\\"https://portal.fiocruz.br/sites/portal.fiocruz.br/files/u7206/radar_ods_2.jpg\\\" alt=\\\"\\\" /></a>\\r\\n\\r\\n<a href=\\\"http://cee.fiocruz.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\"><img src=\\\"https://portal.fiocruz.br/sites/portal.fiocruz.br/files/u7206/cee.jpg\\\" alt=\\\"\\\" /></a>\\r\\n\\r\\n</div>\\r\\n</div>\\r\\n</div>\\r\\n</div>\\r\\n<div class=\\\"bloco_lado_gal bg_ampliado\\\"></div>\",\r\n    \"publicated\":false,\r\n    \"categories\":[1,2,3]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,11 +86,21 @@
 				{
 					"name": "update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\":\"Titulo 1 udpate\",\r\n    \"news\":\"Noticia 1 update\"\r\n}",
+							"raw": "{\r\n   \r\n\"title\":\"CEE: Acompanhamento da Agenda 2030 - 6\" ,\r\n    \"body\":\"No âmbito da Comissão Fiocruz sobre os Objetivos do Desenvolvimento Sustentável, o CEE-Fiocruz acompanha o cumprimento da Agenda 2030. O monitoramento dos 17 ODSs e respectivas metas é compartilhado com o público por meio do site <a href=\\\"http://radarods.e-seed.com.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\">Radar ODS</a>, com conteúdos atualizados periodicamente, a partir de análises de especialistas. Pelo site, fica disponível também uma biblioteca de acesso aberto com títulos que oferecem subsídios ao aprofundamento dos temas trazidos à tona pela Agenda 2030.\\r\\n<div class=\\\"materias_nivel_05\\\">\\r\\n<div class=\\\"field field-name-body field-type-text-with-summary field-label-hidden\\\">\\r\\n<div class=\\\"field-items\\\">\\r\\n<div class=\\\"field-item even\\\">\\r\\n\\r\\n<a href=\\\"http://radarods.e-seed.com.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\">Acesse o Radar ODS</a>.\\r\\n\\r\\n<a href=\\\"http://radarods.e-seed.com.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\"><img src=\\\"https://portal.fiocruz.br/sites/portal.fiocruz.br/files/u7206/radar_ods_2.jpg\\\" alt=\\\"\\\" /></a>\\r\\n\\r\\n<a href=\\\"http://cee.fiocruz.br/\\\" target=\\\"_blank\\\" rel=\\\"noopener\\\"><img src=\\\"https://portal.fiocruz.br/sites/portal.fiocruz.br/files/u7206/cee.jpg\\\" alt=\\\"\\\" /></a>\\r\\n\\r\\n</div>\\r\\n</div>\\r\\n</div>\\r\\n</div>\\r\\n<div class=\\\"bloco_lado_gal bg_ampliado\\\"></div>\",\r\n    \"publicated\":true,\r\n    \"categories\":[1,2,3]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -88,14 +108,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/news/1",
+							"raw": "{{URL}}/api/news/8",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
 								"news",
-								"1"
+								"8"
 							]
 						}
 					},
@@ -104,17 +124,27 @@
 				{
 					"name": "destroy",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/news/3",
+							"raw": "{{URL}}/api/news/8",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
 								"news",
-								"3"
+								"8"
 							]
 						}
 					},
@@ -128,16 +158,26 @@
 				{
 					"name": "index",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/user",
+							"raw": "{{URL}}/api/users",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
-								"user"
+								"users"
 							]
 						}
 					},
@@ -146,6 +186,16 @@
 				{
 					"name": "show",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -165,6 +215,16 @@
 				{
 					"name": "update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -177,14 +237,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/user/1",
+							"raw": "{{URL}}/api/user/3",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
 								"user",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -193,6 +253,16 @@
 				{
 					"name": "destroy",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -212,11 +282,21 @@
 				{
 					"name": "store",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer {{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Teste 3\",\r\n    \"email\":\"teste3@mail.com\",\r\n    \"cpf\":\"12345678903\",\r\n    \"password\":\"123456\",\r\n    \"password_confirmation\":\"123456\"\r\n}",
+							"raw": "{\r\n    \"name\":\"teste\",\r\n    \"email\":\"teste3@mail.com\",\r\n    \"cpf\":\"38203494052\",\r\n    \"password\":\"123456\",\r\n    \"password_confirmation\":\"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,13 +304,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/user",
+							"raw": "{{URL}}/api/users",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"api",
-								"user"
+								"users"
 							]
 						}
 					},
@@ -243,12 +323,28 @@
 			"item": [
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"token\", json.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"teste3@mail.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"raw": "{\r\n    \"email\":\"administrdor@agora\",\r\n    \"password\":\"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -263,6 +359,812 @@
 							"path": [
 								"api",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/logout",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Categoria teste 3\",\r\n    \"description\":\"Descrição Categoria teste 1\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/categories",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/categories",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/categories/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Categoria teste 6 update\",\r\n    \"description\":\"Descrição Categoria teste 6\",\r\n    \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/categories/9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/categories/9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tag",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Meu tesTE_é com Acento_ mauícula e espaço 4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/tags",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Meu tesTE_é com Acento_ mauícula e espaço 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/tags/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/tags/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Minha imagem de teste",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Frinhani/Downloads/Imagem para upload de teste.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/images",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "files",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Minha imagem de teste",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Frinhani/Downloads/Teste upload de arquivos.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/files",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/files/21",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show-image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/images/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"images",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show-file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/files/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "files",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/files",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "images",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/images",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"images"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "migrator",
+			"item": [
+				{
+					"name": "news",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/migrator/news",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"migrator",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "events",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/migrator/events",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"migrator",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "files events",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/migrator/filesEvent",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"migrator",
+								"filesEvent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "files news",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/migrator/filesEvent",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"migrator",
+								"filesEvent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/events",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/events/63",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Experiências de Ciência Cidadã para Biodiversidade e Saúde - 2\",\r\n    \"body\": \"<h1>Descrição</h1>\\r\\nO seminário visa abordar oportunidades e desafios em projetos de <strong>ciência cidadã</strong>. Serão apresentados exemplos práticos de projetos que tenham relação com esta temática. O enfoque será dado tanto em projetos voltados para <strong>vigilância em saúde</strong> quanto à conservação da <strong>biodiversidade</strong>, e ainda em resultados de pesquisas com dados advindos desta prática.\\r\\n\\r\\nPara se inscrever*, acesse este <a href=\\\"https://goo.gl/forms/AJeLRCcPcNO73tkj2\\\">link</a>.\\r\\n\\r\\n*Inscrições limitadas: 110 vagas.\\r\\n\\r\\n<strong>Local:\\r\\n</strong>Auditório Maria Deane / Pavilhão Leônidas Deane / IOC\\r\\nAv. Brasil 4365. Manguinhos\\r\\n\\r\\n<em>Incentivamos que os participantes tragam seus copos ou canecas.</em>\",\r\n    \"start_date\": \"2018-11-30\",\r\n    \"start_time\": \"9:00\",\r\n    \"end_date\": \"2018-11-30\",\r\n    \"end_time\": \"12:00\",\r\n    \"organizer\": \"Fiocruz\",\r\n    \"ddd\": \"(61)\",\r\n    \"phone\": \"5555-4444\",\r\n    \"email\": \"trendsinnews@fiocruz.br\",\r\n    \"address\": \"Av. Boa Viagem, 1070 | Boa Viagem | Recife | Pernambuco CEP: 51.011-000\",\r\n    \"location\": \"Rio de Janeiro\",\r\n    \"venue\": \"Auditório Maria Deane / Pavilhão Leônidas Deane / IOC\",\r\n    \"sidebar_button_link\": \"www.google.com\",\r\n    \"schedule\": [\r\n        {\r\n            \"title\": \"teste\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"12:00\",\r\n            \"description\":\"teste\",\r\n            \"order\":\"1\"\r\n        },\r\n        {\r\n            \"title\": \"teste 2\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"13:00\",\r\n            \"description\":\"teste 2\",\r\n            \"order\":\"3\"\r\n        },\r\n        {\r\n            \"title\": \"teste 2\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"13:00\",\r\n            \"description\":\"teste 2\",\r\n            \"order\":\"2\"\r\n        }\r\n    ],\r\n    \"tags\":[1,3,4],\r\n    \"publicated\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/events",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Experiências de Ciência Cidadã para Biodiversidade e Saúde - 9\",\r\n    \"body\": \"<h1>Descrição</h1>\\r\\nO seminário visa abordar oportunidades e desafios em projetos de <strong>ciência cidadã</strong>. Serão apresentados exemplos práticos de projetos que tenham relação com esta temática. O enfoque será dado tanto em projetos voltados para <strong>vigilância em saúde</strong> quanto à conservação da <strong>biodiversidade</strong>, e ainda em resultados de pesquisas com dados advindos desta prática.\\r\\n\\r\\nPara se inscrever*, acesse este <a href=\\\"https://goo.gl/forms/AJeLRCcPcNO73tkj2\\\">link</a>.\\r\\n\\r\\n*Inscrições limitadas: 110 vagas.\\r\\n\\r\\n<strong>Local:\\r\\n</strong>Auditório Maria Deane / Pavilhão Leônidas Deane / IOC\\r\\nAv. Brasil 4365. Manguinhos\\r\\n\\r\\n<em>Incentivamos que os participantes tragam seus copos ou canecas.</em>\",\r\n    \"start_date\": \"2018-11-30\",\r\n    \"start_time\": \"9:00\",\r\n    \"end_date\": \"2018-11-30\",\r\n    \"end_time\": \"12:00\",\r\n    \"organizer\": \"Fiocruz\",\r\n    \"ddd\": \"(61)\",\r\n    \"phone\": \"5555-4444\",\r\n    \"email\": \"trendsinnews@fiocruz.br\",\r\n    \"address\": \"Av. Boa Viagem, 1070 | Boa Viagem | Recife | Pernambuco CEP: 51.011-000\",\r\n    \"location\": \"Rio de Janeiro,rj\",\r\n    \"venue\": \"Auditório Maria Deane / Pavilhão Leônidas Deane / IOC -dois\",\r\n    \"sidebar_button_link\": \"www.google.com\",\r\n    \"schedule\": [\r\n        {\r\n            \"title\": \"teste order 1 update 2\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"12:00\",\r\n            \"description\":\"teste\",\r\n            \"order\":\"1\"\r\n        },\r\n        {\r\n            \"title\": \"teste 2\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"13:00\",\r\n            \"description\":\"teste 2\",\r\n            \"order\":\"2\"\r\n        },\r\n        {\r\n            \"title\": \"teste 2\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"13:00\",\r\n            \"description\":\"teste 2\",\r\n            \"order\":\"3\"\r\n        },\r\n        {\r\n            \"title\": \"teste 2\",\r\n            \"date\":\"2018-11-30\",\r\n            \"time\":\"13:00\",\r\n            \"description\":\"teste 2\",\r\n            \"order\":\"4\"\r\n        }\r\n    ],\r\n    \"publicated\": true,\r\n    \"tags\":[3,4]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/events/5",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BEARER}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/events/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"events",
+								"1"
 							]
 						}
 					},
@@ -287,8 +1189,19 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "jobs",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer"
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -314,8 +1227,33 @@
 	"variable": [
 		{
 			"key": "URL",
-			"value": "http://agora.local",
+			"value": "localhost:8000",
 			"type": "string"
+		},
+		{
+			"key": "BEARER",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "URL",
+			"value": "http://localhost:8000",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "BEARER",
+			"value": ""
 		}
 	]
 }

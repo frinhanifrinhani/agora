@@ -92,11 +92,11 @@ class MigratorService
             
             DB::commit();
 
-            DB::beginTransaction();
+           /*  DB::beginTransaction();
             
             $this->saveImages($this->handlerImages($imagesData));
 
-            DB::commit();
+            DB::commit(); */
             
         } catch (\Exception $e) {
 
