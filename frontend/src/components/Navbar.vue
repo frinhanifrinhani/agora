@@ -36,7 +36,9 @@ export default {
     async logout() {
       try {
         this.isLoading = true;
-        const response = await this.AuthService.logout();
+        await this.AuthService.logout();
+
+        this.$router.push({ name: 'Login' });
       } catch (error) {
         console.error('Erro ao fazer logout:', error);
       } finally {

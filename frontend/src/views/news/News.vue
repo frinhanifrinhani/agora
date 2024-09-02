@@ -47,8 +47,6 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  
-  
 }
 
 .card .card-info-area .card-info {
@@ -63,11 +61,5 @@ export default {
   color: #48773e;
   background-color: #48773e;
   padding: 0.2rem 1.6rem ;
-} 
-
-/* .card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-} */
+}
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
-    <div class="card login-card">
+    <div class="card login-card" style="height: 60% !important;">
       <div class="card-body">
+        <img class="mb-3 mx-auto d-block" src="@/assets/images/logo_AgoraFiocruz.png" alt="Logo" width="275" height="46">
         <h4 class="card-title text-center mb-0">Login</h4>
         <form @submit.prevent="login">
           <div class="mb-2">
@@ -13,7 +14,7 @@
             <input type="password" v-model="password" class="form-control" id="password" required />
           </div>
           <button type="submit" class="btn btn-success w-100" :disabled="isLoading">
-            <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span v-if="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
             <span v-if="isLoading">Entrando...</span>
             <span v-else>Entrar</span>
           </button>

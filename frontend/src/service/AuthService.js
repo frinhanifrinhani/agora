@@ -28,20 +28,18 @@ export default class AuthService {
 
   async logout() {
     try {
-      const url = this.API_URL + 'logout'
-      
+      const url = this.API_URL + 'logout'      
       const token = localStorage.getItem('authToken');
 
       if (token) {
         await fetch(url, {
           method: 'POST',
           headers: {
-            'Auth-Type': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
           },
         });
 
         localStorage.removeItem('authToken');
-        this.$router.push({ name: 'Login' });
       }
 
     } catch (error) {
