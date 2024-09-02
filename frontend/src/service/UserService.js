@@ -5,11 +5,12 @@ export default class AuthService {
 
   async fetchUsers() {
     try {
+      const token = localStorage.getItem('authToken');
       const response = await fetch(`${this.API_URL}users`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
 
