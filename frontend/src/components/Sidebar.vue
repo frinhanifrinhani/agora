@@ -6,8 +6,8 @@
     </div>
     <hr class="separator" />
     <ul class="list-unstyled p-3">
-      <li :class="{ active: isActive('/') }">
-        <a href="/" @click.prevent="setActive('/')" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</a>
+      <li :class="{ active: isActive('/dashboard') }">
+        <a href="/dashboard" @click.prevent="setActive('/dashboard')" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</a>
       </li>
       <li :class="{ active: isActive('/news') }">
         <a href="/news" @click.prevent="setActive('/news')" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</a>
