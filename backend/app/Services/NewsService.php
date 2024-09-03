@@ -142,6 +142,50 @@ class NewsService
         }
     }
 
+
+
+    public function getNewsByAlias($alias)
+    {
+        try {
+            $news = $this->newsRepository->findByAttributeWhitRelation('alias', $alias)
+                ->with('category')
+                ->with('tag')
+                ->with('comment')
+                ->with('comment.user')
+                ->firstOrFail();
+
+            return response()->json(
+                [
+                    'data' => $news
+                ],
+                Response::HTTP_OK
+            );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception  $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
     public function updateNews($request, $id)
     {
 

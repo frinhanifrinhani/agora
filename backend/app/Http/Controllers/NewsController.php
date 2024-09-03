@@ -32,6 +32,11 @@ class NewsController extends Controller
         return $this->newsService->getNewsById($id);
     }
 
+    public function newsByAlias(string $alias): JsonResponse
+    {
+        return $this->newsService->getNewsByAlias($alias);
+    }
+
     public function update(NewsRequest $request, int $id): JsonResponse
     {
         return $this->newsService->updateNews($request, $id);

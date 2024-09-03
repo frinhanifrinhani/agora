@@ -42,7 +42,8 @@ Route::controller(FileController::class)->group(function () {
 
 Route::controller(NewsController::class)->group(function () {
     Route::get('/news', 'index');
-    Route::get('/news/{id}', 'show');
+    //Route::get('/news/{id}', 'show'); //alterar para dashboard/news/
+    Route::get('/news/{alias}', 'newsByAlias');
     Route::middleware('auth:sanctum')->post('/news', 'store');
     Route::middleware('auth:sanctum')->put('/news/{id}', 'update');
     Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
