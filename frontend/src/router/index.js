@@ -9,7 +9,8 @@ import NewsShow from '@/views/news/NewsShow.vue'
 import About from '@/views/About.vue'
 import Agenda2030 from '@/views/Agenda2030.vue'
 import Dashboard from '@/views/dashboard/Dashboard.vue'
-import Login from '@/views/login/Login.vue'
+// import Login from '@/views/login/Login.vue'
+import Login from '@/components/login/Login.vue'
 import HomeDashboard from '@/views/dashboard/HomeDashboard.vue'
 
 const routes = [

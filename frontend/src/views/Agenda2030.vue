@@ -39,12 +39,12 @@ export default {
   .flip-card {
     background-color: transparent;
     width: 100%;
-    /* height: 300px; */
-    margin-bottom: 100px;
-    /* perspective: 1000px;  */
+    height: 300px;
+    overflow: hidden;
   }
 
   .flip-card-inner {
+    
     position: relative;
     width: 100%;
     height: 100%;
@@ -68,6 +68,10 @@ export default {
     color: black;
   }
 
+  div.flip-card-front img {
+    width: 100%;
+    height: auto;
+}
   .flip-card-back {
     color: gray;
     transform: rotateY(180deg);
@@ -87,9 +91,9 @@ export default {
   }
 
   @media (max-width: 1112px) {
-      .image-responsive{
+      /* .image-responsive{
         display: none;
-      }
+      } */
 
       div.text-responsive {
         width: 90%; /* equivalente a col-md-10 width */
