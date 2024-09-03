@@ -45,7 +45,7 @@ export default {
   computed: {
     pageNumbers() {
       const pages = [];
-      const start = Math.max(2, this.currentPage - 2);
+      const start = Math.max(1, this.currentPage - 2);
       const end = Math.min(this.totalPages - 1, this.currentPage + 2);
 
       for (let page = start; page <= end; page++) {
@@ -96,6 +96,7 @@ export default {
   pointer-events: none;
   border-color: #c0c0c0;
   background-color: #f8f9fa;
+  color: #9ab19d;
 }
 
 .page-link:hover {
