@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\admin;
 
-use App\Models\User;
 use App\Constants\Entities;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -10,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserService
+class UserAdminService
 {
 
     private UserRepository $userRepository;

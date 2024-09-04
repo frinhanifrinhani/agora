@@ -3,14 +3,16 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\MigratorController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MigratorController;
+
+use App\Http\Controllers\admin\UserAdminController;
+use App\Http\Controllers\admin\AuthAdminController;
+use App\Http\Controllers\admin\NewsAdminController;
 
 Route::get('/check-db-connection', function () {
     try {
@@ -21,10 +23,25 @@ Route::get('/check-db-connection', function () {
     }
 });
 
-Route::controller(AuthController::class)->group(function () {
+Route::controller(AuthAdminController::class)->group(function () {
     Route::post('/login', 'login');
     Route::middleware('auth:sanctum')->post('/logout', 'logout');
 });
+
+#################################################
+#                 ROTAS SITE                    #
+#################################################
+
+Route::controller(NewsController::class)->group(function () {
+    Route::get('/news', 'index');
+    Route::get('/news/{alias}', 'newsByAlias');
+});
+
+
+#################################################
+#                 ROTAS ADMIN                   #
+#################################################
+
 
 Route::controller(FileController::class)->group(function () {
     //return all
@@ -40,12 +57,8 @@ Route::controller(FileController::class)->group(function () {
     Route::middleware('auth:sanctum')->delete('/files/{id}', 'destroy');
 });
 
-Route::controller(NewsController::class)->group(function () {
-    Route::get('/news', 'index');
-    Route::get('/news/{id}', 'show');
-    Route::middleware('auth:sanctum')->post('/news', 'store');
-    Route::middleware('auth:sanctum')->put('/news/{id}', 'update');
-    Route::middleware('auth:sanctum')->delete('/news/{id}', 'destroy');
+Route::middleware(['auth:sanctum'])->controller(NewsAdminController::class)->group(function () {
+    Route::resource('admin/news', NewsAdminController::class);
 });
 
 Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group(function () {
@@ -53,7 +66,7 @@ Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserAdminController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('tags', TagController::class);
     Route::resource('events', EventController::class);

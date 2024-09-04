@@ -13,7 +13,7 @@ const routes = [
     component: import('@/views/news/News.vue'),
   },
   { 
-    path: '/noticias/:id',
+    path: '/noticias/:id',//alias
     name: 'NewsShow',
     component: import('@/views/news/NewsShow.vue'),
     props: true
@@ -44,16 +44,28 @@ const routes = [
     component: import('@/views/event/EventShow.vue'),
     props: true
   },
+  // ROTAS ADMIN
   {
-    path: '/dashboard',
+    path: '/admin',
     name: 'Dashboard',
-    component: () => import('@/views/dashboard/Dashboard.vue'),
+    component: () => import('@/views/admin/Dashboard.vue'),
     children: [
       {
         path: '',
         name: 'HomeDashboard',
-        component: () => import('@/views/dashboard/HomeDashboard.vue'),
+        component: () => import('@/views/admin/HomeDashboard.vue'),
       },
+      {
+        path: 'news',
+        name: 'NewsAdmin',
+        component: () => import('@/views/admin/news/News.vue'),
+      },
+      {
+        path: 'news/create',
+        name: 'CreateNews',
+        component: () => import('@/views/admin/news/CreateNews.vue'),
+      },
+      
       /* { 
         path: 'news',
         name: 'News',

@@ -22,23 +22,10 @@ class NewsController extends Controller
         return $this->newsService->getAllNews($request);
     }
 
-    public function store(NewsRequest $request)
+    public function newsByAlias(string $alias): JsonResponse
     {
-        return $this->newsService->createNews($request);
+        return $this->newsService->getNewsByAlias($alias);
     }
 
-    public function show(string $id): JsonResponse
-    {
-        return $this->newsService->getNewsById($id);
-    }
 
-    public function update(NewsRequest $request, int $id): JsonResponse
-    {
-        return $this->newsService->updateNews($request, $id);
-    }
-
-    public function destroy(int $id): JsonResponse
-    {
-        return $this->newsService->deleteNews($id);
-    }
 }

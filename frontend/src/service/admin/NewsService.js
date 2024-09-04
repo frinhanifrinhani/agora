@@ -3,13 +3,21 @@ import { getCurrentInstance } from 'vue';
 export default class NewsService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
-    async getIndexNews(limit = 10, page = 0) {
+    async getIndexNews(limit = 10, page = 1) {
         try {
-            const url = new URL(this.API_URL + 'news');
+            const url = new URL(this.API_URL + 'admin/news');
             url.searchParams.append('limit', limit);
             url.searchParams.append('page', page);
 
-            const response = await fetch(url);
+            const token = localStorage.getItem('authToken');
+
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -21,15 +29,4 @@ export default class NewsService {
         }
     }
 
-    async getShowNews(id) {
-        try {
-            const url = new URL(this.API_URL + `news/${id}`);
-            const response = await fetch(url);
-
-            return await response.json();
-        } catch (error) {
-            console.error("Erro ao buscar os detalhes da notícia:", error);
-            throw error;
-        }
-    }
 }

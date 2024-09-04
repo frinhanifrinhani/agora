@@ -1,31 +1,29 @@
 <?php
 
-namespace Tests\Feature\App\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\admin;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Str;
-use App\Services\AuthService;
 use Illuminate\Http\Response;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Services\admin\AuthAdminService;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\admin\AuthAdminController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AuthControllerTest extends TestCase
+class AuthAdminControllerTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    protected AuthService $authService;
-    protected AuthController $authController;
+    protected AuthAdminService $authService;
+    protected AuthAdminController $authController;
     protected $user;
     protected $token;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->authService = $this->app->make(AuthService::class);
-        $this->authController = new AuthController($this->authService);
+        $this->authService = $this->app->make(AuthAdminService::class);
+        $this->authController = new AuthAdminController($this->authService);
 
         $this->user = User::factory()->create();
 

@@ -56,12 +56,12 @@ class NewsRepository extends BaseRepository
         return $query;
     }
 
-    public function paginate($limit, $page, $type = '', $search = [])
+    public function paginate($limit, $page, $publicated = '', $search = [])
     {
         $query = $this->allQuery();
 
-        if ($type) {
-            $query->where('type', $type);
+        if ($publicated) {
+            $query->where('publicated', $publicated);
         }
 
         $query->with(['filesNews.file']);

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar.vue';
+import Sidebar from '@/components/admin/Sidebar.vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default {
