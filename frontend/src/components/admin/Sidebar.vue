@@ -15,8 +15,8 @@
       <li :class="{ active: $route.path === '/event' }">
         <router-link to="/event" class="pb-3 mb-2"><i class="fa-solid fa-calendar-days me-2"></i>Eventos</router-link>
       </li>
-      <li :class="{ active: $route.path === '/dashboard/user' }">
-        <router-link to="/dashboard/user" class="pb-3 mb-2"><i class="fa-solid fa-users me-2"></i>Usuários</router-link>
+      <li :class="{ active: $route.path === '/admin/user' }">
+        <router-link to="/admin/user" class="pb-3 mb-2"><i class="fa-solid fa-users me-2"></i>Usuários</router-link>
       </li>
     </ul>
   </nav>

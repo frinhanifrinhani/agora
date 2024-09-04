@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\admin;
 
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class AuthService
+class AuthAdminService
 {
 
     public function login($request): JsonResponse

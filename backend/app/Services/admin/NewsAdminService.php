@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\NewsRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class NewsService
+class NewsAdminService
 {
     use MakeAlias;
     use DateHelper;

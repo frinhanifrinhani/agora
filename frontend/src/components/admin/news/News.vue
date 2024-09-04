@@ -7,7 +7,11 @@
     </ol>
   </nav>
   <div class="news-list">
-    <h2 class="mb-4">Notícias</h2>
+    <div class="top-list">
+      <h2 class="mb-4">Notícias</h2>
+      <a href="#" class="btn btn-primary">Cadastrar Notícia</a>
+    </div>
+
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
       <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Carregando...</span>
@@ -38,14 +42,14 @@
               <button
                 v-if="!news.publicated"
                 class="btn btn-primary btn-sm me-2"
-                @click="publicateNews(news.id)"
+                @click="publishNews(news.id)"
               >
                 <i class="fa-regular fa-circle-check"></i>
               </button>
               <button
                 v-if="news.publicated"
                 class="btn btn-danger btn-sm me-2"
-                @click="unpublicateNews(news.id)"
+                @click="unpublishNews(news.id)"
               >
                 <i class="fa-regular fa-circle-xmark"></i>
               </button>
@@ -116,6 +120,16 @@ export default {
       return statusToShow;
     },
 
+    publishNews(id) {
+      console.log(id);
+    },
+
+    async unpublishNews(id) {
+      //this.loading = true;
+      const response = await this.NewsService.getIndexNews(this.perPage, page);
+      console.log(id);
+    },
+
     async getNews(page = 1) {
       this.loading = true;
       const response = await this.NewsService.getIndexNews(this.perPage, page);
@@ -136,7 +150,7 @@ export default {
       if (page > 0 && page <= this.tableNews.last_page) {
         this.getNews(page);
       }
-    }
+    },
   },
 };
 </script>
@@ -146,6 +160,16 @@ export default {
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
+}
+
+.top-list {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.top-list h2 {
+  color: #5ab25e;
 }
 
 .table {

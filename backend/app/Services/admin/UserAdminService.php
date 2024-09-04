@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserService
+class UserAdminService
 {
 
     private UserRepository $userRepository;

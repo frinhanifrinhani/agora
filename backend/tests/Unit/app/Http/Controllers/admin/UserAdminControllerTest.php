@@ -1,30 +1,30 @@
 <?php
 
-namespace Tests\Feature\App\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\admin;
 
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
-use App\Services\admin\UserService;
+use App\Services\admin\UserAdminService;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\UserAdminController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserControllerTest extends TestCase
+class UserAdminControllerTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    protected UserService $userService;
-    protected UserController $userController;
+    protected UserAdminService $userAdminService;
+    protected UserAdminController $userAdminController;
     protected $user;
     protected $token;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->userService = $this->app->make(UserService::class);
-        $this->userController = new UserController($this->userService);
+        $this->userAdminService = $this->app->make(UserAdminService::class);
+        $this->userAdminController = new UserAdminController($this->userAdminService);
 
         $this->user = User::factory()->create();
 
