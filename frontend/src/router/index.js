@@ -44,21 +44,28 @@ const routes = [
     component: import('@/views/event/EventShow.vue'),
     props: true
   },
+  // ROTAS ADMIN
   {
     path: '/admin',
     name: 'Dashboard',
     component: () => import('@/views/admin/Dashboard.vue'),
     children: [
-      // {
-      //   path: '',
-      //   name: 'HomeDashboard',
-      //   component: () => import('@/views/admin/HomeDashboard.vue'),
-      // },
+      {
+        path: '',
+        name: 'HomeDashboard',
+        component: () => import('@/views/admin/HomeDashboard.vue'),
+      },
       {
         path: 'news',
         name: 'NewsAdmin',
         component: () => import('@/views/admin/news/News.vue'),
       },
+      {
+        path: 'news/create',
+        name: 'CreateNews',
+        component: () => import('@/views/admin/news/CreateNews.vue'),
+      },
+      
       /* { 
         path: 'news',
         name: 'News',
