@@ -9,8 +9,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MigratorController;
-use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\UserController;
+
 
 Route::get('/check-db-connection', function () {
     try {
@@ -25,6 +26,18 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::middleware('auth:sanctum')->post('/logout', 'logout');
 });
+
+#################################################
+#                 ROTAS SITE                    #
+#################################################
+
+
+
+
+#################################################
+#                 ROTAS ADMIN                   #
+#################################################
+
 
 Route::controller(FileController::class)->group(function () {
     //return all

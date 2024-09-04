@@ -5,9 +5,9 @@ namespace Tests\Feature\App\Http\Controllers;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Http\Response;
-use App\Services\admin\AuthService;
+use App\Services\AuthService;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthControllerTest extends TestCase

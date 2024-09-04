@@ -2,7 +2,6 @@
 
 namespace App\Services\admin;
 
-use App\Models\User;
 use App\Constants\Entities;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\AuthRequest;
-use App\Services\admin\AuthService;
+use App\Services\AuthService;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
