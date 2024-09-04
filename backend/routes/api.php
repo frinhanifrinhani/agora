@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\MigratorController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MigratorController;
+use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\UserController;
 
 Route::get('/check-db-connection', function () {
     try {

@@ -5,10 +5,10 @@ namespace Tests\Feature\App\Http\Controllers;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Str;
-use App\Services\UserService;
 use Illuminate\Http\Response;
-use App\Http\Controllers\UserController;
+use App\Services\admin\UserService;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\admin\UserController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserControllerTest extends TestCase

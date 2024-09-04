@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Http\Requests\UserRequest;
-use App\Services\UserService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\UserRequest;
+use App\Services\admin\UserService;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
