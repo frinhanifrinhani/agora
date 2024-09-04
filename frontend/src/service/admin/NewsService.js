@@ -29,4 +29,13 @@ export default class NewsService {
         }
     }
 
+    async unpublishNews(id) {
+        try {
+            //const url = new URL(this.API_URL + 'admin/news');
+        } catch (error) {
+            return false;
+        }
+    }
+
+
 }
