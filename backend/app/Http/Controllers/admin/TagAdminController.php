@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 
-use Illuminate\Http\JsonResponse;
+use App\Services\admin\TagAdminService;
 use Illuminate\Http\Request;
 use App\Http\Requests\TagRequest;
-use App\Services\TagService;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 
-class TagController extends Controller
+class TagAdminController extends Controller
 {
-    private TagService $tagService;
+    private TagAdminService $tagService;
 
-    public function __construct(TagService $tagService)
+    public function __construct(TagAdminService $tagService)
     {
         $this->tagService = $tagService;
     }

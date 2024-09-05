@@ -1,23 +1,23 @@
 <?php
 
-namespace Tests\Feature\App\Http\Controllers;
+namespace Tests\Feature\App\Http\Controllers\admin;
 
 use App\Models\Tag;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Str;
-use App\Services\TagService;
+
 use Illuminate\Http\Response;
-use App\Http\Controllers\TagController;
+use App\Services\admin\TagAdminService;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\admin\TagAdminController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class TagControllerTest extends TestCase
+class TagAdminControllerTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    protected TagService $TagService;
-    protected TagController $TagController;
+    protected TagAdminService $tagAdminService;
+    protected TagAdminController $tagAdminController;
     protected $user;
     protected $token;
 
@@ -26,8 +26,8 @@ class TagControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->TagService = $this->app->make(TagService::class);
-        $this->TagController = new TagController($this->TagService);
+        $this->tagAdminService = $this->app->make(TagAdminService::class);
+        $this->tagAdminController = new TagAdminController($this->tagAdminService);
 
         $this->user = User::factory()->create();
 
@@ -40,7 +40,7 @@ class TagControllerTest extends TestCase
     public function testIndexSuccess()
     {
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->get('/api/tags');
+            ->get('/api/admin/tags');
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -51,7 +51,7 @@ class TagControllerTest extends TestCase
 
     public function testIndexUrlNotFoundError()
     {
-        $response = $this->get('/api/tags-url-not-found');
+        $response = $this->get('/api/admin/tags-url-not-found');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 
@@ -67,7 +67,7 @@ class TagControllerTest extends TestCase
         $tag = Tag::factory()->create();
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->get('/api/tags/' . $tag->id);
+            ->get('/api/admin/tags/' . $tag->id);
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -77,7 +77,7 @@ class TagControllerTest extends TestCase
 
     public function testShowNotFoundRegisterError()
     {
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->get('/api/tags/0');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->get('/api/admin/tags/0');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -94,7 +94,7 @@ class TagControllerTest extends TestCase
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -110,7 +110,7 @@ class TagControllerTest extends TestCase
         $tagData = [];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -126,10 +126,10 @@ class TagControllerTest extends TestCase
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -145,11 +145,11 @@ class TagControllerTest extends TestCase
         ];
 
         $tagResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $tagDataUpdate = [];
 
-        $response = $this->put('/api/tags/' . $tagResponse['data']['tag']['id'], $tagDataUpdate);
+        $response = $this->put('/api/admin/tags/' . $tagResponse['data']['tag']['id'], $tagDataUpdate);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -167,14 +167,14 @@ class TagControllerTest extends TestCase
         ];
 
         $tagCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $tagDataUpdate = [
             'name' => $this->title . ' updated',
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/tags/' . $tagCreateResponse['data']['tag']['id'], $tagDataUpdate);
+            ->put('/api/admin/tags/' . $tagCreateResponse['data']['tag']['id'], $tagDataUpdate);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -199,17 +199,17 @@ class TagControllerTest extends TestCase
         ];
 
         $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/tags', $tagData);
 
         $tagCreateResponse2 = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData2);
+            ->post('/api/admin/tags', $tagData2);
 
         $tagDataUpdate = [
             'name' =>$title
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/tags/' . $tagCreateResponse2['data']['tag']['id'], $tagDataUpdate);
+            ->put('/api/admin/tags/' . $tagCreateResponse2['data']['tag']['id'], $tagDataUpdate);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -223,8 +223,8 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/tags/' . $tag->id);
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/tags/' . $tag->id);
+        $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/tags/' . $tag->id);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/tags/' . $tag->id);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -238,7 +238,7 @@ class TagControllerTest extends TestCase
     {
         $tag = Tag::factory()->create();
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/tags/' . $tag->id);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/tags/' . $tag->id);
 
         $response->assertStatus(Response::HTTP_OK);
 

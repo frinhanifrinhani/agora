@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EventController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\admin\UserAdminController;
 use App\Http\Controllers\admin\AuthAdminController;
 use App\Http\Controllers\admin\NewsAdminController;
 use App\Http\Controllers\admin\CategoryAdminController;
+use App\Http\Controllers\admin\TagAdminController;
 
 Route::get('/check-db-connection', function () {
     try {
@@ -64,7 +64,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserAdminController::class);
     Route::resource('admin/categories', CategoryAdminController::class);
     Route::resource('admin/news', NewsAdminController::class);
-    Route::resource('tags', TagController::class);
+    Route::resource('admin/tags', TagAdminController::class);
     Route::resource('events', EventController::class);
 });
 Route::resource('events', EventController::class);
