@@ -7,12 +7,12 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MigratorController;
 
 use App\Http\Controllers\admin\UserAdminController;
 use App\Http\Controllers\admin\AuthAdminController;
 use App\Http\Controllers\admin\NewsAdminController;
+use App\Http\Controllers\admin\CategoryAdminController;
 
 Route::get('/check-db-connection', function () {
     try {
@@ -37,7 +37,6 @@ Route::controller(NewsController::class)->group(function () {
     Route::get('/news/{alias}', 'newsByAlias');
 });
 
-
 #################################################
 #                 ROTAS ADMIN                   #
 #################################################
@@ -57,17 +56,14 @@ Route::controller(FileController::class)->group(function () {
     Route::middleware('auth:sanctum')->delete('/files/{id}', 'destroy');
 });
 
-Route::middleware(['auth:sanctum'])->controller(NewsAdminController::class)->group(function () {
-    Route::resource('admin/news', NewsAdminController::class);
-});
-
 Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group(function () {
     Route::resource('comments', CommentController::class);
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserAdminController::class);
-    Route::resource('categories', CategoryController::class);
+    Route::resource('admin/categories', CategoryAdminController::class);
+    Route::resource('admin/news', NewsAdminController::class);
     Route::resource('tags', TagController::class);
     Route::resource('events', EventController::class);
 });

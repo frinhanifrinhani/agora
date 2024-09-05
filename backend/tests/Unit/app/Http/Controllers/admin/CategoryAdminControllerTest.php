@@ -2,22 +2,21 @@
 
 namespace Tests\Feature\App\Http\Controllers;
 
-use App\Models\Category;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Str;
-use App\Services\CategoryService;
+use App\Models\Category;
 use Illuminate\Http\Response;
-use App\Http\Controllers\CategoryController;
+use App\Services\admin\CategoryAdminService;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\admin\CategoryAdminController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CategoryControllerTest extends TestCase
+class CategoryAdminControllerTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    protected CategoryService $CategoryService;
-    protected CategoryController $CategoryController;
+    protected CategoryAdminService $categoryAdminService;
+    protected CategoryAdminController $categoryAdminController;
     protected $user;
     protected $token;
 
@@ -26,8 +25,8 @@ class CategoryControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->CategoryService = $this->app->make(CategoryService::class);
-        $this->CategoryController = new CategoryController($this->CategoryService);
+        $this->categoryAdminService = $this->app->make(CategoryAdminService::class);
+        $this->categoryAdminController = new CategoryAdminController($this->categoryAdminService);
 
         $this->user = User::factory()->create();
 
@@ -40,7 +39,7 @@ class CategoryControllerTest extends TestCase
     public function testIndexSuccess()
     {
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->get('/api/categories');
+            ->get('/api/admin/categories');
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -51,7 +50,7 @@ class CategoryControllerTest extends TestCase
 
     public function testIndexUrlNotFoundError()
     {
-        $response = $this->get('/api/categories-url-not-found');
+        $response = $this->get('/api/admin/categories-url-not-found');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 
@@ -67,7 +66,7 @@ class CategoryControllerTest extends TestCase
         $category = Category::factory()->create();
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->get('/api/categories/' . $category->id);
+            ->get('/api/admin/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -77,7 +76,7 @@ class CategoryControllerTest extends TestCase
 
     public function testShowNotFoundRegisterError()
     {
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->get('/api/categories/0');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->get('/api/admin/categories/0');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -96,7 +95,7 @@ class CategoryControllerTest extends TestCase
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -112,7 +111,7 @@ class CategoryControllerTest extends TestCase
         $categoryData = [];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -131,10 +130,10 @@ class CategoryControllerTest extends TestCase
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -151,11 +150,11 @@ class CategoryControllerTest extends TestCase
         ];
 
         $categoryResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $categoryDataUpdate = [];
 
-        $response = $this->put('/api/categories/' . $categoryResponse['data']['category']['id'], $categoryDataUpdate);
+        $response = $this->put('/api/admin/categories/' . $categoryResponse['data']['category']['id'], $categoryDataUpdate);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -175,16 +174,16 @@ class CategoryControllerTest extends TestCase
         ];
 
         $categoryCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $categoryDataUpdate = [
             'name' => $this->title . ' updated',
         ];
 
-        $response = $this->put('/api/categories/' . $categoryCreateResponse['data']['category']['id'], $categoryDataUpdate);
+        $response = $this->put('/api/admin/categories/' . $categoryCreateResponse['data']['category']['id'], $categoryDataUpdate);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/categories/' . $categoryCreateResponse['data']['category']['id'], $categoryDataUpdate);
+            ->put('/api/admin/categories/' . $categoryCreateResponse['data']['category']['id'], $categoryDataUpdate);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -209,17 +208,17 @@ class CategoryControllerTest extends TestCase
         ];
 
         $categoryCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData);
+            ->post('/api/admin/categories', $categoryData);
 
         $categoryCreateResponse2 = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/categories', $categoryData2);
+            ->post('/api/admin/categories', $categoryData2);
 
         $categoryDataUpdate = [
             'name' =>$title
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/categories/' . $categoryCreateResponse2['data']['category']['id'], $categoryDataUpdate);
+            ->put('/api/admin/categories/' . $categoryCreateResponse2['data']['category']['id'], $categoryDataUpdate);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -233,8 +232,8 @@ class CategoryControllerTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/categories/' . $category->id);
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/categories/' . $category->id);
+        $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/categories/' . $category->id);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
@@ -248,7 +247,7 @@ class CategoryControllerTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/categories/' . $category->id);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_OK);
 
