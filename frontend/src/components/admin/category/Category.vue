@@ -2,14 +2,14 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <span class="text-black-50">Home / Notícias</span>
+        <span class="text-black-50">Home / Categorias</span>
       </li>
     </ol>
   </nav>
-  <div class="news-list">
+  <div class="category-list">
     <div class="top-list">
-      <h2 class="mb-4">Notícias</h2>
-      <a href="#" class="btn btn-primary">Cadastrar Notícia</a>
+      <h2 class="mb-4">Categorias</h2>
+      <a href="#" class="btn btn-primary">Cadastrar Categoria</a>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -23,47 +23,55 @@
         <thead>
           <tr>
             <th class="text-column-table-template">ID</th>
-            <th class="text-column-table-template">Título</th>
+            <th class="text-column-table-template">Nome</th>
+            <th class="text-column-table-template">Descrição</th>
             <th class="text-column-table-template">Status</th>
             <th class="text-column-table-template">Publicar/Despublicar</th>
-            <th class="text-column-table-template">Data de criação</th>
-            <th class="text-column-table-template">Data de publicação</th>
             <th class="text-column-table-template">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(news, index) in tableNews.data" :key="index" class="align-middle">
-            <td class="text-black-50">{{ news.id }}</td>
-            <td class="text-black-50">{{ truncateText(news.title) }}</td>
+          <tr
+            v-for="(category, index) in tableCategory.data"
+            :key="index"
+            class="align-middle"
+          >
+            <td class="text-black-50">{{ category.id }}</td>
+            <td class="text-black-50">{{ truncateText(category.name) }}</td>
+            <td class="text-black-50">{{ truncateText(category.description) }}</td>
             <td class="text-black-50">
-              {{ publicationStatus(news.publicated) }}
+              {{ publicationStatus(category.status) }}
             </td>
             <td class="text-black-50 center">
               <button
-                v-if="!news.publicated"
+                v-if="!category.status"
                 class="btn btn-primary btn-sm me-2"
-                @click="publishNews(news.id)"
+                @click="publishCategory(category.id)"
               >
                 <i class="fa-regular fa-circle-check"></i>
               </button>
               <button
-                v-if="news.publicated"
+                v-if="category.status"
                 class="btn btn-danger btn-sm me-2"
-                @click="unpublishNews(news.id)"
+                @click="unpublishCategory(category.id)"
               >
                 <i class="fa-regular fa-circle-xmark"></i>
               </button>
             </td>
-            <td class="text-black-50">{{ news.created_at }}</td>
-            <td class="text-black-50">{{ news.publication_date }}</td>
             <td>
-              <button class="btn btn-primary btn-sm me-2" @click="viewNews(news.id)">
+              <button
+                class="btn btn-primary btn-sm me-2"
+                @click="viewCategory(category.id)"
+              >
                 <i class="fa-regular fa-eye"></i>
               </button>
-              <button class="btn btn-warning btn-sm me-2" @click="editNews(news.id)">
+              <button
+                class="btn btn-warning btn-sm me-2"
+                @click="editCategory(category.id)"
+              >
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-danger btn-sm" @click="deleteNews(news.id)">
+              <button class="btn btn-danger btn-sm" @click="deleteCategory(category.id)">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </td>
@@ -71,8 +79,8 @@
         </tbody>
       </table>
       <Pagination
-        :currentPage="tableNews.current_page"
-        :totalPages="tableNews.last_page"
+        :currentPage="tableCategory.current_page"
+        :totalPages="tableCategory.last_page"
         @page-changed="changePage"
       />
     </div>
@@ -80,17 +88,17 @@
 </template>
 
 <script>
-import NewsService from "@/service/admin/NewsService";
+import CategoryService from "@/service/admin/CategoryService";
 import Pagination from "../../Pagination.vue";
 
 export default {
-  name: "News",
+  name: "Category",
   components: {
     Pagination,
   },
   data() {
     return {
-      tableNews: {
+      tableCategory: {
         data: [],
         current_page: 1,
         last_page: 1,
@@ -99,15 +107,15 @@ export default {
     };
   },
   created() {
-    this.NewsService = new NewsService();
+    this.CategoryService = new CategoryService();
   },
   mounted() {
-    this.getNews();
+    this.getCategory();
   },
   methods: {
     truncateText(text) {
-      if(text){
-        const maxLength = 90;
+      if (text) {
+        const maxLength = 100;
         return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
       }
     },
@@ -122,35 +130,42 @@ export default {
       return statusToShow;
     },
 
-    publishNews(id) {
+    publishCategory(id) {
       console.log(id);
     },
 
-    async unpublishNews(id) {
+    async unpublishCategory(id) {
       //this.isLoading = true;
-      const response = await this.NewsService.getIndexNews(this.perPage, page);
+      const response = await this.CategoryService.getIndexCategory(this.perPage, page);
       console.log(id);
     },
 
-    async getNews(page = 1) {
-      this.isLoading = true;
-      const response = await this.NewsService.getIndexNews(this.perPage, page);
+    async getCategory(page = 1) {
+      try {
+        this.isLoading = true;
+        const response = await this.CategoryService.getIndexCategory(this.perPage, page);
 
-      if (response) {
-        this.tableNews = {
-          data: response.data.map((news) => ({
-            ...news,
-          })),
-          current_page: response.current_page,
-          last_page: response.last_page,
-        };
+        if (response) {
+          this.tableCategory = {
+            data: response.data.map((category) => ({
+              ...category,
+            })),
+            current_page: response.current_page,
+            last_page: response.last_page,
+          };
+        }
+
+        this.isLoading = false;
+      } catch (error) {
+        console.error('Erro ao buscar categorias:', error);
+      } finally {
+        this.isLoading = false;
       }
-
-      this.isLoading = false;
     },
+
     changePage(page) {
-      if (page > 0 && page <= this.tableNews.last_page) {
-        this.getNews(page);
+      if (page > 0 && page <= this.tableCategory.last_page) {
+        this.getCategory(page);
       }
     },
   },
@@ -158,7 +173,7 @@ export default {
 </script>
 
 <style scoped>
-.news-list {
+.category-list {
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
