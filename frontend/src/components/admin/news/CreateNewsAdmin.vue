@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "CreateNews",
+  name: "CreateNewsAdmin",
   data() {
     return {};
   },

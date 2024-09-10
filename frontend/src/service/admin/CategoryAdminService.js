@@ -1,11 +1,11 @@
 import { getCurrentInstance } from 'vue';
 
-export default class TagService {
+export default class CategoryAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
-    async getIndexTag(limit = 10, page = 1) {
+    async getIndexCategory(limit = 10, page = 1) {
         try {
-            const url = new URL(this.API_URL + 'admin/tags');
+            const url = new URL(this.API_URL + 'admin/categories');
             url.searchParams.append('limit', limit);
             url.searchParams.append('page', page);
 

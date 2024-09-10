@@ -88,11 +88,11 @@
 </template>
 
 <script>
-import CategoryService from "@/service/admin/CategoryService";
+import CategoryAdminService from "@/service/admin/CategoryAdminService";
 import Pagination from "../../Pagination.vue";
 
 export default {
-  name: "Category",
+  name: "CategoryAdmin",
   components: {
     Pagination,
   },
@@ -107,7 +107,7 @@ export default {
     };
   },
   created() {
-    this.CategoryService = new CategoryService();
+    this.CategoryAdminService = new CategoryAdminService();
   },
   mounted() {
     this.getCategory();
@@ -130,20 +130,10 @@ export default {
       return statusToShow;
     },
 
-    publishCategory(id) {
-      console.log(id);
-    },
-
-    async unpublishCategory(id) {
-      //this.isLoading = true;
-      const response = await this.CategoryService.getIndexCategory(this.perPage, page);
-      console.log(id);
-    },
-
     async getCategory(page = 1) {
       try {
         this.isLoading = true;
-        const response = await this.CategoryService.getIndexCategory(this.perPage, page);
+        const response = await this.CategoryAdminService.getIndexCategory(this.perPage, page);
 
         if (response) {
           this.tableCategory = {

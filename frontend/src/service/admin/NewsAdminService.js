@@ -1,6 +1,6 @@
 import { getCurrentInstance } from 'vue';
 
-export default class NewsService {
+export default class NewsAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
     async getIndexNews(limit = 10, page = 1) {

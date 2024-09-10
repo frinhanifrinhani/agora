@@ -1,11 +1,11 @@
 import { getCurrentInstance } from 'vue';
 
-export default class CategoryService {
+export default class EventAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
-    async getIndexCategory(limit = 10, page = 1) {
+    async getIndexEvent(limit = 10, page = 1) {
         try {
-            const url = new URL(this.API_URL + 'admin/categories');
+            const url = new URL(this.API_URL + 'admin/events');
             url.searchParams.append('limit', limit);
             url.searchParams.append('page', page);
 
@@ -28,14 +28,5 @@ export default class CategoryService {
             return false;
         }
     }
-
-    async unpublishCategory(id) {
-        try {
-            //const url = new URL(this.API_URL + 'admin/category');
-        } catch (error) {
-            return false;
-        }
-    }
-
 
 }
