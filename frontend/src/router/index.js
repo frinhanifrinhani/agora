@@ -73,24 +73,27 @@ const routes = [
         name: 'NewsAdmin',
         component: () => import('@/views/admin/news/News.vue'),
       },
+      //event
+      {
+        path: 'events',
+        name: 'EventAdmin',
+        component: () => import('@/views/admin/event/Event.vue'),
+      },
       {
         path: 'news/create',
         name: 'CreateNews',
         component: () => import('@/views/admin/news/CreateNews.vue'),
       },
-      
-      
-      
-      { 
+      {
         path: 'user',
         name: 'User',
         component: () => import('@/views/user/User.vue'),
       },
-    
+
     ],
     meta: { hideHeader: true, hideFooter: true },
   },
-  { 
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/Login.vue'),
