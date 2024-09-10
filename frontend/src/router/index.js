@@ -77,7 +77,7 @@ const routes = [
       {
         path: 'events',
         name: 'EventAdmin',
-        component: () => import('@/views/admin/event/Event.vue'),
+        component: () => import('@/views/admin/event/EventAdmin.vue'),
       },
       {
         path: 'news/create',

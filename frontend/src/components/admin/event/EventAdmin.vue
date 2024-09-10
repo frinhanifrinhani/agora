@@ -67,11 +67,11 @@
 </template>
 
 <script>
-import EventService from "@/service/admin/EventService";
+import EventAdminService from "@/service/admin/EventAdminService";
 import Pagination from "../../Pagination.vue";
 
 export default {
-  name: "Event",
+  name: "EventAdmin",
   components: {
     Pagination,
   },
@@ -86,7 +86,7 @@ export default {
     };
   },
   created() {
-    this.EventService = new EventService();
+    this.EventAdminService = new EventAdminService();
   },
   mounted() {
     this.getEvent();
@@ -101,7 +101,7 @@ export default {
 
     async getEvent(page = 1) {
       this.isLoading = true;
-      const response = await this.EventService.getIndexEvent(this.perPage, page);
+      const response = await this.EventAdminService.getIndexEvent(this.perPage, page);
 
       if (response) {
         this.tableEvent = {

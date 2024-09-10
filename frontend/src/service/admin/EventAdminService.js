@@ -1,6 +1,6 @@
 import { getCurrentInstance } from 'vue';
 
-export default class EventService {
+export default class EventAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
     async getIndexEvent(limit = 10, page = 1) {
@@ -28,14 +28,5 @@ export default class EventService {
             return false;
         }
     }
-
-    async unpublishEvent(id) {
-        try {
-            //const url = new URL(this.API_URL + 'admin/event');
-        } catch (error) {
-            return false;
-        }
-    }
-
 
 }
