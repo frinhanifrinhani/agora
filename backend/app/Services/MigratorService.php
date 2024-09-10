@@ -15,7 +15,7 @@ use App\Repositories\NewsRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use App\Repositories\EventRepository;
-use App\Services\EventScheduleService;
+use App\Services\admin\EventScheduleAdminService;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\CategoryRepository;
 use App\Repositories\filesNewsRepository;
@@ -30,7 +30,7 @@ class MigratorService
     private TagRepository $tagRepository;
     private NewsRepository $newsRepository;
     private EventRepository $eventRepository;
-    private EventScheduleService $eventScheduleService;
+    private EventScheduleAdminService $eventScheduleAdminService;
 
     private FileRepository $fileRepository;
     private filesNewsRepository $filesNewsRepository;
@@ -44,7 +44,7 @@ class MigratorService
         EventRepository $eventRepository,
         FileRepository $fileRepository,
         filesNewsRepository $filesNewsRepository,
-        EventScheduleService $eventScheduleService,
+        EventScheduleAdminService $eventScheduleAdminService,
         FilesEventsRepository $filesEventsRepository
     ) {
         $this->userRepository = $userRepository;
@@ -54,7 +54,7 @@ class MigratorService
         $this->eventRepository = $eventRepository;
         $this->fileRepository = $fileRepository;
         $this->filesNewsRepository = $filesNewsRepository;
-        $this->eventScheduleService = $eventScheduleService;
+        $this->eventScheduleAdminService = $eventScheduleAdminService;
         $this->filesEventsRepository = $filesEventsRepository;
     }
 
@@ -89,15 +89,15 @@ class MigratorService
 
             $newsData = $this->handlerNews($data);
             $this->saveNews($newsData);
-            
+
             DB::commit();
 
            /*  DB::beginTransaction();
-            
+
             $this->saveImages($this->handlerImages($imagesData));
 
             DB::commit(); */
-            
+
         } catch (\Exception $e) {
 
             return response()->json(
@@ -114,7 +114,7 @@ class MigratorService
         echo "<br />";
         echo "==========================================";
     }
-    
+
     public function migrateFilesNews()
     {
         echo "==========================================";
@@ -135,7 +135,7 @@ class MigratorService
             $this->saveImages($this->handlerImages($imagesData));
 
             DB::commit();
-            
+
         } catch (\Exception $e) {
 
             return response()->json(
@@ -179,7 +179,7 @@ class MigratorService
 
             $eventData = $this->handlerEvent($data);
             $this->saveEvent($eventData);
-            
+
         } catch (\Exception $e) {
 
             return response()->json(
@@ -196,7 +196,7 @@ class MigratorService
         echo "<br />";
         echo "==========================================";
     }
-    
+
     public function migrateFilesEvent()
     {
 
@@ -219,9 +219,9 @@ class MigratorService
             DB::beginTransaction();
 
             $this->saveImagesEvents($this->handlerImagesEvents($imagesData));
-            
+
             DB::commit();
-            
+
         } catch (\Exception $e) {
 
             return response()->json(
@@ -497,7 +497,7 @@ class MigratorService
         if (isset($data)) {
             $basePath = 'images/';
             $fileInfoList = [];
-                        
+
             foreach ($data as $item) {
                 if (isset($item['images']) && !is_null($item['images'])) {
                     $imgPath = $basePath . $item['img'][0];
@@ -606,7 +606,7 @@ class MigratorService
         if (isset($data)) {
             $basePath = 'images/';
             $fileInfoList = [];
-                        
+
             foreach ($data as $item) {
                 if (isset($item['images']) && !is_null($item['images'])) {
                     $imgPath = $basePath . $item['img'];
@@ -820,9 +820,9 @@ class MigratorService
 
                 $unserializedArrayEventSchedule = unserialize($serializedArrayEventSchedule);
 
-                $eventSchedules = json_encode($unserializedArrayEventSchedule, JSON_PRETTY_PRINT);
+                $eventSchedulesAdmin = json_encode($unserializedArrayEventSchedule, JSON_PRETTY_PRINT);
 
-                $schedules = json_decode($eventSchedules);
+                $schedules = json_decode($eventSchedulesAdmin);
 
                 $sheduleData = [];
 
