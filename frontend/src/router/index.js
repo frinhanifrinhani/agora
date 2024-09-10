@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  { 
+  {
     path: '/',
     name: 'Home',
     component: import('@/views/Home.vue'),
     meta: { hideHeader: false, hideFooter: false },
   },
-  { 
+  {
     path: '/noticias',
     name: 'News',
     component: import('@/views/news/News.vue'),
   },
-  { 
+  {
     path: '/noticias/:id',//alias
     name: 'NewsShow',
     component: import('@/views/news/NewsShow.vue'),
@@ -23,22 +23,22 @@ const routes = [
     name: 'Event',
     component: import('@/views/event/Event.vue'),
   },
-  { 
+  {
     path: '/pagina-evento',
     name: 'EventPage',
     component: import('@/views/event/EventPage.vue'),
   },
-  { 
+  {
     path: '/sobre',
     name: 'About',
     component: import('@/views/About.vue'),
   },
-  { 
-    path: '/agenda-2030', 
-    name: 'Agenda2030', 
+  {
+    path: '/agenda-2030',
+    name: 'Agenda2030',
     component: import('@/views/Agenda2030.vue'),
-  }, 
-  { 
+  },
+  {
     path: '/evento/:id',
     name: 'EventShow',
     component: import('@/views/event/EventShow.vue'),
@@ -59,7 +59,7 @@ const routes = [
       {
         path: 'categories',
         name: 'CategoryAdmin',
-        component: () => import('@/views/admin/category/Category.vue'),
+        component: () => import('@/views/admin/category/CategoryAdmin.vue'),
       },
       // tag
       {

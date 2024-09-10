@@ -1,6 +1,6 @@
 import { getCurrentInstance } from 'vue';
 
-export default class CategoryService {
+export default class CategoryAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
     async getIndexCategory(limit = 10, page = 1) {
@@ -28,14 +28,5 @@ export default class CategoryService {
             return false;
         }
     }
-
-    async unpublishCategory(id) {
-        try {
-            //const url = new URL(this.API_URL + 'admin/category');
-        } catch (error) {
-            return false;
-        }
-    }
-
 
 }
