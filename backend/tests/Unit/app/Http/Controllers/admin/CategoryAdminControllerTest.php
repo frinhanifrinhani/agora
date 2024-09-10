@@ -2,22 +2,21 @@
 
 namespace Tests\Feature\App\Http\Controllers;
 
-use App\Models\Tag;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Str;
-use App\Services\TagService;
+use App\Models\Category;
 use Illuminate\Http\Response;
-use App\Http\Controllers\TagController;
+use App\Services\admin\CategoryAdminService;
 use Illuminate\Foundation\Testing\WithFaker;
+use App\Http\Controllers\admin\CategoryAdminController;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class TagControllerTest extends TestCase
+class CategoryAdminControllerTest extends TestCase
 {
     use DatabaseTransactions, WithFaker;
 
-    protected TagService $TagService;
-    protected TagController $TagController;
+    protected CategoryAdminService $categoryAdminService;
+    protected CategoryAdminController $categoryAdminController;
     protected $user;
     protected $token;
 
@@ -26,8 +25,8 @@ class TagControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->TagService = $this->app->make(TagService::class);
-        $this->TagController = new TagController($this->TagService);
+        $this->categoryAdminService = $this->app->make(CategoryAdminService::class);
+        $this->categoryAdminController = new CategoryAdminController($this->categoryAdminService);
 
         $this->user = User::factory()->create();
 
@@ -40,7 +39,7 @@ class TagControllerTest extends TestCase
     public function testIndexSuccess()
     {
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->get('/api/tags');
+            ->get('/api/admin/categories');
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -51,7 +50,7 @@ class TagControllerTest extends TestCase
 
     public function testIndexUrlNotFoundError()
     {
-        $response = $this->get('/api/tags-url-not-found');
+        $response = $this->get('/api/admin/categories-url-not-found');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
 
@@ -64,10 +63,10 @@ class TagControllerTest extends TestCase
 
     public function testShowSuccess()
     {
-        $tag = Tag::factory()->create();
+        $category = Category::factory()->create();
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->get('/api/tags/' . $tag->id);
+            ->get('/api/admin/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -77,24 +76,26 @@ class TagControllerTest extends TestCase
 
     public function testShowNotFoundRegisterError()
     {
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->get('/api/tags/0');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->get('/api/admin/categories/0');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
         $responseData = $response->json();
 
-        $this->assertEquals('Tag não encontrado(a).', $responseData['error']['message']);
+        $this->assertEquals('Categoria não encontrado(a).', $responseData['error']['message']);
     }
 
     public function testStoreSuccess()
     {
+        $faker = \Faker\Factory::create('pt_BR');
+        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
 
-        $tagData = [
+        $categoryData = [
             'name' => $this->title
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -102,15 +103,15 @@ class TagControllerTest extends TestCase
 
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('Tag salvo(a) com sucesso.', $responseData['success']['message']);
+        $this->assertEquals('Categoria salvo(a) com sucesso.', $responseData['success']['message']);
     }
 
     public function testStoreEmptyFieldsError()
     {
-        $tagData = [];
+        $categoryData = [];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -121,35 +122,39 @@ class TagControllerTest extends TestCase
 
     public function testStoreDuplicatedRegisterError()
     {
-        $tagData = [
+        $faker = \Faker\Factory::create('pt_BR');
+        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
+
+        $categoryData = [
             'name' => $this->title
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+            ->post('/api/admin/categories', $categoryData);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
         $responseData = $response->json();
 
-        $this->assertEquals('Tag já cadastrado(a).', $responseData['error']['message']);
+        $this->assertEquals('Categoria já cadastrado(a).', $responseData['error']['message']);
     }
 
     public function testUpdateEmptyFieldsError()
     {
-        $tagData = [
+
+        $categoryData = [
             'name' => $this->title,
         ];
 
-        $tagResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+        $categoryResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->post('/api/admin/categories', $categoryData);
 
-        $tagDataUpdate = [];
+        $categoryDataUpdate = [];
 
-        $response = $this->put('/api/tags/' . $tagResponse['data']['tag']['id'], $tagDataUpdate);
+        $response = $this->put('/api/admin/categories/' . $categoryResponse['data']['category']['id'], $categoryDataUpdate);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
@@ -161,27 +166,31 @@ class TagControllerTest extends TestCase
 
     public function testUpdateSuccess()
     {
+        $faker = \Faker\Factory::create('pt_BR');
+        $faker->addProvider(new \Faker\Provider\pt_BR\Person($faker));
 
-        $tagData = [
+        $categoryData = [
             'name' => $this->title,
         ];
 
-        $tagCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+        $categoryCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->post('/api/admin/categories', $categoryData);
 
-        $tagDataUpdate = [
+        $categoryDataUpdate = [
             'name' => $this->title . ' updated',
         ];
 
+        $response = $this->put('/api/admin/categories/' . $categoryCreateResponse['data']['category']['id'], $categoryDataUpdate);
+
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/tags/' . $tagCreateResponse['data']['tag']['id'], $tagDataUpdate);
+            ->put('/api/admin/categories/' . $categoryCreateResponse['data']['category']['id'], $categoryDataUpdate);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('Tag alterado(a) com sucesso.', $responseData['success']['message']);
+        $this->assertEquals('Categoria alterado(a) com sucesso.', $responseData['success']['message']);
     }
 
     public function testUpdateDuplicatedRegisterError()
@@ -190,61 +199,61 @@ class TagControllerTest extends TestCase
         $title = $this->title;
         $titleTwo = $this->title.' tow';
 
-        $tagData = [
+        $categoryData = [
             'name' => $title
         ];
 
-        $tagData2 = [
+        $categoryData2 = [
             'name' =>$titleTwo
         ];
 
-        $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData);
+        $categoryCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->post('/api/admin/categories', $categoryData);
 
-        $tagCreateResponse2 = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->post('/api/tags', $tagData2);
+        $categoryCreateResponse2 = $this->withHeader('Authorization', 'Bearer ' . $this->token)
+            ->post('/api/admin/categories', $categoryData2);
 
-        $tagDataUpdate = [
+        $categoryDataUpdate = [
             'name' =>$title
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
-            ->put('/api/tags/' . $tagCreateResponse2['data']['tag']['id'], $tagDataUpdate);
+            ->put('/api/admin/categories/' . $categoryCreateResponse2['data']['category']['id'], $categoryDataUpdate);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('Tag já cadastrado(a).', $responseData['error']['message']);
+        $this->assertEquals('Categoria já cadastrado(a).', $responseData['error']['message']);
     }
 
     public function testDeleteNotFoundError()
     {
-        $tag = Tag::factory()->create();
+        $category = Category::factory()->create();
 
-        $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/tags/' . $tag->id);
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/tags/' . $tag->id);
+        $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/categories/' . $category->id);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
 
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('Tag não encontrado(a).', $responseData['error']['message']);
+        $this->assertEquals('Categoria não encontrado(a).', $responseData['error']['message']);
     }
 
     public function testDeleteSuccess()
     {
-        $tag = Tag::factory()->create();
+        $category = Category::factory()->create();
 
-        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/tags/' . $tag->id);
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/categories/' . $category->id);
 
         $response->assertStatus(Response::HTTP_OK);
 
         $responseData = $response->json();
         $this->assertNotEmpty($responseData);
 
-        $this->assertEquals('Tag excluído(a) com sucesso.', $responseData['success']['message']);
+        $this->assertEquals('Categoria excluído(a) com sucesso.', $responseData['success']['message']);
     }
 }

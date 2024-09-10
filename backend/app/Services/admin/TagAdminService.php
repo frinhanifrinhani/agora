@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\admin;
 
-use App\Models\Tag;
 use App\Helpers\MakeAlias;
 use App\Constants\Entities;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\TagRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Exceptions\Renderer\Exception;
 
-class TagService
+class TagAdminService
 {
     use MakeAlias;
 
