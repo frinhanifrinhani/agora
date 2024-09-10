@@ -1,6 +1,6 @@
 import { getCurrentInstance } from 'vue';
 
-export default class TagService {
+export default class TagAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
     async getIndexTag(limit = 10, page = 1) {

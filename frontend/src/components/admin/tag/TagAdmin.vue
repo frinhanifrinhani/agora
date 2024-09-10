@@ -66,11 +66,11 @@
 </template>
 
 <script>
-import TagService from "@/service/admin/TagService";
+import TagAdminService from "@/service/admin/TagAdminService";
 import Pagination from "../../Pagination.vue";
 
 export default {
-  name: "Tag",
+  name: "TagAdmin",
   components: {
     Pagination,
   },
@@ -85,7 +85,7 @@ export default {
     };
   },
   created() {
-    this.TagService = new TagService();
+    this.TagAdminService = new TagAdminService();
   },
   mounted() {
     this.getTag();
@@ -101,7 +101,7 @@ export default {
     async getTag(page = 1) {
       try {
         this.isLoading = true;
-        const response = await this.TagService.getIndexTag(this.perPage, page);
+        const response = await this.TagAdminService.getIndexTag(this.perPage, page);
 
         if (response) {
           this.tableTag = {
