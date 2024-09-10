@@ -82,7 +82,7 @@ const routes = [
       {
         path: 'news/create',
         name: 'CreateNews',
-        component: () => import('@/views/admin/news/CreateNews.vue'),
+        component: () => import('@/views/admin/news/CreateNewsAdmin.vue'),
       },
       {
         path: 'user',
