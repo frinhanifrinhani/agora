@@ -80,11 +80,11 @@
 </template>
 
 <script>
-import NewsService from "@/service/admin/NewsService";
+import NewsAdminService from "@/service/admin/NewsAdminService";
 import Pagination from "../../Pagination.vue";
 
 export default {
-  name: "News",
+  name: "NewsAdmin",
   components: {
     Pagination,
   },
@@ -99,7 +99,7 @@ export default {
     };
   },
   created() {
-    this.NewsService = new NewsService();
+    this.NewsAdminService = new NewsAdminService();
   },
   mounted() {
     this.getNews();
@@ -128,13 +128,13 @@ export default {
 
     async unpublishNews(id) {
       //this.isLoading = true;
-      const response = await this.NewsService.getIndexNews(this.perPage, page);
+      const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
       console.log(id);
     },
 
     async getNews(page = 1) {
       this.isLoading = true;
-      const response = await this.NewsService.getIndexNews(this.perPage, page);
+      const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
 
       if (response) {
         this.tableNews = {
