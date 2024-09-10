@@ -9,7 +9,10 @@
       <li :class="{ active: $route.path === '/admin' }">
         <router-link to="/admin" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</router-link>
       </li>
-      <li :class="{ active: $route.path === '/news' }">
+      <li :class="{ active: $route.path === '/admin/categories' }">
+        <router-link to="/admin/categories" class="pb-3 mb-2"><i class="fa fa-list-alt me-2"></i>Categorias</router-link>
+      </li>
+      <li :class="{ active: $route.path === '/admin/news' }">
         <router-link to="/admin/news" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</router-link>
       </li>
       <li :class="{ active: $route.path === '/event' }">

@@ -55,6 +55,13 @@ const routes = [
         name: 'HomeDashboard',
         component: () => import('@/views/admin/HomeDashboard.vue'),
       },
+      // categories
+      {
+        path: 'categories',
+        name: 'CategoryAdmin',
+        component: () => import('@/views/admin/category/Category.vue'),
+      },
+      // news
       {
         path: 'news',
         name: 'NewsAdmin',
@@ -66,21 +73,14 @@ const routes = [
         component: () => import('@/views/admin/news/CreateNews.vue'),
       },
       
-      /* { 
-        path: 'news',
-        name: 'News',
-        component: NewsDashboard,
-      },
-      { 
-        path: 'event',
-        name: 'Event',
-        component: EventDashboard,
-      }, */
+      
+      
       { 
         path: 'user',
         name: 'User',
         component: () => import('@/views/user/User.vue'),
       },
+    
     ],
     meta: { hideHeader: true, hideFooter: true },
   },
