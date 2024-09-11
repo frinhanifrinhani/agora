@@ -9,7 +9,7 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-md-10">
+      <div class="col-md-10 ms-5">
         <p>
           A Ágora tem como objetivo facilitar a compreensão e aplicação de conceitos-chave dentro de um novo paradigma. Sua missão é promover a discussão, disseminação e adoção de uma ética baseada no compartilhamento e na participação cidadã, fundamentais para a produção colaborativa de conhecimento em Educação, Ciência e Tecnologia
         </p>
@@ -28,7 +28,7 @@
         </p>
       </div>
 
-      <div class="col-md-10"> 
+      <div class="col-md-10 ms-5"> 
         <p>
           As duas frentes de atuação da Ágora:
         </p>
@@ -57,7 +57,7 @@
         <p>Coordenador da Plataforma Ágora</p>
       </div>
 
-      <div class="col-md-10">
+      <div class="col-md-10 ms-5">
         <p class="mb-5">
           <cite>
             ¹ MARTINS, Wagner de Jesus. Gestão estratégica das redes cooperativas de ciência, tecnologia e inovação em saúde: um modelo para o desenvolvimento socioeconômico e a sustentabilidade do SUS. 2013. 256 f. Tese (Doutorado em Saúde Pública) – Escola Nacional de Saúde Pública Sérgio Arouca, Rio de Janeiro, 2013.
