@@ -137,7 +137,7 @@
                     <div class="p-4">
                         <div class="card h-100 pb-4 news-card shadow border-0">
                             <div class="d-flex h-100">
-                                <img src="@/assets/images/cxplanejamento-urbano.jpeg" class="img-fluid me-3 h-100 news-img align-self-center" alt="">
+                                <img src="@/assets/images/cxplanejamento-urbano.jpeg" class="img-fluid h-auto news-img align-self-center d-none d-md-block" alt="">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
@@ -166,10 +166,10 @@
                     <div class="p-4">
                         <div class="card h-100 news-card shadow border-0">
                             <div class="d-flex h-100">
-                                <img src="@/assets/images/cxlogos.jpg" class="img-fluid me-3 h-100 news-img align-self-center" alt="">
+                                <img src="@/assets/images/cxlogos.jpg" class="img-fluid me-3 h-auto news-img align-self-center d-none d-md-block" alt="">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
-                                        <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
+                                      <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
                                             target="_blank" rel="noopener noreferrer">
                                             <p class="responsive-title">
                                                 <strong>
@@ -181,7 +181,7 @@
                                         </a>
                                     </h5>
                                     <div>
-                                        <p class="card-text d-none d-md-block" style="font-size: 12px; line-height: 1.42857143;">
+                                        <p class="card-text h-100" style="font-size: 12px; line-height: 1.42857143;">
                                             A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade. Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde, Ambiente e Sustentabilidade com o objetivo...
                                         </p>
                                     </div>
@@ -200,7 +200,7 @@
                     <div class="p-4">
                         <div class="card h-100 news-card shadow border-0">
                             <div class="d-flex h-100">
-                                <img src="@/assets/images/cxexperiencias-ciencia.jpg" class="img-fluid me-3 h-100 news-img align-self-center" alt="">
+                                <img src="@/assets/images/cxexperiencias-ciencia.jpg" class="img-fluid me-3 h-auto news-img align-self-center d-none d-md-block" alt="">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
@@ -215,13 +215,13 @@
                                     </h5>
                                     
                                     <div>
-                                        <p class="card-text d-none d-md-block" style="font-size: 12px; line-height: 1.42857143;">
+                                        <p class="card-text h-100" style="font-size: 12px; line-height: 1.42857143;">
                                             Descrição O seminário visa abordar oportunidades e desafios em projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que tenham relação com esta temática. O enfoque será dado tanto em projetos voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda em resultados de pesquisas com dados advindos desta prática. Para se...
                                         </p>
                                     </div>
 
                                     <div class="card-info-area">
-                                        <div class="card-info d-flex flex-column flex-md-row">
+                                        <div class="card-info">
                                             <span class="badge text-bg-success">SEMINÁRIO</span>
                                             <small>30/11/2018</small>
                                         </div>
@@ -305,14 +305,6 @@
     background-size: 100%; 
     
 }
-
-/* .events-title{
-    color: #222222; 
-    text-decoration: none; 
-    font-size: 19px; 
-    line-height: 1.4; 
-    font-weight: 700;
-} */
 
   i {
     display: flex;
