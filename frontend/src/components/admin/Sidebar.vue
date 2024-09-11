@@ -2,29 +2,46 @@
   <nav class="sidebar bg-dark text-light border-end shadow-sm">
     <div class="overlay"></div>
     <div class="logo">
-      <img src="@/assets/images/logo_AgoraFiocruz.png" alt="Logo">
+      <img src="@/assets/images/logo_AgoraFiocruz.png" alt="Logo" />
     </div>
     <hr class="separator" />
     <ul class="list-unstyled p-3">
       <li :class="{ active: $route.path === '/admin' }">
-        <router-link to="/admin" class="p-3 mb-2"><i class="fa-solid fa-house me-2"></i>Dashboard</router-link>
+        <router-link to="/admin" class="p-3 mb-2"
+          ><i class="fa-solid fa-house me-2"></i>Dashboard</router-link
+        >
       </li>
-      <li :class="{ active: $route.path === '/news' }">
-        <router-link to="/admin/news" class="pb-3 mb-2"><i class="fa-regular fa-newspaper me-2"></i>Notícias</router-link>
+      <li :class="{ active: $route.path === '/admin/categories' }">
+        <router-link to="/admin/categories" class="pb-3 mb-2"
+          ><i class="fa fa-list-alt me-2"></i>Categorias</router-link
+        >
       </li>
-      <li :class="{ active: $route.path === '/event' }">
-        <router-link to="/event" class="pb-3 mb-2"><i class="fa-solid fa-calendar-days me-2"></i>Eventos</router-link>
+      <li :class="{ active: $route.path === '/admin/tags' }">
+        <router-link to="/admin/tags" class="pb-3 mb-2"
+          ><i class="fa fa-tags me-2"></i>Tags</router-link
+        >
+      </li>
+      <li :class="{ active: $route.path === '/admin/news' }">
+        <router-link to="/admin/news" class="pb-3 mb-2"
+          ><i class="fa-regular fa-newspaper me-2"></i>Notícias</router-link
+        >
+      </li>
+      <li :class="{ active: $route.path === '/admin/events' }">
+        <router-link to="/admin/events" class="pb-3 mb-2"
+          ><i class="fa-regular fa-newspaper me-2"></i>Eventos</router-link
+        >
       </li>
       <li :class="{ active: $route.path === '/admin/user' }">
-        <router-link to="/admin/user" class="pb-3 mb-2"><i class="fa-solid fa-users me-2"></i>Usuários</router-link>
+        <router-link to="/admin/user" class="pb-3 mb-2"
+          ><i class="fa-solid fa-users me-2"></i>Usuários</router-link
+        >
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-export default {
-};
+export default {};
 </script>
 
 <style scoped>
@@ -37,12 +54,12 @@ export default {
   display: flex;
   flex-direction: column;
   padding-top: 20px;
-  background: url('./src/assets/images/sidebar-2.jpg') no-repeat center center;
+  background: url("./src/assets/images/sidebar-2.jpg") no-repeat center center;
   background-size: cover;
   overflow: hidden;
   color: #fff;
   position: relative;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
 
@@ -69,7 +86,7 @@ export default {
 
 .separator {
   border: none;
-  border-top: 1px solid #676A6D;
+  border-top: 1px solid #676a6d;
   margin: 10px 20px;
   z-index: 2;
 }
@@ -94,7 +111,7 @@ export default {
 }
 
 .list-unstyled li.active a {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .list-unstyled li a:hover {

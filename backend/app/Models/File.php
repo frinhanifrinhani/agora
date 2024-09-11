@@ -35,12 +35,12 @@ class File extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return $this->returnBrazilianDefaultDate($value);
+        return $this->returnBrazilianDefaultDateHour($value);
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return $this->returnBrazilianDefaultDate($value);
+        return $this->returnBrazilianDefaultDateHour($value);
     }
 
     public function news()

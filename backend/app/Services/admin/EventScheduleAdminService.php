@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\admin;
 
 use App\Helpers\MakeAlias;
 use App\Constants\Entities;
 use App\Helpers\DateHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\EventScheduleRepository;
 
-
-class EventScheduleService
+class EventScheduleAdminService
 {
     use MakeAlias;
     use DateHelper;

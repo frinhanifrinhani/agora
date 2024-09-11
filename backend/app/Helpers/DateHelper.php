@@ -15,6 +15,10 @@ trait DateHelper
     }
 
     public function returnBrazilianDefaultDate($value){
+        return Carbon::parse($value)->format('d/m/Y');
+    }
+
+    public function returnBrazilianDefaultDateHour($value){
         return Carbon::parse($value)->format('d/m/Y H:i:s');
     }
 

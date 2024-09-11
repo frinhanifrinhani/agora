@@ -34,7 +34,7 @@
         <tbody>
           <tr v-for="(news, index) in tableNews.data" :key="index" class="align-middle">
             <td class="text-black-50">{{ news.id }}</td>
-            <td class="text-black-50">{{ truncateTitle(news.title) }}</td>
+            <td class="text-black-50">{{ truncateText(news.title) }}</td>
             <td class="text-black-50">
               {{ publicationStatus(news.publicated) }}
             </td>
@@ -80,11 +80,11 @@
 </template>
 
 <script>
-import NewsService from "@/service/admin/NewsService";
+import NewsAdminService from "@/service/admin/NewsAdminService";
 import Pagination from "../../Pagination.vue";
 
 export default {
-  name: "News",
+  name: "NewsAdmin",
   components: {
     Pagination,
   },
@@ -99,15 +99,17 @@ export default {
     };
   },
   created() {
-    this.NewsService = new NewsService();
+    this.NewsAdminService = new NewsAdminService();
   },
   mounted() {
     this.getNews();
   },
   methods: {
-    truncateTitle(title) {
-      const maxLength = 90;
-      return title.length > maxLength ? title.substring(0, maxLength) + "..." : title;
+    truncateText(text) {
+      if(text){
+        const maxLength = 90;
+        return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+      }
     },
 
     publicationStatus(status) {
@@ -125,14 +127,14 @@ export default {
     },
 
     async unpublishNews(id) {
-      //this.loading = true;
-      const response = await this.NewsService.getIndexNews(this.perPage, page);
+      //this.isLoading = true;
+      const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
       console.log(id);
     },
 
     async getNews(page = 1) {
-      this.loading = true;
-      const response = await this.NewsService.getIndexNews(this.perPage, page);
+      this.isLoading = true;
+      const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
 
       if (response) {
         this.tableNews = {
@@ -144,7 +146,7 @@ export default {
         };
       }
 
-      this.loading = false;
+      this.isLoading = false;
     },
     changePage(page) {
       if (page > 0 && page <= this.tableNews.last_page) {
@@ -210,7 +212,7 @@ export default {
   font-weight: 400;
 }
 
-.center {
+/* .center {
   text-align: center;
-}
+} */
 </style>

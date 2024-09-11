@@ -17,12 +17,12 @@ class Tag extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return $this->returnBrazilianDefaultDate($value);
+        return $this->returnBrazilianDefaultDateHour($value);
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return $this->returnBrazilianDefaultDate($value);
+        return $this->returnBrazilianDefaultDateHour($value);
     }
 
     public static function defaultSortAttribute(): string

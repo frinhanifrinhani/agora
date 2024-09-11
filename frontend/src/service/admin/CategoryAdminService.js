@@ -1,11 +1,11 @@
 import { getCurrentInstance } from 'vue';
 
-export default class NewsService {
+export default class CategoryAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
-    async getIndexNews(limit = 10, page = 1) {
+    async getIndexCategory(limit = 10, page = 1) {
         try {
-            const url = new URL(this.API_URL + 'admin/news');
+            const url = new URL(this.API_URL + 'admin/categories');
             url.searchParams.append('limit', limit);
             url.searchParams.append('page', page);
 
@@ -28,14 +28,5 @@ export default class NewsService {
             return false;
         }
     }
-
-    async unpublishNews(id) {
-        try {
-            //const url = new URL(this.API_URL + 'admin/news');
-        } catch (error) {
-            return false;
-        }
-    }
-
 
 }

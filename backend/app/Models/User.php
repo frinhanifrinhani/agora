@@ -73,12 +73,12 @@ class User extends Authenticatable
 
     public function getCreatedAtAttribute($value)
     {
-        return $this->returnBrazilianDefaultDate($value);
+        return $this->returnBrazilianDefaultDateHour($value);
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return $this->returnBrazilianDefaultDate($value);
+        return $this->returnBrazilianDefaultDateHour($value);
     }
 
     public function getCpfAttribute($value)

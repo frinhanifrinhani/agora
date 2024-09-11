@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\admin;
 
-use App\Models\Category;
 use App\Helpers\MakeAlias;
 use App\Constants\Entities;
 use Illuminate\Http\Response;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CategoryService
+class CategoryAdminService
 {
 
     use MakeAlias;
