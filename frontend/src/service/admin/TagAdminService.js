@@ -1,4 +1,5 @@
 import { getCurrentInstance } from 'vue';
+import axios from 'axios';
 
 export default class TagAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
@@ -26,6 +27,23 @@ export default class TagAdminService {
             return await response.json();
         } catch (error) {
             return false;
+        }
+    }
+
+    async createTag(data){
+        const url = this.API_URL + 'admin/tags';
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.post(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw new Error(`HTTP error! Status: ${error.response?.status || 'Http error'}`);
         }
     }
 

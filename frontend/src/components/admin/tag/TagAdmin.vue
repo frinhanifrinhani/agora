@@ -6,10 +6,10 @@
       </li>
     </ol>
   </nav>
-  <div class="tag-list">
+  <div class="list">
     <div class="top-list">
       <h2 class="mb-4">Tags</h2>
-      <a href="#" class="btn btn-primary">Cadastrar Tag</a>
+      <a href="/admin/tags/create" class="btn btn-primary">Cadastrar Tag</a>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -115,7 +115,7 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error('Erro ao buscar tag:', error);
       } finally {
         this.isLoading = false;
       }
@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-.tag-list {
+.list {
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;

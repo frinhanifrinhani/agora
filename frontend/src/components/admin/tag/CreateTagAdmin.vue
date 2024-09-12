@@ -1,0 +1,147 @@
+<template>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+        <span class="text-black-50">Home / Tags / Nova Tag</span>
+      </li>
+    </ol>
+  </nav>
+
+  <div class="list">
+    <div class="top-list">
+      <h2 class="mb-4">Tags</h2>
+    </div>
+
+    <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+    </div>
+
+    <div class="form-area table table-hover">
+      <form @submit.prevent="submitForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input
+            type="text"
+            id="name"
+            v-model="formData.name"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+import TagAdminService from "@/service/admin/TagAdminService";
+
+export default {
+  name: "CreateTagAdmin",
+  components: {},
+  data() {
+    return {
+      formData: {
+        name: '',
+      },
+      isLoading: false,
+    };
+  },
+  created() {
+    this.TagAdminService = new TagAdminService();
+  },
+  // mounted() {
+  //   this.getTag();
+  // },
+  methods: {
+    async submitForm() {
+      //console.log("Dados do formulário:", this.formData);
+
+      // const data = {
+      //   name: this.formData.name,
+      // };
+      //console.log(data);
+      this.createTag(this.formData);
+    },
+
+    async createTag(data) {
+      try {
+        this.isLoading = true;
+        const response = await this.TagAdminService.createTag(data);
+
+        if (response) {
+          this.isLoading = false;
+        }
+      } catch (error) {
+        console.error("Erro ao salvar tag:", error.message);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.list {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.top-list {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.top-list h2 {
+  color: #5ab25e;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-dark {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.table-dark th {
+  border-bottom: 2px solid #454d55;
+}
+
+.text-column-table-template {
+  color: #5ab25e;
+  font-weight: 400;
+}
+
+.form-area {
+  padding: 25px 75px;
+}
+</style>
