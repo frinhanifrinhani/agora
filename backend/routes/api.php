@@ -36,12 +36,11 @@ Route::controller(AuthAdminController::class)->group(function () {
 Route::controller(NewsController::class)->group(function () {
     Route::get('/news', 'index');
     Route::get('/news/{alias}', 'newsByAlias');
-    Route::get('/news/{id}', 'show');
 });
 
 Route::controller(EventController::class)->group(function () {
     Route::get('/events', 'index');
-    Route::get('/events/{id}', 'show');
+    Route::get('/events/{alias}', 'eventsByAlias');
 });
 
 #################################################

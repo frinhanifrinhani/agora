@@ -26,10 +26,4 @@ class NewsController extends Controller
     {
         return $this->newsService->getNewsByAlias($alias);
     }
-
-    public function show(string $id): JsonResponse
-    {
-        dd($id);
-        return $this->newsService->getNewsById($id);
-    }
 }

@@ -22,9 +22,9 @@ class EventController extends Controller
         return $this->eventService->getAllEvents($request);
     }
 
-    public function show(string $id): JsonResponse
+    public function eventsByAlias(string $alias): JsonResponse
     {
-        return $this->eventService->getEventsById($id);
+        dd($alias);
+        return $this->eventService->getEventsByAlias($alias);
     }
-
 }
