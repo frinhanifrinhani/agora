@@ -67,15 +67,18 @@ Route::middleware(['auth:sanctum'])->controller(CommentController::class)->group
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('users', UserAdminController::class);
-    Route::resource('admin/categories', CategoryAdminController::class);
-    Route::resource('admin/news', NewsAdminController::class);
-    Route::resource('admin/tags', TagAdminController::class);
-    Route::resource('admin/events', EventAdminController::class);
+});
+
+Route::middleware(['auth:sanctum'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('categories', CategoryAdminController::class);
+    Route::resource('news', NewsAdminController::class);
+    Route::resource('tags', TagAdminController::class);
+    Route::resource('events', EventAdminController::class);
 });
 
 Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {
     Route::post('news', 'news');
     Route::post('event', 'event');
     Route::post('filesNews', 'filesNews');
-    Route::post('filesEvent', 'filesEvent');
+    Route::post('filesEvents', 'filesEvents');
 });

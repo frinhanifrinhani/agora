@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "766789de-60ca-4a11-8e53-52f465f61466",
+		"_postman_id": "2e41b77c-dd5b-43f6-8825-c4374b506a6b",
 		"name": "Agora 1.0.1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "5906446",
-		"_collection_link": "https://novopat.postman.co/workspace/Agora-Workspace~e66f81b8-567e-4820-9408-23bb5cfbb43a/collection/5906446-766789de-60ca-4a11-8e53-52f465f61466?action=share&source=collection_link&creator=5906446"
+		"_exporter_id": "4954353"
 	},
 	"item": [
 		{
@@ -76,10 +75,12 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{URL}}/api/migrator/news",
+									"raw": "http://localhost:8000/api/migrator/news",
+									"protocol": "http",
 									"host": [
-										"{{URL}}"
+										"localhost"
 									],
+									"port": "8000",
 									"path": [
 										"api",
 										"migrator",
@@ -503,7 +504,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "Bearer {{BEARER}}",
+											"value": "{{BEARER}}",
 											"type": "string"
 										}
 									]
@@ -545,7 +546,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{BEARER}}",
+											"value": "{{token}}",
 											"type": "string"
 										}
 									]
@@ -1160,7 +1161,7 @@
 									"script": {
 										"exec": [
 											"var json = JSON.parse(responseBody);\r",
-											"pm.collectionVariables.set(\"token\", json.access_token);"
+											"pm.collectionVariables.set(\"BEARER\", json.token);"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1294,16 +1295,11 @@
 	"variable": [
 		{
 			"key": "URL",
-			"value": "http://agora.local",
+			"value": "http://localhost:8000",
 			"type": "string"
 		},
 		{
 			"key": "BEARER",
-			"value": "Bearer 1146|YF8qGBuEz2pZTcDI26U5EjYveyZYQQYxuqxpjn3nc0bab3d4",
-			"type": "string"
-		},
-		{
-			"key": "token",
 			"value": ""
 		}
 	]
