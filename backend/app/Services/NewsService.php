@@ -75,4 +75,45 @@ class NewsService
             );
         }
     }
+
+    public function getNewsById($id)
+    {
+        try {
+            $news = $this->newsRepository
+                ->findByAttributeWhitRelation('id', $id)
+                ->with('tag')
+                ->firstOrFail();
+
+            return response()->json(
+                [
+                    'data' => $news
+                ],
+                Response::HTTP_OK
+            );
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception  $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
 }
