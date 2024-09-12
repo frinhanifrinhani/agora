@@ -1,4 +1,7 @@
+
 <template>
+  <FlashMessage />
+
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
@@ -54,6 +57,7 @@
 import { required, minLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import TagAdminService from "@/service/admin/TagAdminService";
+import { useFlashMessage } from "@/service/FlashMessageService";
 
 export default {
   name: "CreateTagAdmin",
@@ -77,7 +81,9 @@ export default {
   },
   setup() {
     const useValidate = useVuelidate();
-    return { useValidate }; 
+    const { setFlashMessage } = useFlashMessage(); 
+    return { useValidate, setFlashMessage };
+    
   },
   methods: {
     async submitForm() {
@@ -95,9 +101,12 @@ export default {
 
         if (response) {
           this.isLoading = false;
+          this.setFlashMessage("Tag criada com sucesso!", "success");
+          this.formData.name = "";
+          this.$router.push("/admin/tags");
         }
       } catch (error) {
-        console.error("Erro ao salvar tag:", error);
+        this.setFlashMessage("Erro ao criar a tag. Tente novamente.", "error");
       } finally {
         this.isLoading = false;
       }
@@ -171,4 +180,10 @@ export default {
 .form-area {
   padding: 25px 75px;
 }
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
 </style>
+

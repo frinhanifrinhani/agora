@@ -47,13 +47,13 @@ const routes = [
   // ROTAS ADMIN
   {
     path: '/admin',
-    name: 'Dashboard',
-    component: () => import('@/views/admin/Dashboard.vue'),
+    name: 'Admin',
+    component: () => import('@/views/admin/Admin.vue'),
     children: [
       {
         path: '',
-        name: 'HomeDashboard',
-        component: () => import('@/views/admin/HomeDashboard.vue'),
+        name: 'Dashboard',
+        component: () => import('@/views/admin/Dashboard.vue'),
       },
       // categories
       {
