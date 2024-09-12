@@ -27,26 +27,40 @@
             id="name"
             v-model="formData.name"
             class="form-control"
+            :class="{ 'is-invalid': useValidate.formData.name.$error }"
+            @blur="useValidate.formData.name.$touch()"
             required
           />
+          <!-- Mensagem de validação -->
+          <div
+            v-if="useValidate.formData.name.$invalid && useValidate.formData.name.$dirty"
+            class="invalid-feedback"
+          >
+            <span v-if="useValidate.formData.name.required">O nome é obrigatório.</span>
+            <br />
+            <span v-if="useValidate.formData.name.minLength"
+              >O nome deve ter pelo menos 2 caracteres.</span
+            >
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="submit" class="btn btn-primary" :disabled="isLoading || useValidate.$invalid">Cadastrar</button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import { required, minLength } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 import TagAdminService from "@/service/admin/TagAdminService";
 
 export default {
   name: "CreateTagAdmin",
-  components: {},
   data() {
     return {
       formData: {
-        name: '',
+        name: "",
       },
       isLoading: false,
     };
@@ -54,20 +68,26 @@ export default {
   created() {
     this.TagAdminService = new TagAdminService();
   },
-  // mounted() {
-  //   this.getTag();
-  // },
+  validations() {
+    return {
+      formData: {
+        name: { required, minLength: minLength(2) },
+      },
+    };
+  },
+  setup() {
+    const useValidate = useVuelidate();
+    return { useValidate }; 
+  },
   methods: {
     async submitForm() {
-      //console.log("Dados do formulário:", this.formData);
+      this.useValidate.$touch();
 
-      // const data = {
-      //   name: this.formData.name,
-      // };
-      //console.log(data);
-      this.createTag(this.formData);
+      if (!this.useValidate.$invalid) {
+        this.createTag(this.formData);
+      }
+      
     },
-
     async createTag(data) {
       try {
         this.isLoading = true;
@@ -77,7 +97,7 @@ export default {
           this.isLoading = false;
         }
       } catch (error) {
-        console.error("Erro ao salvar tag:", error.message);
+        console.error("Erro ao salvar tag:", error);
       } finally {
         this.isLoading = false;
       }
@@ -87,6 +107,13 @@ export default {
 </script>
 
 <style scoped>
+.is-invalid {
+  border-color: #dc3545;
+}
+.invalid-feedback {
+  color: #dc3545;
+}
+
 .list {
   padding: 20px;
   background-color: #f8f9fa;
