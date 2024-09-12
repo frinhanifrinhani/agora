@@ -1,29 +1,26 @@
 import { getCurrentInstance } from 'vue';
+import axios from 'axios';
 
 export default class NewsAdminService {
     API_URL = getCurrentInstance().appContext.config.globalProperties.$API_URL;
 
     async getIndexNews(limit = 10, page = 1) {
         try {
-            const url = new URL(this.API_URL + 'admin/news');
-            url.searchParams.append('limit', limit);
-            url.searchParams.append('page', page);
-
+            const url = this.API_URL + 'admin/news';
             const token = localStorage.getItem('authToken');
-
-            const response = await fetch(url, {
-                method: 'GET',
+    
+            const response = await axios.get(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
+                },
+                params: {
+                    limit: limit,
+                    page: page
                 }
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            return await response.json();
+    
+            return response.data;
         } catch (error) {
             return false;
         }
@@ -36,6 +33,5 @@ export default class NewsAdminService {
             return false;
         }
     }
-
 
 }
