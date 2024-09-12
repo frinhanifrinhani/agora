@@ -27,7 +27,7 @@ class MigratorController extends Controller
 
     public function event()
     {
-        return $this->migratorService->migrateEvent();
+        return $this->migratorService->migrateEvents();
     }
 
     public function filesNews()
@@ -35,8 +35,8 @@ class MigratorController extends Controller
         return $this->migratorService->migrateFilesNews();
     }
     
-    public function filesEvent()
+    public function filesEvents()
     {
-        return $this->migratorService->migrateFilesEvent();
+        return $this->migratorService->migrateFilesEvents();
     }
 }
