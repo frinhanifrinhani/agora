@@ -34,7 +34,6 @@ class EventService
     {
         try {
             $news = $this->eventRepository->findByAttributeWhitRelation('alias', $alias)
-                ->with('category')
                 ->with('tag')
                 ->firstOrFail();
 
