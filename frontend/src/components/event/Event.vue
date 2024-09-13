@@ -2,16 +2,15 @@
     <div>
       <div class="row justify-content-center">
         <div class="position-relative image-container">
-          <div class="centered-title">
+          <div class="centered-title text-center lh-sm">
             <h1 style="color: #fff;
               border-color: #6dab3c;
               border-radius: 20px;
-              line-height: 50px;
               font-weight: bolder;">
               SAÚDE & CTI PARA A AGENDA 2030
             </h1>
           </div>
-          <div class="centered-button-emphasis">
+          <div class="centered-button-emphasis text-center">
             <a class="btn" style="color: #fff;
               border-color: #6dab3c;
               background-color: #6dab3c;
@@ -24,12 +23,14 @@
           </div>
           <div class="centered-button">              
             <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="/pagina-evento">
-              <span class="me-2">Detalhes</span>
+              <span class="me-2 mt-3">Detalhes</span>
               <i class="fa-solid fa-angle-right"></i>
             </a>              
           </div>
-          <img src="@/assets/images/banner-obj-des-sustentavel.jpg" class="img-fluid" alt="">
-          <div class="col-md-11 d-flex centered-form justify-content-center bg-white text-dark p-5">
+          <img src="@/assets/images/banner-obj-des-sustentavel.jpg" class="img-fluid" alt="Banner">
+
+          <!--Seção pesquisar evento -->
+          <div class="col-md-10 d-flex centered-form justify-content-center bg-white text-dark p-5 d-none d-md-flex">
             <div class="col-3 py-2 ms-5 ps-5 d-flex align-items-center justify-content-end">
               <i class="fa-solid fa-magnifying-glass-plus"></i>
               <h5 class="ms-2">Pesquisar Evento:</h5>
@@ -65,6 +66,44 @@
           </div>
         </div>
       </div>
+
+      <!--Seção de pesquisa para mobile-->
+      <div class="col-md-10 row justify-content-center bg-white text-dark p-5 text-center d-md-none">
+        <div class="col-12 py-2 d-flex align-items-center justify-content-center">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+            <h5 class="ms-2">Pesquisar Evento:</h5>
+        </div>
+        <div class="col-12 p-2">
+            <input type="text" class="form-control" placeholder="Palavras-chave">
+        </div>
+        <div class="col-12 p-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Categoria</option>
+                <option value="2030-agenda">2030 Agenda</option>
+                <option value="curso">Curso</option>
+                <option value="encontro">Encontro</option>
+                <option value="feira">Feira</option>
+                <option value="oficina">Oficina</option>
+                <option value="palestra">Palestra</option>
+                <option value="reuniao">Reunião</option>
+                <option value="seminario">Seminário</option>
+                <option value="workshop">Workshop</option>
+            </select>
+        </div>
+        <div class="col-12 p-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Status</option>
+                <option value="upcoming">Próximos</option>
+                <option value="incoming">Em andamento</option>
+                <option value="expired">Expirado</option>
+            </select>
+        </div>              
+        <div class="col-12 p-2">
+            <button type="submit" class="btn btn-success">Pesquisar</button>
+        </div>
+      </div>
+
+      <!--Últimas atualizações-->
       <div class="row justify-content-center pb-4">
         <div class="col-md-8 align-items-center">
           <div class="p-4 text-center">
@@ -224,6 +263,30 @@ export default {
 </script>
 
 <style scoped>
+.image-container {
+  width: 100vw;
+  height: 100vh; 
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.centered-title,
+.centered-button-emphasis,
+.centered-button {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.centered-title {
+  top: 20%;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -258,4 +321,5 @@ export default {
     max-width: 48%;
   }
 }
+
 </style>
