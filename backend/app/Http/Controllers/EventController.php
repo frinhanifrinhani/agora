@@ -24,7 +24,6 @@ class EventController extends Controller
 
     public function eventsByAlias(string $alias): JsonResponse
     {
-        dd($alias);
         return $this->eventService->getEventsByAlias($alias);
     }
 }
