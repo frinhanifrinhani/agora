@@ -1,16 +1,16 @@
 <template>
   <div class="content">
-    <CreateNewsComponent />
+    <CreateNewsAdminComponent />
   </div>
 </template>
 
 <script>
-import CreateNewsComponent from "@/components/admin/news/CreateNews.vue";
+import CreateNewsAdminComponent from "@/components/admin/news/CreateNewsAdmin.vue";
 
 export default {
-  name: "CreateNews",
+  name: "CreateNewsAdmin",
   components: {
-    CreateNewsComponent,
+    CreateNewsAdminComponent,
   },
 };
 </script>
