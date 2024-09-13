@@ -16,7 +16,7 @@
           ><i class="fa fa-list-alt me-2"></i>Categorias</router-link
         >
       </li>
-      <li :class="{ active: $route.path === '/admin/tags' }">
+      <li :class="{ active: $route.path === '/admin/tags' || $route.path === '/admin/tags/create' }">
         <router-link to="/admin/tags" class="pb-3 mb-2"
           ><i class="fa fa-tags me-2"></i>Tags</router-link
         >

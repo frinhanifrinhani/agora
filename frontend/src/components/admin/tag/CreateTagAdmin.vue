@@ -9,8 +9,8 @@
     </ol>
   </nav>
 
-  <div class="list">
-    <div class="top-list">
+  <div class="content">
+    <div class="top-content">
       <h2 class="mb-4">Tags</h2>
     </div>
 
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="form-area table table-hover">
+    <div class="form-area">
       <form @submit.prevent="submitForm">
         <div class="mb-3">
           <label for="name" class="form-label">Nome</label>
@@ -97,7 +97,7 @@ export default {
         this.createTag(this.formData);
       }
     },
-    
+
     async createTag(data) {
 
         this.isLoading = true;
@@ -124,23 +124,24 @@ export default {
   color: #dc3545;
 }
 
-.list {
+.content {
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
 }
 
-.top-list {
+.top-content {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
 }
 
-.top-list h2 {
+.top-content h2 {
   color: #5ab25e;
 }
 
-.table {
+.form-area {
+  padding: 25px 175px;
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
@@ -150,40 +151,12 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.table th,
-.table td {
-  padding: 12px 15px;
-  vertical-align: middle;
+label, input{
+  color: rgba(0,0,0,.5) !important;
 }
 
-.table-hover tbody tr:hover {
-  background-color: #f1f1f1;
-}
-
-.table-bordered {
-  border: 1px solid #dee2e6;
-}
-
-.table-dark {
-  background-color: #343a40;
-  color: #fff;
-}
-
-.table-dark th {
-  border-bottom: 2px solid #454d55;
-}
-
-.text-column-table-template {
-  color: #5ab25e;
-  font-weight: 400;
-}
-
-.form-area {
-  padding: 25px 75px;
-}
-
-.alert-success {
+/* .alert-success {
   background-color: #d4edda;
   color: #155724;
-}
+} */
 </style>

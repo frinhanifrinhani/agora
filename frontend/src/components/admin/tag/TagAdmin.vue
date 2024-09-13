@@ -24,7 +24,7 @@
           <tr>
             <th class="text-column-table-template">ID</th>
             <th class="text-column-table-template">Nome</th>
-            <th class="text-column-table-template">Ações</th>
+            <th class="text-column-table-template actions">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
             <td class="text-black-50">{{ tag.id }}</td>
             <td class="text-black-50">{{ truncateText(tag.name) }}</td>
            
-            <td>
+            <td class="actions">
               <button
                 class="btn btn-primary btn-sm me-2"
                 @click="viewTag(tag.id)"
@@ -185,6 +185,9 @@ export default {
   font-weight: 400;
 }
 
+.actions{
+  width: 275px;
+}
 /* .center {
   text-align: center;
 } */
