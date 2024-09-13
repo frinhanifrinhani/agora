@@ -39,8 +39,14 @@ export default class TagAdminService {
             });
             return response.data;
         } catch (error) {
-            throw new Error(`HTTP error! Status: ${error.response?.status || 'Http error'}`);
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao criar a tag!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
         }
     }
-
 }

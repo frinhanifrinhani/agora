@@ -1,4 +1,3 @@
-
 <template>
   <FlashMessage />
 
@@ -47,7 +46,13 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" :disabled="isLoading || useValidate.$invalid">Cadastrar</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          :disabled="isLoading || useValidate.$invalid"
+        >
+          Cadastrar
+        </button>
       </form>
     </div>
   </div>
@@ -81,9 +86,8 @@ export default {
   },
   setup() {
     const useValidate = useVuelidate();
-    const { setFlashMessage } = useFlashMessage(); 
+    const { setFlashMessage } = useFlashMessage();
     return { useValidate, setFlashMessage };
-    
   },
   methods: {
     async submitForm() {
@@ -92,24 +96,21 @@ export default {
       if (!this.useValidate.$invalid) {
         this.createTag(this.formData);
       }
-      
     },
+    
     async createTag(data) {
-      try {
+
         this.isLoading = true;
         const response = await this.TagAdminService.createTag(data);
 
-        if (response) {
-          this.isLoading = false;
-          this.setFlashMessage("Tag criada com sucesso!", "success");
-          this.formData.name = "";
+        if (response.success) {
+          this.setFlashMessage(response.success.message, "success");
           this.$router.push("/admin/tags");
+        }else{
+          this.setFlashMessage(response, "error");
         }
-      } catch (error) {
-        this.setFlashMessage("Erro ao criar a tag. Tente novamente.", "error");
-      } finally {
+
         this.isLoading = false;
-      }
     },
   },
 };
@@ -186,4 +187,3 @@ export default {
   color: #155724;
 }
 </style>
-
