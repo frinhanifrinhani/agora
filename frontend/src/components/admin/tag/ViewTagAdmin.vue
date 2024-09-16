@@ -4,7 +4,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <span class="text-black-50">Home / Tags / Nova Tag</span>
+        <span class="text-black-50">Home / Tags / {{ tag.name }}</span>
       </li>
     </ol>
   </nav>

@@ -10,7 +10,7 @@
     <div class="top-list">
       <h2 class="mb-4">Tags</h2>
       <router-link to="/admin/tags/create" class="btn btn-primary">
-      Cadastrar Tag
+        Cadastrar Tag
       </router-link>
     </div>
 
@@ -41,9 +41,16 @@
               <button class="btn btn-warning btn-sm me-2" @click="editTag(tag.id)">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-danger btn-sm" @click="deleteTag(tag.id)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
+
+              <ConfirmDelete
+                :confirmationMessage="'Deseja realmente deletar esta Tag?'"
+                :confirmationText="'Esta ação não pode ser desfeita para a Tag:'"
+                :itemType="'A Tag'"
+                :itemName="tag.name"
+                :successMessage="tag.name + ' foi deletada com sucesso.'"
+                @confirmed="deleteTag(tag.id)"
+                :refreshList="true"
+              />
             </td>
           </tr>
         </tbody>
@@ -60,11 +67,13 @@
 <script>
 import TagAdminService from "@/service/admin/TagAdminService";
 import Pagination from "../../Pagination.vue";
+import ConfirmDelete from "../ConfirmDelete.vue";
 
 export default {
   name: "TagAdmin",
   components: {
     Pagination,
+    ConfirmDelete,
   },
   data() {
     return {
@@ -78,9 +87,10 @@ export default {
   },
   created() {
     this.TagAdminService = new TagAdminService();
+    //this.fetchTags();
   },
   mounted() {
-    this.getTag();
+    this.fetchTags();
   },
   methods: {
     truncateText(text) {
@@ -90,7 +100,7 @@ export default {
       }
     },
 
-    async getTag(page = 1) {
+    async fetchTags(page = 1) {
       try {
         this.isLoading = true;
         const response = await this.TagAdminService.getIndexTag(this.perPage, page);
@@ -119,6 +129,18 @@ export default {
 
     editTag(id) {
       this.$router.push({ name: "EditTagAdmin", params: { id: id } });
+    },
+
+    async deleteTag(id) {
+
+      try {
+        await this.TagAdminService.deleteTag(id);
+
+        await this.fetchTags();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+
     },
 
     changePage(page) {

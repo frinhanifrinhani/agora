@@ -99,4 +99,31 @@ export default class TagAdminService {
             }
         }
     }
+
+    async deleteTag(id){
+        const url = this.API_URL + 'admin/tags/'+id;
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.delete(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    id: id 
+                }
+            });
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao deletar a tag!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }  
+    }
 }

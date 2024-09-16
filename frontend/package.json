@@ -23,6 +23,7 @@
     "agora": "file:",
     "bootstrap": "^5.3.3",
     "dompurify": "^3.1.6",
+    "sweetalert2": "^11.14.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
