@@ -77,6 +77,11 @@ const routes = [
         name: 'ViewTagAdmin',
         component: () => import('@/views/admin/tag/ViewTagAdmin.vue'),
       },
+      {
+        path: 'tags/edit/:id',
+        name: 'EditTagAdmin',
+        component: () => import('@/views/admin/tag/EditTagAdmin.vue'),
+      },
       // news
       {
         path: 'news',

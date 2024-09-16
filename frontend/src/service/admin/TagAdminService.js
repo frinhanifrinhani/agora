@@ -74,4 +74,29 @@ export default class TagAdminService {
             }
         }
     }
+
+    async updateTag(data){
+        
+        const url = this.API_URL + 'admin/tags/'+data.id;
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.put(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao atualizar a tag!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
 }

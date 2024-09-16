@@ -114,8 +114,11 @@ export default {
     },
 
     viewTag(id) {
-      
       this.$router.push({ name: "ViewTagAdmin", params: { id: id } });
+    },
+
+    editTag(id) {
+      this.$router.push({ name: "EditTagAdmin", params: { id: id } });
     },
 
     changePage(page) {

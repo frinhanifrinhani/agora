@@ -38,7 +38,8 @@
 
       <router-link to="/admin/tags" class="btn btn-danger"> Cancelar </router-link>
       &nbsp;
-      <router-link to="#" class="btn btn-primary"> Editar </router-link>
+      <router-link :to="{ name: 'EditTagAdmin', params: { id: tag.id } }" class="btn btn-primary"> Editar </router-link>
+
     </div>
   </div>
 </template>
