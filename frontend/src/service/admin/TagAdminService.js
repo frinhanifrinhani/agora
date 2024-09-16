@@ -26,6 +26,31 @@ export default class TagAdminService {
         }
     }
 
+    async getTag(id){
+        try {
+            const url = this.API_URL + 'admin/tags/'+id;
+            const token = localStorage.getItem('authToken');
+    
+            const response = await axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                
+            });
+    
+            return response.data;
+        } catch (error) {
+             if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao buscar a tag!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
+
     async createTag(data){
         const url = this.API_URL + 'admin/tags';
         const token = localStorage.getItem('authToken');

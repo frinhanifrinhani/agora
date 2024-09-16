@@ -11,7 +11,7 @@
 
   <div class="content">
     <div class="top-content">
-      <h2 class="mb-4">Tags</h2>
+      <h2 class="mb-4">Cadastrar Tag</h2>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -46,6 +46,8 @@
           </div>
         </div>
 
+        <router-link to="/admin/tags" class="btn btn-danger"> Cancelar </router-link>
+        &nbsp;
         <button
           type="submit"
           class="btn btn-primary"
@@ -153,6 +155,10 @@ export default {
 
 label, input{
   color: rgba(0,0,0,.5) !important;
+}
+
+.btn {
+  border-radius: 6px!important;
 }
 
 /* .alert-success {

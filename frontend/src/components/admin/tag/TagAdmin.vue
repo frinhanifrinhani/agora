@@ -9,7 +9,9 @@
   <div class="list">
     <div class="top-list">
       <h2 class="mb-4">Tags</h2>
-      <a href="/admin/tags/create" class="btn btn-primary">Cadastrar Tag</a>
+      <router-link to="/admin/tags/create" class="btn btn-primary">
+      Cadastrar Tag
+      </router-link>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -28,25 +30,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(tag, index) in tableTag.data"
-            :key="index"
-            class="align-middle"
-          >
+          <tr v-for="(tag, index) in tableTag.data" :key="index" class="align-middle">
             <td class="text-black-50">{{ tag.id }}</td>
             <td class="text-black-50">{{ truncateText(tag.name) }}</td>
-           
+
             <td class="actions">
-              <button
-                class="btn btn-primary btn-sm me-2"
-                @click="viewTag(tag.id)"
-              >
+              <button class="btn btn-primary btn-sm me-2" @click="viewTag(tag.id)">
                 <i class="fa-regular fa-eye"></i>
               </button>
-              <button
-                class="btn btn-warning btn-sm me-2"
-                @click="editTag(tag.id)"
-              >
+              <button class="btn btn-warning btn-sm me-2" @click="editTag(tag.id)">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
               <button class="btn btn-danger btn-sm" @click="deleteTag(tag.id)">
@@ -115,10 +107,15 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        console.error('Erro ao buscar tag:', error);
+        console.error("Erro ao buscar tag:", error);
       } finally {
         this.isLoading = false;
       }
+    },
+
+    viewTag(id) {
+      
+      this.$router.push({ name: "ViewTagAdmin", params: { id: id } });
     },
 
     changePage(page) {
@@ -185,7 +182,7 @@ export default {
   font-weight: 400;
 }
 
-.actions{
+.actions {
   width: 275px;
 }
 /* .center {
