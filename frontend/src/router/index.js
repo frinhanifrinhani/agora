@@ -81,7 +81,7 @@ const routes = [
       },
       {
         path: 'news/create',
-        name: 'CreateNews',
+        name: 'CreateNewsAdmin',
         component: () => import('@/views/admin/news/CreateNewsAdmin.vue'),
       },
       {
@@ -96,7 +96,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/Login.vue'),
+    component: () => import('@/views/login/login.vue'),
     meta: { hideHeader: true, hideFooter: true },
   },
 ];

@@ -26,6 +26,4 @@ class NewsController extends Controller
     {
         return $this->newsService->getNewsByAlias($alias);
     }
-
-
 }

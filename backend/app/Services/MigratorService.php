@@ -153,7 +153,7 @@ class MigratorService
         echo "==========================================";
     }
 
-    public function migrateEvent()
+    public function migrateEvents()
     {
 
         echo "==========================================";
@@ -180,6 +180,8 @@ class MigratorService
             $eventData = $this->handlerEvent($data);
             $this->saveEvent($eventData);
 
+            DB::commit();
+
         } catch (\Exception $e) {
 
             return response()->json(
@@ -197,7 +199,7 @@ class MigratorService
         echo "==========================================";
     }
 
-    public function migrateFilesEvent()
+    public function migrateFilesEvents()
     {
 
         echo "==========================================";

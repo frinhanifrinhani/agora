@@ -30,18 +30,16 @@ class EventService
         return $this->eventRepository->paginate($request->limit, $request->page);
     }
 
-    public function getEventsById($id)
+    public function getEventsByAlias($alias)
     {
         try {
-            $events = $this->eventRepository
-                ->findByAttributeWhitRelation('id', $id)
-                ->with('eventSchedule')
+            $news = $this->eventRepository->findByAttributeWhitRelation('alias', $alias)
                 ->with('tag')
                 ->firstOrFail();
 
             return response()->json(
                 [
-                    'data' => $events
+                    'data' => $news
                 ],
                 Response::HTTP_OK
             );
@@ -53,7 +51,7 @@ class EventService
                         __(
                             'messages.erro.notFound',
                             [
-                                'model' => ucfirst(Entities::EVENT),
+                                'model' => ucfirst(Entities::NEWS),
                             ]
                         )
                     ]
@@ -71,5 +69,4 @@ class EventService
             );
         }
     }
-
 }

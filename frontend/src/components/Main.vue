@@ -5,7 +5,7 @@
       <div class="col-md-12 position-relative image-container pb-5">
           <img src="@/assets/images/banner.png" class="img-fluid" alt="">
           <div class="centered-button">
-            <a class="btn" style="background-color:#fff; color:#888888; border-radius: 20px; font-size: 14px;" href="/sobre">
+            <a class="btn mt-5" style="background-color:#fff; color:#888888; border: 1px solid #d3d3d3; border-radius: 20px; font-size: 14px;  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);" href="/sobre">
                 <span class="me-2">Leia Mais</span>
                 <i class="fa-solid fa-angle-right"></i>
             </a>
@@ -25,7 +25,7 @@
                     </div>
                     
                     <div class="col-12 col-md-2 mt-3 mt-md-0">
-                        <a class="btn btn-success buttons" href="">
+                        <a class="btn btn-success buttons" href="/noticias">
                             <span class="me-2">Leia Mais</span>
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
@@ -137,7 +137,7 @@
                     <div class="p-4">
                         <div class="card h-100 pb-4 news-card shadow border-0">
                             <div class="d-flex h-100">
-                                <img src="@/assets/images/cxplanejamento-urbano.jpeg" class="img-fluid me-3 h-100 news-img align-self-center" alt="">
+                                <img src="@/assets/images/cxplanejamento-urbano.jpeg" class="img-fluid h-auto news-img align-self-center d-none d-md-block" alt="">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/planejamento-urbano-e-seguranca-hidrica/"
@@ -166,10 +166,10 @@
                     <div class="p-4">
                         <div class="card h-100 news-card shadow border-0">
                             <div class="d-flex h-100">
-                                <img src="@/assets/images/cxlogos.jpg" class="img-fluid me-3 h-100 news-img align-self-center" alt="">
+                                <img src="@/assets/images/cxlogos.jpg" class="img-fluid me-3 h-auto news-img align-self-center d-none d-md-block" alt="">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
-                                        <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
+                                      <a href="https://agora.fiocruz.br/blog/event/3o-ciclo-de-debates-manaus/"
                                             target="_blank" rel="noopener noreferrer">
                                             <p class="responsive-title">
                                                 <strong>
@@ -181,7 +181,7 @@
                                         </a>
                                     </h5>
                                     <div>
-                                        <p class="card-text d-none d-md-block" style="font-size: 12px; line-height: 1.42857143;">
+                                        <p class="card-text h-100" style="font-size: 12px; line-height: 1.42857143;">
                                             A Vice-Presidência de Ambiente, Atenção e Promoção da Saúde convida para o 3° Ciclo de Debates em Saúde, Ambiente e Sustentabilidade. Alinhado com a missão institucional e dialogando com as teses aprovadas no VIII Congresso Interno da FIOCRUZ, a VPAAPS dá continuidade ao Ciclo de Debates de Saúde, Ambiente e Sustentabilidade com o objetivo...
                                         </p>
                                     </div>
@@ -200,7 +200,7 @@
                     <div class="p-4">
                         <div class="card h-100 news-card shadow border-0">
                             <div class="d-flex h-100">
-                                <img src="@/assets/images/cxexperiencias-ciencia.jpg" class="img-fluid me-3 h-100 news-img align-self-center" alt="">
+                                <img src="@/assets/images/cxexperiencias-ciencia.jpg" class="img-fluid me-3 h-auto news-img align-self-center d-none d-md-block" alt="">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <h5 class="card-title">
                                         <a href="https://agora.fiocruz.br/blog/event/experiencias-de-ciencia-cidada-para-biodiversidade-e-saude/"
@@ -215,13 +215,13 @@
                                     </h5>
                                     
                                     <div>
-                                        <p class="card-text d-none d-md-block" style="font-size: 12px; line-height: 1.42857143;">
+                                        <p class="card-text h-100" style="font-size: 12px; line-height: 1.42857143;">
                                             Descrição O seminário visa abordar oportunidades e desafios em projetos de ciência cidadã. Serão apresentados exemplos práticos de projetos que tenham relação com esta temática. O enfoque será dado tanto em projetos voltados para vigilância em saúde quanto à conservação da biodiversidade, e ainda em resultados de pesquisas com dados advindos desta prática. Para se...
                                         </p>
                                     </div>
 
                                     <div class="card-info-area">
-                                        <div class="card-info d-flex flex-column flex-md-row">
+                                        <div class="card-info">
                                             <span class="badge text-bg-success">SEMINÁRIO</span>
                                             <small>30/11/2018</small>
                                         </div>
@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center align-items-center mb-4">
-                        <a class="btn btn-success buttons" href="">
+                        <a class="btn btn-success buttons" href="/evento">
                             <span class="me-2">Mais eventos</span>
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
@@ -305,14 +305,6 @@
     background-size: 100%; 
     
 }
-
-/* .events-title{
-    color: #222222; 
-    text-decoration: none; 
-    font-size: 19px; 
-    line-height: 1.4; 
-    font-weight: 700;
-} */
 
   i {
     display: flex;
