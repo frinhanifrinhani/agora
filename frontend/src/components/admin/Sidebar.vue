@@ -6,7 +6,7 @@
     </div>
     <hr class="separator" />
     <ul class="list-unstyled p-3">
-      <li :class="{ active: $route.path === '/admin' }">
+      <li :class="{ active: $route.path === '/admin' || $route.path === '/admin/'}">
         <router-link to="/admin" class="p-3 mb-2"
           ><i class="fa-solid fa-house me-2"></i>Dashboard</router-link
         >
