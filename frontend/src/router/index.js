@@ -47,13 +47,13 @@ const routes = [
   // ROTAS ADMIN
   {
     path: '/admin',
-    name: 'Dashboard',
-    component: () => import('@/views/admin/Dashboard.vue'),
+    name: 'Admin',
+    component: () => import('@/views/admin/Admin.vue'),
     children: [
       {
         path: '',
-        name: 'HomeDashboard',
-        component: () => import('@/views/admin/HomeDashboard.vue'),
+        name: 'Dashboard',
+        component: () => import('@/views/admin/Dashboard.vue'),
       },
       // categories
       {
@@ -66,6 +66,21 @@ const routes = [
         path: 'tags',
         name: 'TagAdmin',
         component: () => import('@/views/admin/tag/TagAdmin.vue'),
+      },
+      {
+        path: 'tags/create',
+        name: 'CreateTagAdmin',
+        component: () => import('@/views/admin/tag/CreateTagAdmin.vue'),
+      },
+      {
+        path: 'tags/view/:id',
+        name: 'ViewTagAdmin',
+        component: () => import('@/views/admin/tag/ViewTagAdmin.vue'),
+      },
+      {
+        path: 'tags/edit/:id',
+        name: 'EditTagAdmin',
+        component: () => import('@/views/admin/tag/EditTagAdmin.vue'),
       },
       // news
       {

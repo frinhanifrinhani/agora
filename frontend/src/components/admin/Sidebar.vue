@@ -6,32 +6,32 @@
     </div>
     <hr class="separator" />
     <ul class="list-unstyled p-3">
-      <li :class="{ active: $route.path === '/admin' }">
+      <li :class="{ active: $route.path === '/admin' || $route.path === '/admin/'}">
         <router-link to="/admin" class="p-3 mb-2"
           ><i class="fa-solid fa-house me-2"></i>Dashboard</router-link
         >
       </li>
-      <li :class="{ active: $route.path === '/admin/categories' }">
+      <li :class="{ active: $route.path.startsWith('/admin/categories') }">
         <router-link to="/admin/categories" class="pb-3 mb-2"
           ><i class="fa fa-list-alt me-2"></i>Categorias</router-link
         >
       </li>
-      <li :class="{ active: $route.path === '/admin/tags' }">
+      <li :class="{ active: $route.path.startsWith('/admin/tags') }">
         <router-link to="/admin/tags" class="pb-3 mb-2"
           ><i class="fa fa-tags me-2"></i>Tags</router-link
         >
       </li>
-      <li :class="{ active: $route.path === '/admin/news' }">
+      <li :class="{ active: $route.path.startsWith('/admin/news') }">
         <router-link to="/admin/news" class="pb-3 mb-2"
           ><i class="fa-regular fa-newspaper me-2"></i>Notícias</router-link
         >
       </li>
-      <li :class="{ active: $route.path === '/admin/events' }">
+      <li :class="{ active: $route.path.startsWith('/admin/events') }">
         <router-link to="/admin/events" class="pb-3 mb-2"
           ><i class="fa-regular fa-newspaper me-2"></i>Eventos</router-link
         >
       </li>
-      <li :class="{ active: $route.path === '/admin/user' }">
+      <li :class="{ active: $route.path.startsWith('/admin/user') }">
         <router-link to="/admin/user" class="pb-3 mb-2"
           ><i class="fa-solid fa-users me-2"></i>Usuários</router-link
         >

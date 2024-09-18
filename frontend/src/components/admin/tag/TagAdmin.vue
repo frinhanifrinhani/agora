@@ -6,10 +6,12 @@
       </li>
     </ol>
   </nav>
-  <div class="tag-list">
+  <div class="list">
     <div class="top-list">
       <h2 class="mb-4">Tags</h2>
-      <a href="#" class="btn btn-primary">Cadastrar Tag</a>
+      <router-link to="/admin/tags/create" class="btn btn-primary">
+        Cadastrar Tag
+      </router-link>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -24,34 +26,31 @@
           <tr>
             <th class="text-column-table-template">ID</th>
             <th class="text-column-table-template">Nome</th>
-            <th class="text-column-table-template">Ações</th>
+            <th class="text-column-table-template actions">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(tag, index) in tableTag.data"
-            :key="index"
-            class="align-middle"
-          >
+          <tr v-for="(tag, index) in tableTag.data" :key="index" class="align-middle">
             <td class="text-black-50">{{ tag.id }}</td>
             <td class="text-black-50">{{ truncateText(tag.name) }}</td>
-           
-            <td>
-              <button
-                class="btn btn-primary btn-sm me-2"
-                @click="viewTag(tag.id)"
-              >
+
+            <td class="actions">
+              <button class="btn btn-primary btn-sm me-2" @click="viewTag(tag.id)">
                 <i class="fa-regular fa-eye"></i>
               </button>
-              <button
-                class="btn btn-warning btn-sm me-2"
-                @click="editTag(tag.id)"
-              >
+              <button class="btn btn-warning btn-sm me-2" @click="editTag(tag.id)">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-danger btn-sm" @click="deleteTag(tag.id)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
+
+              <ConfirmDelete
+                :confirmationMessage="'Deseja realmente deletar esta Tag?'"
+                :confirmationText="'Esta ação não pode ser desfeita para a Tag:'"
+                :itemType="'A Tag'"
+                :itemName="tag.name"
+                :successMessage="tag.name + ' foi deletada com sucesso.'"
+                @confirmed="deleteTag(tag.id)"
+                :refreshList="true"
+              />
             </td>
           </tr>
         </tbody>
@@ -68,11 +67,13 @@
 <script>
 import TagAdminService from "@/service/admin/TagAdminService";
 import Pagination from "../../Pagination.vue";
+import ConfirmDelete from "../ConfirmDelete.vue";
 
 export default {
   name: "TagAdmin",
   components: {
     Pagination,
+    ConfirmDelete,
   },
   data() {
     return {
@@ -86,9 +87,10 @@ export default {
   },
   created() {
     this.TagAdminService = new TagAdminService();
+    //this.fetchTags();
   },
   mounted() {
-    this.getTag();
+    this.fetchTags();
   },
   methods: {
     truncateText(text) {
@@ -98,7 +100,7 @@ export default {
       }
     },
 
-    async getTag(page = 1) {
+    async fetchTags(page = 1) {
       try {
         this.isLoading = true;
         const response = await this.TagAdminService.getIndexTag(this.perPage, page);
@@ -115,10 +117,30 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error("Erro ao buscar tag:", error);
       } finally {
         this.isLoading = false;
       }
+    },
+
+    viewTag(id) {
+      this.$router.push({ name: "ViewTagAdmin", params: { id: id } });
+    },
+
+    editTag(id) {
+      this.$router.push({ name: "EditTagAdmin", params: { id: id } });
+    },
+
+    async deleteTag(id) {
+
+      try {
+        await this.TagAdminService.deleteTag(id);
+
+        await this.fetchTags();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+
     },
 
     changePage(page) {
@@ -131,7 +153,7 @@ export default {
 </script>
 
 <style scoped>
-.tag-list {
+.list {
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -185,6 +207,9 @@ export default {
   font-weight: 400;
 }
 
+.actions {
+  width: 275px;
+}
 /* .center {
   text-align: center;
 } */
