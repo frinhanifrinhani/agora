@@ -73,9 +73,16 @@
               >
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-danger btn-sm" @click="deleteCategory(category.id)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
+
+              <ConfirmDelete
+                :confirmationMessage="'Deseja realmente deletar esta Categoria?'"
+                :confirmationText="'Esta ação não pode ser desfeita para a Categoria:'"
+                :itemType="'A Categoria'"
+                :itemName="category.name"
+                :successMessage="category.name + ' foi deletada com sucesso.'"
+                @confirmed="deleteCategory(category.id)"
+                :refreshList="true"
+              />
             </td>
           </tr>
         </tbody>
@@ -92,11 +99,13 @@
 <script>
 import CategoryAdminService from "@/service/admin/CategoryAdminService";
 import Pagination from "../../Pagination.vue";
+import ConfirmDelete from "../ConfirmDelete.vue";
 
 export default {
   name: "CategoryAdmin",
   components: {
     Pagination,
+    ConfirmDelete,
   },
   data() {
     return {
@@ -161,6 +170,18 @@ export default {
 
     editCategory(id) {
       this.$router.push({ name: "EditCategoryAdmin", params: { id: id } });
+    },
+
+    async deleteCategory(id) {
+
+      try {
+        await this.CategoryAdminService.deleteCategory(id);
+
+        await this.fetchCategories();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+
     },
 
     changePage(page) {
