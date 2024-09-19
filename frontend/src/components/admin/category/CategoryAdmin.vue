@@ -159,6 +159,10 @@ export default {
       this.$router.push({ name: "ViewCategoryAdmin", params: { id: id } });
     },
 
+    editCategory(id) {
+      this.$router.push({ name: "EditCategoryAdmin", params: { id: id } });
+    },
+
     changePage(page) {
       if (page > 0 && page <= this.tableCategory.last_page) {
         this.getCategory(page);

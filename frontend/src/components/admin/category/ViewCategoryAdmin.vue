@@ -38,7 +38,7 @@
 
       <router-link to="/admin/categories" class="btn btn-danger"> Cancelar </router-link>
       &nbsp;
-      <router-link to="#" class="btn btn-primary"> Editar </router-link>
+      <router-link :to="{ name: 'EditCategoryAdmin', params: { id: category.id } }" class="btn btn-primary"> Editar </router-link>
 
     </div>
   </div>

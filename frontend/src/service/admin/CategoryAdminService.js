@@ -75,5 +75,30 @@ export default class CategoryAdminService {
         }
     }
 
+    async updateCategory(data){
+        
+        const url = this.API_URL + 'admin/categories/'+data.id;
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.put(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao atualizar a categoria!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
+
     
 }
