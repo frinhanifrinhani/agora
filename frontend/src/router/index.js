@@ -66,6 +66,11 @@ const routes = [
         name: 'CreateCategoryAdmin',
         component: () => import('@/views/admin/Category/CreateCategoryAdmin.vue'),
       },
+      {
+        path: 'categories/view/:id',
+        name: 'ViewCategoryAdmin',
+        component: () => import('@/views/admin/category/ViewCategoryAdmin.vue'),
+      },
       // tag
       {
         path: 'tags',

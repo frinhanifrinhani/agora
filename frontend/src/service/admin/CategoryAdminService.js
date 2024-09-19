@@ -25,6 +25,31 @@ export default class CategoryAdminService {
         }
     }
 
+    async getCategory(id){
+        try {
+            const url = this.API_URL + 'admin/categories/'+id;
+            const token = localStorage.getItem('authToken');
+    
+            const response = await axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                
+            });
+    
+            return response.data;
+        } catch (error) {
+             if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao buscar a categoria!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
+
     async createCategory(data){
         
         const url = this.API_URL + 'admin/categories';
@@ -50,4 +75,5 @@ export default class CategoryAdminService {
         }
     }
 
+    
 }

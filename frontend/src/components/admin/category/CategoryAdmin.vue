@@ -112,7 +112,7 @@ export default {
     this.CategoryAdminService = new CategoryAdminService();
   },
   mounted() {
-    this.getCategory();
+    this.fetchCategories();
   },
   methods: {
     truncateText(text) {
@@ -132,7 +132,7 @@ export default {
       return statusToShow;
     },
 
-    async getCategory(page = 1) {
+    async fetchCategories(page = 1) {
       try {
         this.isLoading = true;
         const response = await this.CategoryAdminService.getIndexCategory(this.perPage, page);
@@ -153,6 +153,10 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+     viewCategory(id) {
+      this.$router.push({ name: "ViewCategoryAdmin", params: { id: id } });
     },
 
     changePage(page) {

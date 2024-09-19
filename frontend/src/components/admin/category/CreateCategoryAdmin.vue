@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <router-link to="/admin/category" class="btn btn-danger"> Cancelar </router-link>
+        <router-link to="/admin/categories" class="btn btn-danger"> Cancelar </router-link>
         &nbsp;
         <button
           type="submit"
