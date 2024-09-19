@@ -9,7 +9,9 @@
   <div class="category-list">
     <div class="top-list">
       <h2 class="mb-4">Categorias</h2>
-      <a href="#" class="btn btn-primary">Cadastrar Categoria</a>
+            <router-link to="/admin/categories/create" class="btn btn-primary">
+        Cadastrar Categoria
+      </router-link>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">

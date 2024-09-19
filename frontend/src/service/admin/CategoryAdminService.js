@@ -24,4 +24,30 @@ export default class CategoryAdminService {
             return false;
         }
     }
+
+    async createCategory(data){
+        
+        const url = this.API_URL + 'admin/categories';
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.post(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao criar a categoria!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
+
 }
