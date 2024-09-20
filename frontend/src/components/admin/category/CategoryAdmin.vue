@@ -9,7 +9,7 @@
   <div class="category-list">
     <div class="top-list">
       <h2 class="mb-4">Categorias</h2>
-            <router-link to="/admin/categories/create" class="btn btn-primary">
+      <router-link to="/admin/categories/create" class="btn btn-primary">
         Cadastrar Categoria
       </router-link>
     </div>
@@ -45,20 +45,30 @@
               {{ publicationStatus(category.status) }}
             </td>
             <td class="text-black-50 center">
-              <button
+              <!-- <button
                 v-if="!category.status"
                 class="btn btn-primary btn-sm me-2"
                 @click="publishCategory(category.id)"
               >
                 <i class="fa-regular fa-circle-check"></i>
-              </button>
-              <button
+              </button> -->
+
+              <ConfirmPublish
+                v-if="!category.status"
+                :confirmationMessage="'Deseja realmente publicar esta Categoria?'"
+                :itemType="'A Categoria'"
+                :itemName="category.name"
+                :successMessage="category.name + ' foi publicada com sucesso.'"
+                @confirmed="publishCategory(category.id)"
+                :refreshList="true"
+              />
+              <!-- <button
                 v-if="category.status"
                 class="btn btn-danger btn-sm me-2"
                 @click="unpublishCategory(category.id)"
               >
                 <i class="fa-regular fa-circle-xmark"></i>
-              </button>
+              </button> -->
             </td>
             <td>
               <button
@@ -100,12 +110,14 @@
 import CategoryAdminService from "@/service/admin/CategoryAdminService";
 import Pagination from "../../Pagination.vue";
 import ConfirmDelete from "../ConfirmDelete.vue";
+import ConfirmPublish from "../ConfirmPublish.vue";
 
 export default {
   name: "CategoryAdmin",
   components: {
     Pagination,
     ConfirmDelete,
+    ConfirmPublish,
   },
   data() {
     return {
@@ -144,7 +156,10 @@ export default {
     async fetchCategories(page = 1) {
       try {
         this.isLoading = true;
-        const response = await this.CategoryAdminService.getIndexCategory(this.perPage, page);
+        const response = await this.CategoryAdminService.getIndexCategory(
+          this.perPage,
+          page
+        );
 
         if (response) {
           this.tableCategory = {
@@ -158,13 +173,13 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error("Erro ao buscar categorias:", error);
       } finally {
         this.isLoading = false;
       }
     },
 
-     viewCategory(id) {
+    viewCategory(id) {
       this.$router.push({ name: "ViewCategoryAdmin", params: { id: id } });
     },
 
@@ -173,7 +188,6 @@ export default {
     },
 
     async deleteCategory(id) {
-
       try {
         await this.CategoryAdminService.deleteCategory(id);
 
@@ -181,7 +195,16 @@ export default {
       } catch (error) {
         this.setFlashMessage(error, "error");
       }
+    },
 
+    async publishCategory(id) {
+      try {
+        await this.CategoryAdminService.publishCategory(id);
+
+        await this.fetchCategories();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
     },
 
     changePage(page) {
