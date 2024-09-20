@@ -53,6 +53,16 @@
                 <i class="fa-regular fa-circle-check"></i>
               </button> -->
 
+              <ConfirmUnpublish
+                v-if="category.status"
+                :confirmationMessage="'Deseja realmente despublicar esta Categoria?'"
+                :itemType="'A Categoria'"
+                :itemName="category.name"
+                :successMessage="category.name + ' foi despublicada com sucesso.'"
+                @confirmed="unpublishCategory(category.id)"
+                :refreshList="true"
+              />
+
               <ConfirmPublish
                 v-if="!category.status"
                 :confirmationMessage="'Deseja realmente publicar esta Categoria?'"
@@ -62,6 +72,7 @@
                 @confirmed="publishCategory(category.id)"
                 :refreshList="true"
               />
+
               <!-- <button
                 v-if="category.status"
                 class="btn btn-danger btn-sm me-2"
@@ -111,6 +122,7 @@ import CategoryAdminService from "@/service/admin/CategoryAdminService";
 import Pagination from "../../Pagination.vue";
 import ConfirmDelete from "../ConfirmDelete.vue";
 import ConfirmPublish from "../ConfirmPublish.vue";
+import ConfirmUnpublish from "../ConfirmUnpublish.vue";
 
 export default {
   name: "CategoryAdmin",
@@ -118,6 +130,7 @@ export default {
     Pagination,
     ConfirmDelete,
     ConfirmPublish,
+    ConfirmUnpublish,
   },
   data() {
     return {
@@ -200,6 +213,16 @@ export default {
     async publishCategory(id) {
       try {
         await this.CategoryAdminService.publishCategory(id);
+
+        await this.fetchCategories();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+    },
+
+    async unpublishCategory(id) {
+      try {
+        await this.CategoryAdminService.unpublishCategory(id);
 
         await this.fetchCategories();
       } catch (error) {

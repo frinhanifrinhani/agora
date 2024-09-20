@@ -1,5 +1,5 @@
 <template>
-  <button title="Publicar" class="btn btn-primary btn-sm" @click="showConfirmation"><i class="fa-regular fa-circle-check"></i></button>
+  <button title="Despublicar" class="btn  btn-danger  btn-sm" @click="showConfirmation"><i class="fa-regular fa-circle-xmark"></i></button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   props: {
     buttonText: {
       type: String,
-      default: 'Publicar'
+      default: 'Despublicar'
     },
     confirmationMessage: {
       type: String,
@@ -21,7 +21,7 @@ export default {
     },
     confirmButtonText: {
       type: String,
-      default: 'Sim, publicar!'
+      default: 'Sim, Despublicar!'
     },
     cancelButtonText: {
       type: String,
@@ -52,7 +52,7 @@ export default {
             
            this.$emit('confirmed'); 
            Swal.fire({
-            title: 'Publicado(a)!',
+            title: 'Despublicado(a)!',
             icon: 'success',
             confirmButtonColor: '#0b5ed7',
           });

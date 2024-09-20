@@ -152,4 +152,30 @@ export default class CategoryAdminService {
             }
         }  
     }
+
+    async unpublishCategory(id){
+        
+        const url = this.API_URL + 'admin/categories/unpublish/'+id;
+        const token = localStorage.getItem('authToken');
+        
+        try {
+            const response = await axios.put(url, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao despublicar a categoria!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }  
+    }
 }
