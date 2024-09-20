@@ -78,6 +78,7 @@ Route::middleware(['auth:sanctum'])->prefix('admin')->name('admin.')->group(func
     Route::controller(CategoryAdminController::class)->group(function () {
         Route::resource('categories', CategoryAdminController::class);
         Route::put('/categories/publish/{id}', 'publish');
+        Route::put('/categories/unpublish/{id}', 'unpublish');
     });
 
 });

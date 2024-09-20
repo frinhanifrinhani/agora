@@ -24,7 +24,7 @@ class CategoryAdminService
 
     public function getAllCategories($request)
     {
-        return $this->categoryRepository->paginate($request->limit,$request->page);
+        return $this->categoryRepository->paginate($request->limit, $request->page);
     }
 
     public function createCategory($request): JsonResponse
@@ -89,7 +89,7 @@ class CategoryAdminService
     public function getCategoryById($id): JsonResponse
     {
         try {
-            $category = $this->categoryRepository->findOrFailByAttribute('id',$id);
+            $category = $this->categoryRepository->findOrFailByAttribute('id', $id);
 
             return response()->json(
                 [
@@ -97,7 +97,7 @@ class CategoryAdminService
                 ],
                 Response::HTTP_OK
             );
-        } catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json(
                 [
                     'error' => [
@@ -112,8 +112,7 @@ class CategoryAdminService
                 ],
                 Response::HTTP_BAD_REQUEST
             );
-
-        }catch (\Exception  $e) {
+        } catch (\Exception  $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -258,23 +257,6 @@ class CategoryAdminService
         } catch (\Exception $e) {
             DB::rollBack();
 
-            if ($e->getCode() == 23505) {
-                return response()->json(
-                    [
-                        'error' => [
-                            'message' =>
-                            __(
-                                'messages.erro.duplicateError',
-                                [
-                                    'model' =>  ucfirst(Entities::CATEGORY)
-                                ]
-                            )
-                        ]
-                    ],
-                    Response::HTTP_BAD_REQUEST
-                );
-            }
-
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -284,5 +266,43 @@ class CategoryAdminService
         }
     }
 
+    public function unpublishCategory($id): JsonResponse
+    {
+        try {
 
+            $categoryData['status'] = 0;
+
+            DB::beginTransaction();
+
+            $categoryResponse = $this->categoryRepository->update($categoryData, $id);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.updated',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY)
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'category' => $categoryResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
 }
