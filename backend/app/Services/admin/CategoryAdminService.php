@@ -226,4 +226,63 @@ class CategoryAdminService
             );
         }
     }
+
+    public function publishCategory($id): JsonResponse
+    {
+        try {
+
+            $categoryData['status'] = 1;
+
+            DB::beginTransaction();
+
+            $categoryResponse = $this->categoryRepository->update($categoryData, $id);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.updated',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY)
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'category' => $categoryResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            if ($e->getCode() == 23505) {
+                return response()->json(
+                    [
+                        'error' => [
+                            'message' =>
+                            __(
+                                'messages.erro.duplicateError',
+                                [
+                                    'model' =>  ucfirst(Entities::CATEGORY)
+                                ]
+                            )
+                        ]
+                    ],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+
 }
