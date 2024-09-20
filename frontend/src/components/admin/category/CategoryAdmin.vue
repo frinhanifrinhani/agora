@@ -209,7 +209,7 @@ export default {
 
     changePage(page) {
       if (page > 0 && page <= this.tableCategory.last_page) {
-        this.getCategory(page);
+        this.fetchCategories(page);
       }
     },
   },

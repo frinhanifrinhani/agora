@@ -145,7 +145,7 @@ export default {
 
     changePage(page) {
       if (page > 0 && page <= this.tableTag.last_page) {
-        this.getTag(page);
+        this.fetchTags(page);
       }
     },
   },
