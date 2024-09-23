@@ -242,7 +242,7 @@ class CategoryAdminService
                 [
                     'success' => [
                         'message' => __(
-                            'messages.updated',
+                            'messages.publish',
                             [
                                 'model' => ucfirst(Entities::CATEGORY)
                             ]
@@ -253,6 +253,22 @@ class CategoryAdminService
                     ]
                 ],
                 Response::HTTP_CREATED
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         } catch (\Exception $e) {
             DB::rollBack();
@@ -282,7 +298,7 @@ class CategoryAdminService
                 [
                     'success' => [
                         'message' => __(
-                            'messages.updated',
+                            'messages.unpublish',
                             [
                                 'model' => ucfirst(Entities::CATEGORY)
                             ]
@@ -293,6 +309,22 @@ class CategoryAdminService
                     ]
                 ],
                 Response::HTTP_CREATED
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
             );
         } catch (\Exception $e) {
             DB::rollBack();

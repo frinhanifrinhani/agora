@@ -82,7 +82,7 @@ class EventControllerTest extends TestCase
     {
         $event = Event::factory()->create();
 
-        $response = $this->get('/api/events/' . $event->id);
+        $response = $this->get('/api/events/' . $event->alias);
         $response->assertStatus(Response::HTTP_OK);
 
         $responseData = $response->json();

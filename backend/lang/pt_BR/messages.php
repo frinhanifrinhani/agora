@@ -27,6 +27,8 @@ return [
     'activated'     => ':model ativado(a) com sucesso.',
     'inactivated'   => ':model inativado(a) com sucesso.',
     'canceled'      => ':model cancelado(a) com sucesso.',
+    'publish'       => ':model publicado(a) com sucesso.',
+    'unpublish'     => ':model despublicado(a) com sucesso.',
 
     'erro' => [
         'duplicateError' => ':model já cadastrado(a).',

@@ -256,4 +256,66 @@ class CategoryAdminControllerTest extends TestCase
 
         $this->assertEquals('Categoria excluído(a) com sucesso.', $responseData['success']['message']);
     }
+
+    public function testPublishSuccess()
+    {
+        $category = Category::factory()->state([
+            'status' => false
+        ])->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/categories/publish/' . $category->id);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Categoria publicado(a) com sucesso.', $responseData['success']['message']);
+    }
+
+    public function testPublishNotFoundCategoryError()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/categories/publish/0');
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Categoria não encontrado(a).', $responseData['error']['message']);
+    }
+
+    public function testUnpublishSuccess()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/categories/unpublish/' . $category->id);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Categoria despublicado(a) com sucesso.', $responseData['success']['message']);
+    }
+
+    public function testUnpublishNotFoundCategoryError()
+    {
+        $category = Category::factory()->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/categories/unpublish/0');
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Categoria não encontrado(a).', $responseData['error']['message']);
+    }
 }
