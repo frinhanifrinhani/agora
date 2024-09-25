@@ -24,7 +24,7 @@ class CategoryAdminService
 
     public function getAllCategories($request)
     {
-        return $this->categoryRepository->paginate($request->limit,$request->page);
+        return $this->categoryRepository->paginate($request->limit, $request->page);
     }
 
     public function createCategory($request): JsonResponse
@@ -89,7 +89,7 @@ class CategoryAdminService
     public function getCategoryById($id): JsonResponse
     {
         try {
-            $category = $this->categoryRepository->findOrFailByAttribute('id',$id);
+            $category = $this->categoryRepository->findOrFailByAttribute('id', $id);
 
             return response()->json(
                 [
@@ -97,7 +97,7 @@ class CategoryAdminService
                 ],
                 Response::HTTP_OK
             );
-        } catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json(
                 [
                     'error' => [
@@ -112,8 +112,7 @@ class CategoryAdminService
                 ],
                 Response::HTTP_BAD_REQUEST
             );
-
-        }catch (\Exception  $e) {
+        } catch (\Exception  $e) {
             return response()->json(
                 [
                     'error' => [$e->getMessage()]
@@ -218,6 +217,118 @@ class CategoryAdminService
                 Response::HTTP_BAD_REQUEST
             );
         } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function publishCategory($id): JsonResponse
+    {
+        try {
+
+            $categoryData['status'] = 1;
+
+            DB::beginTransaction();
+
+            $categoryResponse = $this->categoryRepository->update($categoryData, $id);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.publish',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY)
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'category' => $categoryResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function unpublishCategory($id): JsonResponse
+    {
+        try {
+
+            $categoryData['status'] = 0;
+
+            DB::beginTransaction();
+
+            $categoryResponse = $this->categoryRepository->update($categoryData, $id);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.unpublish',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY)
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'category' => $categoryResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::CATEGORY),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
             return response()->json(
                 [
                     'error' => [$e->getMessage()]

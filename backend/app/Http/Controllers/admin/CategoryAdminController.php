@@ -41,4 +41,14 @@ class CategoryAdminController extends Controller
     {
         return $this->categoryAdminService->deleteCategory($id);
     }
+
+    public function publish(int $id): JsonResponse
+    {
+        return $this->categoryAdminService->publishCategory($id);
+    }
+
+    public function unpublish(int $id): JsonResponse
+    {
+        return $this->categoryAdminService->unpublishCategory($id);
+    }
 }

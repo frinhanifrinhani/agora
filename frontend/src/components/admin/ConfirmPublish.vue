@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-danger btn-sm" @click="showConfirmation"><i class="fa-solid fa-trash"></i></button>
+  <button title="Publicar" class="btn btn-primary btn-sm" @click="showConfirmation"><i class="fa-regular fa-circle-check"></i></button>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   props: {
     buttonText: {
       type: String,
-      default: 'Deletar'
+      default: 'Publicar'
     },
     confirmationMessage: {
       type: String,
@@ -17,11 +17,11 @@ export default {
     },
     confirmationText: {
       type: String,
-      default: 'Esta ação não pode ser desfeita!'
+      default: ''
     },
     confirmButtonText: {
       type: String,
-      default: 'Sim, deletar!'
+      default: 'Sim, publicar!'
     },
     cancelButtonText: {
       type: String,
@@ -40,7 +40,6 @@ export default {
     showConfirmation() {
       Swal.fire({
         title: this.confirmationMessage,
-        html: `${this.confirmationText} <br/> <strong>${this.itemName}</strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#0b5ed7',
@@ -53,8 +52,7 @@ export default {
             
            this.$emit('confirmed'); 
            Swal.fire({
-            title: 'Deletado(a)!',
-            html: `${this.itemType} <strong>${this.itemName}</strong> foi deletado(a) com sucesso.`,
+            title: 'Publicado(a)!',
             icon: 'success',
             confirmButtonColor: '#0b5ed7',
           });

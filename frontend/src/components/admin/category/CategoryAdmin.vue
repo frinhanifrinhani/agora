@@ -9,7 +9,9 @@
   <div class="category-list">
     <div class="top-list">
       <h2 class="mb-4">Categorias</h2>
-      <a href="#" class="btn btn-primary">Cadastrar Categoria</a>
+      <router-link to="/admin/categories/create" class="btn btn-primary">
+        Cadastrar Categoria
+      </router-link>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -43,20 +45,41 @@
               {{ publicationStatus(category.status) }}
             </td>
             <td class="text-black-50 center">
-              <button
+              <!-- <button
                 v-if="!category.status"
                 class="btn btn-primary btn-sm me-2"
                 @click="publishCategory(category.id)"
               >
                 <i class="fa-regular fa-circle-check"></i>
-              </button>
-              <button
+              </button> -->
+
+              <ConfirmUnpublish
+                v-if="category.status"
+                :confirmationMessage="'Deseja realmente despublicar esta Categoria?'"
+                :itemType="'A Categoria'"
+                :itemName="category.name"
+                :successMessage="category.name + ' foi despublicada com sucesso.'"
+                @confirmed="unpublishCategory(category.id)"
+                :refreshList="true"
+              />
+
+              <ConfirmPublish
+                v-if="!category.status"
+                :confirmationMessage="'Deseja realmente publicar esta Categoria?'"
+                :itemType="'A Categoria'"
+                :itemName="category.name"
+                :successMessage="category.name + ' foi publicada com sucesso.'"
+                @confirmed="publishCategory(category.id)"
+                :refreshList="true"
+              />
+
+              <!-- <button
                 v-if="category.status"
                 class="btn btn-danger btn-sm me-2"
                 @click="unpublishCategory(category.id)"
               >
                 <i class="fa-regular fa-circle-xmark"></i>
-              </button>
+              </button> -->
             </td>
             <td>
               <button
@@ -71,9 +94,16 @@
               >
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-danger btn-sm" @click="deleteCategory(category.id)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
+
+              <ConfirmDelete
+                :confirmationMessage="'Deseja realmente deletar esta Categoria?'"
+                :confirmationText="'Esta ação não pode ser desfeita para a Categoria:'"
+                :itemType="'A Categoria'"
+                :itemName="category.name"
+                :successMessage="category.name + ' foi deletada com sucesso.'"
+                @confirmed="deleteCategory(category.id)"
+                :refreshList="true"
+              />
             </td>
           </tr>
         </tbody>
@@ -90,11 +120,17 @@
 <script>
 import CategoryAdminService from "@/service/admin/CategoryAdminService";
 import Pagination from "../../Pagination.vue";
+import ConfirmDelete from "../ConfirmDelete.vue";
+import ConfirmPublish from "../ConfirmPublish.vue";
+import ConfirmUnpublish from "../ConfirmUnpublish.vue";
 
 export default {
   name: "CategoryAdmin",
   components: {
     Pagination,
+    ConfirmDelete,
+    ConfirmPublish,
+    ConfirmUnpublish,
   },
   data() {
     return {
@@ -110,7 +146,7 @@ export default {
     this.CategoryAdminService = new CategoryAdminService();
   },
   mounted() {
-    this.getCategory();
+    this.fetchCategories();
   },
   methods: {
     truncateText(text) {
@@ -130,10 +166,13 @@ export default {
       return statusToShow;
     },
 
-    async getCategory(page = 1) {
+    async fetchCategories(page = 1) {
       try {
         this.isLoading = true;
-        const response = await this.CategoryAdminService.getIndexCategory(this.perPage, page);
+        const response = await this.CategoryAdminService.getIndexCategory(
+          this.perPage,
+          page
+        );
 
         if (response) {
           this.tableCategory = {
@@ -147,15 +186,53 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        console.error('Erro ao buscar categorias:', error);
+        console.error("Erro ao buscar categorias:", error);
       } finally {
         this.isLoading = false;
       }
     },
 
+    viewCategory(id) {
+      this.$router.push({ name: "ViewCategoryAdmin", params: { id: id } });
+    },
+
+    editCategory(id) {
+      this.$router.push({ name: "EditCategoryAdmin", params: { id: id } });
+    },
+
+    async deleteCategory(id) {
+      try {
+        await this.CategoryAdminService.deleteCategory(id);
+
+        await this.fetchCategories();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+    },
+
+    async publishCategory(id) {
+      try {
+        await this.CategoryAdminService.publishCategory(id);
+
+        await this.fetchCategories();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+    },
+
+    async unpublishCategory(id) {
+      try {
+        await this.CategoryAdminService.unpublishCategory(id);
+
+        await this.fetchCategories();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
+    },
+
     changePage(page) {
       if (page > 0 && page <= this.tableCategory.last_page) {
-        this.getCategory(page);
+        this.fetchCategories(page);
       }
     },
   },

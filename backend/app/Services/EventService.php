@@ -33,13 +33,13 @@ class EventService
     public function getEventsByAlias($alias)
     {
         try {
-            $news = $this->eventRepository->findByAttributeWhitRelation('alias', $alias)
+            $event = $this->eventRepository->findByAttributeWhitRelation('alias', $alias)
                 ->with('tag')
                 ->firstOrFail();
 
             return response()->json(
                 [
-                    'data' => $news
+                    'data' => $event
                 ],
                 Response::HTTP_OK
             );
@@ -51,7 +51,7 @@ class EventService
                         __(
                             'messages.erro.notFound',
                             [
-                                'model' => ucfirst(Entities::NEWS),
+                                'model' => ucfirst(Entities::EVENT),
                             ]
                         )
                     ]
