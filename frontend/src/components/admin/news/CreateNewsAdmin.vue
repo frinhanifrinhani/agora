@@ -35,10 +35,14 @@
           />
           <!-- Mensagem de validação -->
           <div
-            v-if="useValidate.formData.title.$invalid && useValidate.formData.title.$dirty"
+            v-if="
+              useValidate.formData.title.$invalid && useValidate.formData.title.$dirty
+            "
             class="invalid-feedback"
           >
-            <span v-if="useValidate.formData.title.required">O título é obrigatório.</span>
+            <span v-if="useValidate.formData.title.required"
+              >O título é obrigatório.</span
+            >
             <br />
             <span v-if="useValidate.formData.title.minLength"
               >O título deve ter pelo menos 2 caracteres.</span
@@ -47,7 +51,7 @@
         </div>
         <div class="mb-3">
           <label for="body" class="form-label">Notícia</label>
-          <textarea 
+          <textarea
             id="body"
             v-model="formData.body"
             class="form-control"
@@ -70,7 +74,38 @@
             >
           </div>
         </div>
+        <div class="mb-3">
+          <a href="#" class="btn btn-primary" @click="showCategories = true">
+            Escolher Categorias
+          </a>
 
+          <Modal :isOpen="showCategories" @close="showCategories = false">
+            <h2>Categorias</h2>
+            <ul>
+              <li v-for="category in categories" :key="category.id">
+                <input
+                  type="checkbox"
+                  :value="category.id"
+                  v-model="selectedCategories"
+                />
+                {{ category.name }}
+              </li>
+            </ul>
+            <a href="#" class="btn btn-primary" @click="showCategories = false">
+              Salvar Categorias
+            </a>
+          </Modal>
+
+          <div>
+            <h3>Categorias Escolhidas:</h3>
+            <ul>
+              <li v-for="category in selectedCategoriesDetails" :key="category.id">
+                {{ category.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="mb-3">&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <router-link to="/admin/news" class="btn btn-danger"> Cancelar </router-link>
         &nbsp;
         <button
@@ -91,17 +126,41 @@ import useVuelidate from "@vuelidate/core";
 import NewsAdminService from "@/service/admin/NewsAdminService";
 import { useFlashMessage } from "@/service/FlashMessageService";
 
+import Modal from "../Modal.vue";
+
+// const selectedCategoriesData = this.selectedCategoriesDetails.map((category) => ({
+//   id: category.id
+// }));
+
 export default {
   name: "CreateNewsAdmin",
+
   data() {
     return {
       formData: {
         title: "",
+        body: "",
+        categories: [],
       },
       isLoading: false,
+      showCategories: false,
+      categories: [],
+      selectedCategories: [],
     };
   },
-  mounted() {},
+  computed: {
+    selectedCategoriesDetails() {
+      return this.categories.filter((category) =>
+        this.selectedCategories.includes(category.id)
+      );
+    },
+  },
+  components: {
+    Modal,
+  },
+  mounted() {
+    this.getCategories();
+  },
   created() {
     this.NewsAdminService = new NewsAdminService();
   },
@@ -122,9 +181,18 @@ export default {
     async submitForm() {
       this.useValidate.$touch();
 
+      this.formData.categories = this.selectedCategoriesDetails.map(
+        (category) => category.id
+      );
+
       if (!this.useValidate.$invalid) {
         this.createNews(this.formData);
       }
+    },
+
+    async getCategories() {
+      const response = await this.NewsAdminService.getCategories();
+      this.categories = response.data; // Salva as categorias no estado
     },
 
     async createNews(data) {

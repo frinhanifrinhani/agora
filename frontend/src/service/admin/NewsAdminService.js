@@ -26,6 +26,24 @@ export default class NewsAdminService {
         }
     }
 
+    async getCategories(){
+        try {
+            const url = this.API_URL + 'admin/categories';
+            const token = localStorage.getItem('authToken');
+    
+            const response = await axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            return response.data;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async createNews(data){
         const url = this.API_URL + 'admin/news';
         const token = localStorage.getItem('authToken');
