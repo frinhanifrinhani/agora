@@ -26,6 +26,30 @@ export default class NewsAdminService {
         }
     }
 
+    async createNews(data){
+        const url = this.API_URL + 'admin/news';
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.post(url, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao criar a notícia!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
+
     async unpublishNews(id) {
         try {
             //const url = new URL(this.API_URL + 'admin/news');

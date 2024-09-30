@@ -9,7 +9,9 @@
   <div class="news-list">
     <div class="top-list">
       <h2 class="mb-4">Notícias</h2>
-      <a href="#" class="btn btn-primary">Cadastrar Notícia</a>
+      <router-link to="/admin/news/create" class="btn btn-primary">
+        Cadastrar Notícia
+      </router-link>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">

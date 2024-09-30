@@ -103,6 +103,11 @@ const routes = [
         name: 'NewsAdmin',
         component: () => import('@/views/admin/news/NewsAdmin.vue'),
       },
+      {
+        path: 'news/create',
+        name: 'CreateNewsAdmin',
+        component: () => import('@/views/admin/News/CreateNewsAdmin.vue'),
+      },
       //event
       {
         path: 'events',

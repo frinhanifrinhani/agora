@@ -8,7 +8,7 @@
 import CreateNewsAdminComponent from "@/components/admin/news/CreateNewsAdmin.vue";
 
 export default {
-  name: "CreateNewsAdmin",
+  name: "NewNewsAdmin",
   components: {
     CreateNewsAdminComponent,
   },
