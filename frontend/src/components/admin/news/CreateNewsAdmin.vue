@@ -75,10 +75,6 @@
           </div>
         </div>
         <div class="mb-3">
-          <a href="#" class="btn btn-primary" @click="showCategories = true">
-            Escolher Categorias
-          </a>
-
           <Modal :isOpen="showCategories" @close="showCategories = false">
             <h2>Categorias</h2>
             <ul>
@@ -95,14 +91,21 @@
               Incluir categorias
             </a>
           </Modal>
-
+          <label for="categories" class="form-label">Categorias</label>
           <div>
-            <h3>Categorias Escolhidas:</h3>
-            <ul>
-              <li v-for="category in selectedCategoriesDetails" :key="category.id">
-                {{ category.name }}
-              </li>
-            </ul>
+            <div class="card">
+              <h5 v-if="selectedCategories && selectedCategories.length > 0" class="card-title">Categorias Escolhidas</h5>
+              <div class="card-body">
+                <ul>
+                  <li v-for="category in selectedCategoriesDetails" :key="category.id">
+                    {{ category.name }}
+                  </li>
+                </ul>
+              </div>
+              <a href="#" class="btn btn-primary" @click="showCategories = true">
+                Escolher Categorias
+              </a>
+            </div>
           </div>
         </div>
         <div class="mb-3">&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -264,22 +267,50 @@ input {
 }
 
 .modal-content ul {
-  display: flex!important;
-  flex-wrap: wrap!important; 
-  list-style-type: none!important;
-  padding: 0!important;
-  margin: 0!important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
   width: 100%;
   overflow-y: scroll;
 }
 
-.modal-content .btn-primary{
+.modal-content .btn-primary {
   margin: 0 auto;
   width: 250px;
 }
 .modal-content li {
-  flex: 1 1 200px; 
-  margin: 10px; 
+  flex: 1 1 200px;
+  margin: 10px;
 }
 
+.card {
+  width: 100%;
+  padding: 10px;
+}
+
+.card .btn {
+  width: 250px;
+  margin: 0 auto;
+}
+
+.card {
+  min-height: 100px !important;
+  height: auto !important;
+  background: #fafafa;
+}
+.card-body ul {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+}
+
+.card-body li {
+  flex: 1 1 200px;
+  margin: 1px;
+}
 </style>
