@@ -27,6 +27,19 @@ class CategoryAdminService
         return $this->categoryRepository->paginate($request->limit, $request->page);
     }
 
+    public function categoriesToChoice()
+    {
+        $categoryResponse = $this->categoryRepository->all();
+
+        return response()->json(
+            [
+                'data' => $categoryResponse,
+                'total' => $categoryResponse->count()
+            ],
+            Response::HTTP_OK
+        );
+    }
+
     public function createCategory($request): JsonResponse
     {
         try {
