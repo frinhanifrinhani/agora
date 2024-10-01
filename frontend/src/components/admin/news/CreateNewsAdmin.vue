@@ -11,7 +11,7 @@
 
   <div class="content">
     <div class="top-content">
-      <h2 class="mb-4">Cadastrar News</h2>
+      <h2 class="mb-4">Cadastrar Notícia</h2>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">
@@ -92,7 +92,7 @@
               </li>
             </ul>
             <a href="#" class="btn btn-primary" @click="showCategories = false">
-              Salvar Categorias
+              Incluir categorias
             </a>
           </Modal>
 
@@ -127,10 +127,6 @@ import NewsAdminService from "@/service/admin/NewsAdminService";
 import { useFlashMessage } from "@/service/FlashMessageService";
 
 import Modal from "../Modal.vue";
-
-// const selectedCategoriesData = this.selectedCategoriesDetails.map((category) => ({
-//   id: category.id
-// }));
 
 export default {
   name: "CreateNewsAdmin",
@@ -256,10 +252,6 @@ input {
   border-radius: 6px !important;
 }
 
-/* .alert-success {
-  background-color: #d4edda;
-  color: #155724;
-} */
 .editor {
   border: 1px solid #ccc;
   padding: 10px;
@@ -270,4 +262,24 @@ input {
   border-color: #aaa;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.modal-content ul {
+  display: flex!important;
+  flex-wrap: wrap!important; 
+  list-style-type: none!important;
+  padding: 0!important;
+  margin: 0!important;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.modal-content .btn-primary{
+  margin: 0 auto;
+  width: 250px;
+}
+.modal-content li {
+  flex: 1 1 200px; 
+  margin: 10px; 
+}
+
 </style>

@@ -28,7 +28,7 @@ export default class NewsAdminService {
 
     async getCategories(){
         try {
-            const url = this.API_URL + 'admin/categories';
+            const url = this.API_URL + 'admin/categories/choice/all';
             const token = localStorage.getItem('authToken');
     
             const response = await axios.get(url, {
