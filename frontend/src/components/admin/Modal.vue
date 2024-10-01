@@ -3,9 +3,9 @@
   <div v-if="isOpen" class="modal-backdrop" @click.self="closeModal">
     <div class="modal-content">
       <slot></slot>
-      <button @click="closeModal">
-        <i class="fa fa-times-circle fa-2x" aria-hidden="true" style="color: red;"></i>
-      </button>
+      <a href="#" @click="closeModal">
+        <i class="fa fa-times-circle fa-2x fechar-modal" aria-hidden="true" ></i>
+      </a>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
   max-width: 100%;
 }
 
-button {
+a {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -58,10 +58,14 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  color: red;
+a .fechar-modal {
+  color: #dc3545; /* Cor padrão */
+  transition: color 0.3s ease; /* Suaviza a transição da cor */
 }
 
+a .fechar-modal:hover {
+  color: #bb2d3b; /* Cor quando o mouse passa sobre o ícone */
+}
 .modal-backdrop {
   position: fixed;
   top: 0;
