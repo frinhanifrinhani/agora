@@ -74,6 +74,8 @@
             >
           </div>
         </div>
+
+        <!-- categorias -->
         <div class="mb-3">
           <Modal :isOpen="showCategories" @close="showCategories = false">
             <h2>Categorias</h2>
@@ -94,7 +96,12 @@
           <label for="categories" class="form-label">Categorias</label>
           <div>
             <div class="card">
-              <h5 v-if="selectedCategories && selectedCategories.length > 0" class="card-title">Categorias Escolhidas</h5>
+              <h5
+                v-if="selectedCategories && selectedCategories.length > 0"
+                class="card-title"
+              >
+                Categorias Escolhidas
+              </h5>
               <div class="card-body">
                 <ul>
                   <li v-for="category in selectedCategoriesDetails" :key="category.id">
@@ -108,6 +115,70 @@
             </div>
           </div>
         </div>
+
+        <!-- Tags -->
+        <div class="mb-3">
+          <Modal :isOpen="showTags" @close="showTags = false">
+            <h2>Tags</h2>
+            <ul>
+              <li v-for="tag in tags" :key="tag.id">
+                <input type="checkbox" :value="tag.id" v-model="selectedTags" />
+                {{ tag.name }}
+              </li>
+            </ul>
+            <a href="#" class="btn btn-primary" @click="showTags = false">
+              Incluir tags
+            </a>
+          </Modal>
+          <label for="categories" class="form-label">Tags</label>
+          <div>
+            <div class="card">
+              <h5 v-if="selectedTags && selectedTags.length > 0" class="card-title">
+                Categorias Tags
+              </h5>
+              <div class="card-body">
+                <ul>
+                  <li v-for="tag in selectedTagsDetails" :key="tag.id">
+                    {{ tag.name }}
+                  </li>
+                </ul>
+              </div>
+              <a href="#" class="btn btn-primary" @click="showTags = true">
+                Escolher Tag
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label
+            class="btn btn-secondary"
+            :class="{ active: formData.publicated === '1' }"
+          >
+            <input
+              type="radio"
+              name="publicated"
+              id="true"
+              value="1"
+              v-model="formData.publicated"
+            />
+            Publicado
+          </label>
+          <label
+            class="btn btn-secondary"
+            :class="{ active: formData.publicated === '0' }"
+          >
+            <input
+              type="radio"
+              name="publicated"
+              id="false"
+              value="0"
+              v-model="formData.publicated"
+            />
+            Despublicado
+          </label>
+        </div>
+
         <div class="mb-3">&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <router-link to="/admin/news" class="btn btn-danger"> Cancelar </router-link>
         &nbsp;
@@ -139,12 +210,18 @@ export default {
       formData: {
         title: "",
         body: "",
+        publicated: "1",
+        isChecked: true,
         categories: [],
+        tags: [],
       },
       isLoading: false,
       showCategories: false,
+      showTags: false,
       categories: [],
+      tags: [],
       selectedCategories: [],
+      selectedTags: [],
     };
   },
   computed: {
@@ -153,12 +230,16 @@ export default {
         this.selectedCategories.includes(category.id)
       );
     },
+    selectedTagsDetails() {
+      return this.tags.filter((tag) => this.selectedTags.includes(tag.id));
+    },
   },
   components: {
     Modal,
   },
   mounted() {
     this.getCategories();
+    this.getTags();
   },
   created() {
     this.NewsAdminService = new NewsAdminService();
@@ -184,6 +265,8 @@ export default {
         (category) => category.id
       );
 
+      this.formData.tags = this.selectedTagsDetails.map((tag) => tag.id);
+
       if (!this.useValidate.$invalid) {
         this.createNews(this.formData);
       }
@@ -191,7 +274,12 @@ export default {
 
     async getCategories() {
       const response = await this.NewsAdminService.getCategories();
-      this.categories = response.data; // Salva as categorias no estado
+      this.categories = response.data;
+    },
+
+    async getTags() {
+      const response = await this.NewsAdminService.getTags();
+      this.tags = response.data;
     },
 
     async createNews(data) {

@@ -271,7 +271,9 @@ class NewsAdminService
     {
         $newsData = $request->validated();
 
-        if ($request->has("publicated")) {
+        $newsData['publication_date'] = null;
+
+        if ($newsData['publicated']) {
             $newsData['publication_date'] = $this->getNow();
         }
 

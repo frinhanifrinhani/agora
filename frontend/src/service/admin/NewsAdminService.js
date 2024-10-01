@@ -44,6 +44,24 @@ export default class NewsAdminService {
         }
     }
 
+    async getTags(){
+        try {
+            const url = this.API_URL + 'admin/tags/choice/all';
+            const token = localStorage.getItem('authToken');
+    
+            const response = await axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            return response.data;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async createNews(data){
         const url = this.API_URL + 'admin/news';
         const token = localStorage.getItem('authToken');
