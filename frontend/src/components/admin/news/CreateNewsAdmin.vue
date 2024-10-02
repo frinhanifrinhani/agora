@@ -77,84 +77,34 @@
 
         <!-- categorias -->
         <div class="mb-3">
-          <Modal :isOpen="showCategories" @close="showCategories = false">
-            <h2>Categorias</h2>
-            <ul>
-              <li v-for="category in categories" :key="category.id">
-                <input
-                  type="checkbox"
-                  :value="category.id"
-                  v-model="selectedCategories"
-                />
-                {{ category.name }}
-              </li>
-            </ul>
-            <a href="#" class="btn btn-primary" @click="showCategories = false">
-              Incluir categorias
-            </a>
-          </Modal>
-          <label for="categories" class="form-label">Categorias</label>
-          <div>
-            <div class="card">
-              <h5
-                v-if="selectedCategories && selectedCategories.length > 0"
-                class="card-title"
-              >
-                Categorias Escolhidas
-              </h5>
-              <div class="card-body">
-                <ul>
-                  <li v-for="category in selectedCategoriesDetails" :key="category.id">
-                    {{ category.name }}
-                  </li>
-                </ul>
-              </div>
-              <a href="#" class="btn btn-primary" @click="showCategories = true">
-                Escolher Categorias
-              </a>
-            </div>
-          </div>
+          <multiselect
+            v-model="selectedCategories"
+            :options="categories"
+            :multiple="true"
+            :searchable="true"
+            placeholder="Selecione a(s) categoria(s)"
+            label="name"
+            track-by="id"
+          >
+          </multiselect>
         </div>
 
         <!-- Tags -->
         <div class="mb-3">
-          <Modal :isOpen="showTags" @close="showTags = false">
-            <h2>Tags</h2>
-            <ul>
-              <li v-for="tag in tags" :key="tag.id">
-                <input type="checkbox" :value="tag.id" v-model="selectedTags" />
-                {{ tag.name }}
-              </li>
-            </ul>
-            <a href="#" class="btn btn-primary" @click="showTags = false">
-              Incluir tags
-            </a>
-          </Modal>
-          <label for="categories" class="form-label">Tags</label>
-          <div>
-            <div class="card">
-              <h5 v-if="selectedTags && selectedTags.length > 0" class="card-title">
-                Categorias Tags
-              </h5>
-              <div class="card-body">
-                <ul>
-                  <li v-for="tag in selectedTagsDetails" :key="tag.id">
-                    {{ tag.name }}
-                  </li>
-                </ul>
-              </div>
-              <a href="#" class="btn btn-primary" @click="showTags = true">
-                Escolher Tag
-              </a>
-            </div>
-          </div>
+          <multiselect
+            v-model="selectedTags"
+            :options="tags"
+            :multiple="true"
+            :searchable="true"
+            placeholder="Selecione a(s) tag(s)"
+            label="name"
+            track-by="id"
+          >
+          </multiselect>
         </div>
 
         <div class="mb-3">
-          <label
-            class="btn btn-secondary"
-            :class="{ active: formData.publicated === '1' }"
-          >
+          <label class="" :class="{ active: formData.publicated === '1' }">
             <input
               type="radio"
               name="publicated"
@@ -164,10 +114,8 @@
             />
             Publicado
           </label>
-          <label
-            class="btn btn-secondary"
-            :class="{ active: formData.publicated === '0' }"
-          >
+
+          <label class="" :class="{ active: formData.publicated === '0' }">
             <input
               type="radio"
               name="publicated"
@@ -200,7 +148,8 @@ import useVuelidate from "@vuelidate/core";
 import NewsAdminService from "@/service/admin/NewsAdminService";
 import { useFlashMessage } from "@/service/FlashMessageService";
 
-import Modal from "../Modal.vue";
+import Multiselect from "vue-multiselect";
+import "vue-multiselect/dist/vue-multiselect.css";
 
 export default {
   name: "CreateNewsAdmin",
@@ -212,7 +161,6 @@ export default {
         body: "",
         publicated: "1",
         isChecked: true,
-        categories: [],
         tags: [],
       },
       isLoading: false,
@@ -225,17 +173,10 @@ export default {
     };
   },
   computed: {
-    selectedCategoriesDetails() {
-      return this.categories.filter((category) =>
-        this.selectedCategories.includes(category.id)
-      );
-    },
-    selectedTagsDetails() {
-      return this.tags.filter((tag) => this.selectedTags.includes(tag.id));
-    },
+ 
   },
   components: {
-    Modal,
+    Multiselect
   },
   mounted() {
     this.getCategories();
@@ -261,11 +202,8 @@ export default {
     async submitForm() {
       this.useValidate.$touch();
 
-      this.formData.categories = this.selectedCategoriesDetails.map(
-        (category) => category.id
-      );
-
-      this.formData.tags = this.selectedTagsDetails.map((tag) => tag.id);
+      this.formData.categories = this.selectedCategories.map((category) => category.id);
+      this.formData.tags = this.selectedTags.map((tag) => tag.id);
 
       if (!this.useValidate.$invalid) {
         this.createNews(this.formData);
