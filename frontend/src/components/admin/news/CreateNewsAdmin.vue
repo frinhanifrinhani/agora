@@ -4,7 +4,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <span class="text-black-50">Home / Notícias / Nova News</span>
+        <span class="text-black-50">Home / Notícias / Nova Notícia</span>
       </li>
     </ol>
   </nav>
@@ -51,7 +51,7 @@
         </div>
         <div class="mb-3">
           <label for="body" class="form-label">Notícia</label>
-          <textarea
+          <!-- <textarea
             id="body"
             v-model="formData.body"
             class="form-control"
@@ -59,20 +59,20 @@
             @blur="useValidate.formData.body.$touch()"
             rows="10"
             required
-          ></textarea>
-          <!-- Mensagem de validação -->
-          <div
-            v-if="useValidate.formData.body.$invalid && useValidate.formData.body.$dirty"
-            class="invalid-feedback"
-          >
-            <span v-if="useValidate.formData.body.required"
-              >O notícia é obrigatória.</span
-            >
-            <br />
-            <span v-if="useValidate.formData.body.minLength"
-              >A notícia deve ter pelo menos 10 caracteres.</span
-            >
+          ></textarea> -->
+          <div>
+            <quill-editor
+              v-model="formData.body"
+              class="form-control"
+              :options="editorOptions"
+              @blur="onEditorBlur"
+              @input="onEditorInput"
+              style="height: 400px"
+            />
           </div>
+          <!-- Mensagem de validação -->
+
+          <br />
         </div>
 
         <!-- categorias -->
@@ -128,6 +128,7 @@
         </div>
 
         <div class="mb-3">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
         <router-link to="/admin/news" class="btn btn-danger"> Cancelar </router-link>
         &nbsp;
         <button
@@ -143,6 +144,7 @@
 </template>
 
 <script>
+import { reactive } from "vue";
 import { required, minLength } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import NewsAdminService from "@/service/admin/NewsAdminService";
@@ -151,19 +153,46 @@ import { useFlashMessage } from "@/service/FlashMessageService";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 
+import { QuillEditor } from "@vueup/vue-quill"; // Update import
+import "@vueup/vue-quill/dist/vue-quill.snow.css"; // or 'vue-quill.bubble.css'
+
 export default {
   name: "CreateNewsAdmin",
 
+  setup() {
+    const useValidate = useVuelidate();
+    const { setFlashMessage } = useFlashMessage();
+
+    const formData = reactive({
+      title: "",
+      body: "",
+      publicated: "1",
+      isChecked: true,
+      tags: [],
+    });
+
+    return { useValidate, setFlashMessage, formData };
+  },
+
   data() {
     return {
-      formData: {
-        title: "",
-        body: "",
-        publicated: "1",
-        isChecked: true,
-        tags: [],
-      },
       isLoading: false,
+      editorOptions: {
+        modules: {
+          toolbar: [
+            ["bold", "italic", "underline", "strike"],
+            ["blockquote", "code-block"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ indent: "-1" }, { indent: "+1" }],
+            [{ size: ["small", false, "large", "huge"] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ color: [] }, { background: [] }],
+            [{ font: [] }],
+            [{ align: [] }],
+            ["clean"],
+          ],
+        },
+      },
       showCategories: false,
       showTags: false,
       categories: [],
@@ -172,11 +201,9 @@ export default {
       selectedTags: [],
     };
   },
-  computed: {
- 
-  },
   components: {
-    Multiselect
+    Multiselect,
+    QuillEditor,
   },
   mounted() {
     this.getCategories();
@@ -189,22 +216,21 @@ export default {
     return {
       formData: {
         title: { required, minLength: minLength(2) },
-        body: { required, minLength: minLength(10) },
+        body: {},
       },
     };
-  },
-  setup() {
-    const useValidate = useVuelidate();
-    const { setFlashMessage } = useFlashMessage();
-    return { useValidate, setFlashMessage };
   },
   methods: {
     async submitForm() {
       this.useValidate.$touch();
 
+      var editorElement = document.querySelector(".ql-editor");
+      var innerHTMLValue = editorElement.innerHTML;
+      this.formData.body = innerHTMLValue;
       this.formData.categories = this.selectedCategories.map((category) => category.id);
       this.formData.tags = this.selectedTags.map((tag) => tag.id);
 
+      console.log(this.formData);
       if (!this.useValidate.$invalid) {
         this.createNews(this.formData);
       }
@@ -276,6 +302,10 @@ label,
 input {
   color: rgba(0, 0, 0, 0.5) !important;
 }
+
+/* .custom-quill-editor .ql-container {
+  height: 300px!important; 
+} */
 
 .btn {
   border-radius: 6px !important;

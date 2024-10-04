@@ -25,8 +25,9 @@ export default defineConfig({
     },
     mimeTypes: {
       'application/javascript': ['js'],
+      'text/javascript': ['vue'],
+      'application/json': ['json']
     },
     port: 5173
-    
   }
 })
