@@ -51,21 +51,11 @@
         </div>
         <div class="mb-3">
           <label for="body" class="form-label">Notícia</label>
-          <!-- <textarea
-            id="body"
-            v-model="formData.body"
-            class="form-control"
-            :class="{ 'is-invalid': useValidate.formData.body.$error }"
-            @blur="useValidate.formData.body.$touch()"
-            rows="10"
-            required
-          ></textarea> -->
           <div>
             <quill-editor
               v-model="formData.body"
               class="form-control"
               :options="editorOptions"
-              @blur="onEditorBlur"
               @input="onEditorInput"
               style="height: 400px"
             />
@@ -163,12 +153,11 @@ import { useFlashMessage } from "@/service/FlashMessageService";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.css";
 
-import { QuillEditor } from "@vueup/vue-quill"; // Update import
-import "@vueup/vue-quill/dist/vue-quill.snow.css"; // or 'vue-quill.bubble.css'
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
   name: "CreateNewsAdmin",
-
   setup() {
     const useValidate = useVuelidate();
     const { setFlashMessage } = useFlashMessage();
