@@ -23,7 +23,7 @@
     <div class="form-area">
       <form @submit.prevent="submitForm">
         <div class="mb-3">
-          <label for="title" class="form-label">Nome</label>
+          <label for="title" class="form-label">Título</label>
           <input
             type="text"
             id="title"
@@ -103,25 +103,35 @@
           </multiselect>
         </div>
 
-        <div class="mb-3">
-          <label class="" :class="{ active: formData.publicated === '1' }">
+        <div class="mb-3 radio-buttons">
+          <label
+            class="btn btn-outline-primary"
+            :class="{ active: formData.publicated === '1' }"
+          >
             <input
               type="radio"
               name="publicated"
               id="true"
               value="1"
               v-model="formData.publicated"
+              autocomplete="off"
+              class="d-none"
             />
             Publicado
           </label>
 
-          <label class="" :class="{ active: formData.publicated === '0' }">
+          <label
+            class="btn btn-outline-danger"
+            :class="{ active: formData.publicated === '0' }"
+          >
             <input
               type="radio"
               name="publicated"
               id="false"
               value="0"
               v-model="formData.publicated"
+              autocomplete="off"
+              class="d-none"
             />
             Despublicado
           </label>
@@ -368,5 +378,23 @@ input {
 .card-body li {
   flex: 1 1 200px;
   margin: 1px;
+}
+
+.radio-buttons .active{
+  color: #FFF !important;
+}
+
+.radio-buttons .btn:hover{
+  color: #FFF !important;
+}
+
+.radio-buttons .btn-outline-primary{
+  border-radius: 6px 0 0 6px !important;
+  border-right: 0px !important;
+}
+
+.radio-buttons .btn-outline-danger{
+  border-radius:  0 6px 6px 0 !important;
+  border-left: 0px !important;
 }
 </style>
