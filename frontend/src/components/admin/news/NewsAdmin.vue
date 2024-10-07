@@ -41,20 +41,25 @@
               {{ publicationStatus(news.publicated) }}
             </td>
             <td class="text-black-50 center">
-              <button
-                v-if="!news.publicated"
-                class="btn btn-primary btn-sm me-2"
-                @click="publishNews(news.id)"
-              >
-                <i class="fa-regular fa-circle-check"></i>
-              </button>
-              <button
+              <ConfirmUnpublish
                 v-if="news.publicated"
-                class="btn btn-danger btn-sm me-2"
-                @click="unpublishNews(news.id)"
-              >
-                <i class="fa-regular fa-circle-xmark"></i>
-              </button>
+                :confirmationMessage="'Deseja realmente despublicar esta Notícia?'"
+                :itemType="'A Notícia'"
+                :itemName="news.title"
+                :successMessage="news.title + ' foi despublicada com sucesso.'"
+                @confirmed="unpublishNews(news.id)"
+                :refreshList="true"
+              />
+
+              <ConfirmPublish
+                v-if="!news.publicated"
+                :confirmationMessage="'Deseja realmente publicar esta Notícia?'"
+                :itemType="'A Notícia'"
+                :itemName="news.title"
+                :successMessage="news.title + ' foi publicada com sucesso.'"
+                @confirmed="publishNews(news.id)"
+                :refreshList="true"
+              />
             </td>
             <td class="text-black-50">{{ news.created_at }}</td>
             <td class="text-black-50">{{ news.publication_date }}</td>
@@ -84,11 +89,15 @@
 <script>
 import NewsAdminService from "@/service/admin/NewsAdminService";
 import Pagination from "../../Pagination.vue";
+import ConfirmPublish from "../ConfirmPublish.vue";
+import ConfirmUnpublish from "../ConfirmUnpublish.vue";
 
 export default {
   name: "NewsAdmin",
   components: {
     Pagination,
+    ConfirmPublish,
+    ConfirmUnpublish,
   },
   data() {
     return {
@@ -104,11 +113,11 @@ export default {
     this.NewsAdminService = new NewsAdminService();
   },
   mounted() {
-    this.getNews();
+    this.fetchNews();
   },
   methods: {
     truncateText(text) {
-      if(text){
+      if (text) {
         const maxLength = 90;
         return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
       }
@@ -124,35 +133,52 @@ export default {
       return statusToShow;
     },
 
-    publishNews(id) {
-      console.log(id);
+    async fetchNews(page = 1) {
+      try {
+        this.isLoading = true;
+        const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
+
+        if (response) {
+          this.tableNews = {
+            data: response.data.map((news) => ({
+              ...news,
+            })),
+            current_page: response.current_page,
+            last_page: response.last_page,
+          };
+        }
+
+        this.isLoading = false;
+      } catch (error) {
+        console.error("Erro ao buscar notícias:", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async publishNews(id) {
+      try {
+        await this.NewsAdminService.publishNews(id);
+
+        await this.fetchNews();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
+      }
     },
 
     async unpublishNews(id) {
-      //this.isLoading = true;
-      const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
-      console.log(id);
-    },
+      try {
+        await this.NewsAdminService.unpublishNews(id);
 
-    async getNews(page = 1) {
-      this.isLoading = true;
-      const response = await this.NewsAdminService.getIndexNews(this.perPage, page);
-
-      if (response) {
-        this.tableNews = {
-          data: response.data.map((news) => ({
-            ...news,
-          })),
-          current_page: response.current_page,
-          last_page: response.last_page,
-        };
+        await this.fetchNews();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
       }
-
-      this.isLoading = false;
     },
+
     changePage(page) {
       if (page > 0 && page <= this.tableNews.last_page) {
-        this.getNews(page);
+        this.fetchNews(page);
       }
     },
   },

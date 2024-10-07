@@ -45,13 +45,6 @@
               {{ publicationStatus(category.status) }}
             </td>
             <td class="text-black-50 center">
-              <!-- <button
-                v-if="!category.status"
-                class="btn btn-primary btn-sm me-2"
-                @click="publishCategory(category.id)"
-              >
-                <i class="fa-regular fa-circle-check"></i>
-              </button> -->
 
               <ConfirmUnpublish
                 v-if="category.status"
@@ -73,13 +66,6 @@
                 :refreshList="true"
               />
 
-              <!-- <button
-                v-if="category.status"
-                class="btn btn-danger btn-sm me-2"
-                @click="unpublishCategory(category.id)"
-              >
-                <i class="fa-regular fa-circle-xmark"></i>
-              </button> -->
             </td>
             <td>
               <button
