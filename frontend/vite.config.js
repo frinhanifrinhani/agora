@@ -28,6 +28,11 @@ export default defineConfig({
       'text/javascript': ['vue'],
       'application/json': ['json']
     },
+    optimizeDeps: {
+      include: [
+        "quill", 
+        "quill-image-resize-module"],
+    },
     port: 5173
   }
 })
