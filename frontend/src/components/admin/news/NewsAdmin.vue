@@ -95,6 +95,7 @@
 <script>
 import NewsAdminService from "@/service/admin/NewsAdminService";
 import Pagination from "../../Pagination.vue";
+import ConfirmDelete from "../ConfirmDelete.vue";
 import ConfirmPublish from "../ConfirmPublish.vue";
 import ConfirmUnpublish from "../ConfirmUnpublish.vue";
 
@@ -102,6 +103,7 @@ export default {
   name: "NewsAdmin",
   components: {
     Pagination,
+    ConfirmDelete,
     ConfirmPublish,
     ConfirmUnpublish,
   },
@@ -159,6 +161,20 @@ export default {
         console.error("Erro ao buscar notícias:", error);
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    viewNews(id) {
+      this.$router.push({ name: "ViewNewsAdmin", params: { id: id } });
+    },
+
+    async deleteNews(id) {
+      try {
+        await this.NewsAdminService.deleteNews(id);
+
+        await this.fetchNews();
+      } catch (error) {
+        this.setFlashMessage(error, "error");
       }
     },
 

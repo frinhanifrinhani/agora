@@ -108,16 +108,16 @@ const routes = [
         name: 'CreateNewsAdmin',
         component: () => import('@/views/admin/News/CreateNewsAdmin.vue'),
       },
+      {
+        path: 'news/view/:id',
+        name: 'ViewNewsAdmin',
+        component: () => import('@/views/admin/news/ViewNewsAdmin.vue'),
+      },
       //event
       {
         path: 'events',
         name: 'EventAdmin',
         component: () => import('@/views/admin/event/EventAdmin.vue'),
-      },
-      {
-        path: 'news/create',
-        name: 'CreateNewsAdmin',
-        component: () => import('@/views/admin/news/CreateNewsAdmin.vue'),
       },
       {
         path: 'user',

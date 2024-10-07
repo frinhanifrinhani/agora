@@ -4,14 +4,14 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item active" aria-current="page">
-        <span class="text-black-50">Home / Categorys / {{ category.name }}</span>
+        <span class="text-black-50">Home / Categorias / {{ category.name }}</span>
       </li>
     </ol>
   </nav>
 
   <div class="content">
     <div class="top-content">
-      <h2 class="mb-4">Category</h2>
+      <h2 class="mb-4">Categorias</h2>
     </div>
 
     <div v-if="isLoading" class="d-flex justify-content-center align-items-center vh-100">

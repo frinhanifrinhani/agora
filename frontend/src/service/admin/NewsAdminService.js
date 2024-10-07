@@ -26,6 +26,31 @@ export default class NewsAdminService {
         }
     }
 
+    async getNews(id){
+        try {
+            const url = this.API_URL + 'admin/news/'+id;
+            const token = localStorage.getItem('authToken');
+    
+            const response = await axios.get(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                
+            });
+    
+            return response.data;
+        } catch (error) {
+             if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao buscar a notícia!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }
+    }
+
     async getCategories(){
         try {
             const url = this.API_URL + 'admin/categories/choice/all';
