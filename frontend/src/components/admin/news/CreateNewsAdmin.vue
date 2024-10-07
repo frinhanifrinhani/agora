@@ -188,6 +188,7 @@ export default {
             [{ color: [] }, { background: [] }],
             [{ font: [] }],
             [{ align: [] }],
+             ["image"],
             ["clean"],
           ],
         },
@@ -202,7 +203,7 @@ export default {
   },
   components: {
     Multiselect,
-    QuillEditor,
+    QuillEditor
   },
   mounted() {
     this.getCategories();
