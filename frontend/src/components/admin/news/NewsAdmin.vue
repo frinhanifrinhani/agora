@@ -70,9 +70,15 @@
               <button class="btn btn-warning btn-sm me-2" @click="editNews(news.id)">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
-              <button class="btn btn-danger btn-sm" @click="deleteNews(news.id)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
+              <ConfirmDelete
+                :confirmationMessage="'Deseja realmente deletar esta Notícia?'"
+                :confirmationText="'Esta ação não pode ser desfeita para a Notícia:'"
+                :itemType="'A Notícia'"
+                :itemName="news.name"
+                :successMessage="news.name + ' foi deletada com sucesso.'"
+                @confirmed="deleteNews(news.id)"
+                :refreshList="true"
+              />
             </td>
           </tr>
         </tbody>

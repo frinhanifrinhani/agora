@@ -86,6 +86,33 @@ export default class NewsAdminService {
         }
     }
 
+    async deleteNews(id){
+        const url = this.API_URL + 'admin/news/'+id;
+        const token = localStorage.getItem('authToken');
+    
+        try {
+            const response = await axios.delete(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    id: id 
+                }
+            });
+            return response.data;
+        } catch (error) {
+            
+            if(error.response){
+                const errorMessage = error?.response?.data?.error?.message  || "Ocorreu um erro ao deletar a notícia!";
+                
+                return errorMessage
+            }else{
+                return error;
+            }
+        }  
+    }
+
     async publishNews(id){
         
         const url = this.API_URL + 'admin/news/publish/'+id;
