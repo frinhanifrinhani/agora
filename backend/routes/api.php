@@ -71,16 +71,26 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('news', NewsAdminController::class);
-    Route::resource('tags', TagAdminController::class);
+
+    Route::controller(NewsAdminController::class)->group(function () {
+        Route::resource('news', NewsAdminController::class);
+        Route::put('/news/publish/{id}', 'publish');
+        Route::put('/news/unpublish/{id}', 'unpublish');
+    });
+
+    Route::controller(TagAdminController::class)->group(function () {
+        Route::resource('tags', TagAdminController::class);
+        Route::get('/tags/choice/all', 'tagsToChoice');
+    });
+
     Route::resource('events', EventAdminController::class);
 
     Route::controller(CategoryAdminController::class)->group(function () {
         Route::resource('categories', CategoryAdminController::class);
+        Route::get('/categories/choice/all', 'categoriesToChoice');
         Route::put('/categories/publish/{id}', 'publish');
         Route::put('/categories/unpublish/{id}', 'unpublish');
     });
-
 });
 
 Route::prefix('migrator')->middleware('auth:sanctum')->controller(MigratorController::class)->group(function () {

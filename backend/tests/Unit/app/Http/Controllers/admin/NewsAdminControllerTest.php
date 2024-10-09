@@ -239,6 +239,7 @@ class NewsAdminControllerTest extends TestCase
         $newsData = [
             'title' => $this->title,
             'body' => $this->body,
+            'publicated' => true,
         ];
 
         $this->withHeader('Authorization', 'Bearer ' . $this->token)
@@ -260,6 +261,7 @@ class NewsAdminControllerTest extends TestCase
         $newsData = [
             'title' => $this->title,
             'body' => $this->body,
+            'publicated' => true,
         ];
 
         $newsResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
@@ -290,11 +292,13 @@ class NewsAdminControllerTest extends TestCase
         $newsData = [
             'title' => $title,
             'body' => $body,
+            'publicated' => true,
         ];
 
         $newsData2 = [
             'title' => $titleTwo,
             'body' => $bodyTwo,
+            'publicated' => true,
         ];
 
         $this->withHeader('Authorization', 'Bearer ' . $this->token)
@@ -306,6 +310,7 @@ class NewsAdminControllerTest extends TestCase
         $newsDataUpdate = [
             'title' => $this->title,
             'body' => $this->body,
+            'publicated' => true,
         ];
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)
@@ -324,6 +329,7 @@ class NewsAdminControllerTest extends TestCase
         $newsData = [
             'title' => $this->title,
             'body' => $this->body,
+            'publicated' => true,
         ];
 
         $newsCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
@@ -332,6 +338,7 @@ class NewsAdminControllerTest extends TestCase
         $newsDataUpdate = [
             'title' => $this->title . ' updated',
             'body' => $this->body . ' updated',
+            'publicated' => true,
         ];
 
         $this->withHeader('Authorization', 'Bearer ' . $this->token)->delete('/api/admin/news/' . $newsCreateResponse['data']['news']['id']);
@@ -354,6 +361,7 @@ class NewsAdminControllerTest extends TestCase
         $newsData = [
             'title' => $this->title,
             'body' => $this->body,
+            'publicated' => true,
         ];
 
         $newsCreateResponse = $this->withHeader('Authorization', 'Bearer ' . $this->token)
@@ -362,6 +370,7 @@ class NewsAdminControllerTest extends TestCase
         $newsDataUpdate = [
             'title' => $this->title . ' updated',
             'body' => $this->body . ' updated',
+            'publicated' => true,
         ];
 
         $response = $this->put('/api/admin/news/' . $newsCreateResponse['data']['news']['id'], $newsDataUpdate);
@@ -404,5 +413,67 @@ class NewsAdminControllerTest extends TestCase
         $this->assertNotEmpty($responseData);
 
         $this->assertEquals('Notícia excluído(a) com sucesso.', $responseData['success']['message']);
+    }
+
+    public function testPublishSuccess()
+    {
+        $news = News::factory()->state([
+            'publicated' => false
+        ])->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/news/publish/' . $news->id);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Notícia publicado(a) com sucesso.', $responseData['success']['message']);
+    }
+
+    public function testPublishNotFoundNewsError()
+    {
+        $news = News::factory()->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/news/publish/0');
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Notícia não encontrado(a).', $responseData['error']['message']);
+    }
+
+    public function testUnpublishSuccess()
+    {
+        $news = News::factory()->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/news/unpublish/' . $news->id);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Notícia despublicado(a) com sucesso.', $responseData['success']['message']);
+    }
+
+    public function testUnpublishNotFoundNewsError()
+    {
+        $news = News::factory()->create();
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->token)->put('/api/admin/news/unpublish/0');
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+
+        $responseData = $response->json();
+
+        $this->assertNotEmpty($responseData);
+
+        $this->assertEquals('Notícia não encontrado(a).', $responseData['error']['message']);
     }
 }

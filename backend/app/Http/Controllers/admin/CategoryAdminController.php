@@ -22,6 +22,11 @@ class CategoryAdminController extends Controller
         return $this->categoryAdminService->getAllCategories($request);
     }
 
+    public function categoriesToChoice()
+    {
+        return $this->categoryAdminService->categoriesToChoice();
+    }
+
     public function store(CategoryRequest $request): JsonResponse
     {
         return $this->categoryAdminService->createCategory($request);

@@ -42,4 +42,14 @@ class NewsAdminController extends Controller
     {
         return $this->newsAdminService->deleteNews($id);
     }
+
+    public function publish(int $id): JsonResponse
+    {
+        return $this->newsAdminService->publishNews($id);
+    }
+
+    public function unpublish(int $id): JsonResponse
+    {
+        return $this->newsAdminService->unpublishNews($id);
+    }
 }

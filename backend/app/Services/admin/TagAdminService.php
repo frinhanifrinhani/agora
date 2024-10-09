@@ -26,6 +26,20 @@ class TagAdminService
         return $this->tagRepository->paginate($request->limit, $request->page);
     }
 
+
+    public function tagsToChoice()
+    {
+        $tagResponse = $this->tagRepository->all();
+
+        return response()->json(
+            [
+                'data' => $tagResponse,
+                'total' => $tagResponse->count()
+            ],
+            Response::HTTP_OK
+        );
+    }
+
     public function createTag($request): JsonResponse
     {
         try {

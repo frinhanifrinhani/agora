@@ -23,6 +23,16 @@ export default defineConfig({
       host: 'localhost',
       port: 5173,
     },
+    mimeTypes: {
+      'application/javascript': ['js'],
+      'text/javascript': ['vue'],
+      'application/json': ['json']
+    },
+    optimizeDeps: {
+      include: [
+        "quill", 
+        "quill-image-resize-module"],
+    },
     port: 5173
   }
 })

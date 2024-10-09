@@ -11,35 +11,40 @@ use App\Http\Controllers\Controller;
 
 class TagAdminController extends Controller
 {
-    private TagAdminService $tagService;
+    private TagAdminService $tagAdminService;
 
-    public function __construct(TagAdminService $tagService)
+    public function __construct(TagAdminService $tagAdminService)
     {
-        $this->tagService = $tagService;
+        $this->tagAdminService = $tagAdminService;
     }
 
     public function index(Request $request)
     {
-        return $this->tagService->getAllTag($request);
+        return $this->tagAdminService->getAllTag($request);
+    }
+
+    public function tagsToChoice()
+    {
+        return $this->tagAdminService->tagsToChoice();
     }
 
     public function store(TagRequest $request)
     {
-        return $this->tagService->createTag($request);
+        return $this->tagAdminService->createTag($request);
     }
 
     public function show(string $id): JsonResponse
     {
-        return $this->tagService->getTagById($id);
+        return $this->tagAdminService->getTagById($id);
     }
 
     public function update(TagRequest $request, int $id): JsonResponse
     {
-        return $this->tagService->updateTag($request, $id);
+        return $this->tagAdminService->updateTag($request, $id);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        return $this->tagService->deleteTag($id);
+        return $this->tagAdminService->deleteTag($id);
     }
 }

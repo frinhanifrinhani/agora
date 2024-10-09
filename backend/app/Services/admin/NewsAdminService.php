@@ -271,7 +271,9 @@ class NewsAdminService
     {
         $newsData = $request->validated();
 
-        if ($request->has("publicated")) {
+        $newsData['publication_date'] = null;
+
+        if ($newsData['publicated']) {
             $newsData['publication_date'] = $this->getNow();
         }
 
@@ -281,5 +283,117 @@ class NewsAdminService
         $this->request->isMethod('post') ? $newsData['user_id'] = auth()->id() : null;
 
         return $newsData;
+    }
+
+    public function publishNews($id): JsonResponse
+    {
+        try {
+
+            $newsData['publicated'] = 1;
+
+            DB::beginTransaction();
+
+            $newsResponse = $this->newsRepository->update($newsData, $id);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.publish',
+                            [
+                                'model' => ucfirst(Entities::NEWS)
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'news' => $newsResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+    }
+
+    public function unpublishNews($id): JsonResponse
+    {
+        try {
+
+            $newsData['publicated'] = 0;
+
+            DB::beginTransaction();
+
+            $newsResponse = $this->newsRepository->update($newsData, $id);
+
+            DB::commit();
+
+            return response()->json(
+                [
+                    'success' => [
+                        'message' => __(
+                            'messages.unpublish',
+                            [
+                                'model' => ucfirst(Entities::NEWS)
+                            ]
+                        )
+                    ],
+                    'data' => [
+                        'news' => $newsResponse
+                    ]
+                ],
+                Response::HTTP_CREATED
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json(
+                [
+                    'error' => [
+                        'message' =>
+                        __(
+                            'messages.erro.notFound',
+                            [
+                                'model' => ucfirst(Entities::NEWS),
+                            ]
+                        )
+                    ]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(
+                [
+                    'error' => [$e->getMessage()]
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 }
